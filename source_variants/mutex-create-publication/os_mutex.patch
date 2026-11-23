@@ -1,0 +1,21 @@
+--- a/Source/os_mutex.c
++++ b/Source/os_mutex.c
+@@ -242,8 +242,6 @@
+         return (pevent);
+     }
+     OSEventFreeList     = (OS_EVENT *)OSEventFreeList->OSEventPtr; /* Adjust the free list             */
+-    OS_EXIT_CRITICAL();
+-    pevent->OSEventType = OS_EVENT_TYPE_MUTEX;
+     pevent->OSEventCnt  = (INT16U)((INT16U)prio << 8u) | OS_MUTEX_AVAILABLE; /* Resource is avail.     */
+     pevent->OSEventPtr  = (void *)0;                       /* No task owning the mutex                 */
+ #if OS_EVENT_NAME_EN > 0u
+@@ -251,6 +249,9 @@
+     pevent->OSEventName = (INT8U *)(void *)"?";
+ #endif
+     OS_EventWaitListInit(pevent);
++    /* Publish the initialized Mutex before restoring the saved interrupt mask. */
++    pevent->OSEventType = OS_EVENT_TYPE_MUTEX;
++    OS_EXIT_CRITICAL();
+     OS_TRACE_MUTEX_CREATE(pevent, pevent->OSEventName);
+    *perr = OS_ERR_NONE;
+     return (pevent);

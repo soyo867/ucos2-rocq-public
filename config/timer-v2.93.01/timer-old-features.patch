@@ -1,0 +1,10 @@
+--- a/Cfg/Template/os_cfg.h
++++ b/Cfg/Template/os_cfg.h
+@@ -39,2 +39,2 @@
+-#define OS_EVENT_MULTI_EN         1u   /* Include code for OSEventPendMulti()                          */
+-#define OS_EVENT_NAME_EN          1u   /* Enable names for Sem, Mutex, Mbox and Q                      */
++#define OS_EVENT_MULTI_EN         0u   /* Include code for OSEventPendMulti()                          */
++#define OS_EVENT_NAME_EN          0u   /* Enable names for Sem, Mutex, Mbox and Q                      */
+@@ -71,1 +71,1 @@
+-#define OS_TASK_PROFILE_EN        1u   /*     Include variables in OS_TCB for profiling                */
++#define OS_TASK_PROFILE_EN        0u   /*     Include variables in OS_TCB for profiling                */

@@ -1,0 +1,21 @@
+--- a/Source/os_core.c
++++ b/Source/os_core.c
+@@ -2117,10 +2117,6 @@
+ 
+         OSTCBInitHook(ptcb);
+ 
+-        OS_ENTER_CRITICAL();
+-        OSTCBPrioTbl[prio] = ptcb;
+-        OS_EXIT_CRITICAL();
+-
+         OSTaskCreateHook(ptcb);                            /* Call user defined hook                   */
+ 
+ #if OS_TASK_CREATE_EXT_EN > 0u
+@@ -2142,6 +2138,7 @@
+         OSRdyGrp               |= ptcb->OSTCBBitY;         /* Make task ready to run                   */
+         OSRdyTbl[ptcb->OSTCBY] |= ptcb->OSTCBBitX;
+         OSTaskCtr++;                                       /* Increment the #tasks counter             */
++        OSTCBPrioTbl[prio] = ptcb;                         /* Publish only the fully linked ready TCB  */
+         OS_TRACE_TASK_READY(ptcb);
+         OS_EXIT_CRITICAL();
+         return (OS_ERR_NONE);

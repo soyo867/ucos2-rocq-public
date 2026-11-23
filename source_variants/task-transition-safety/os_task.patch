@@ -1,0 +1,23 @@
+--- a/Source/os_task.c
++++ b/Source/os_task.c
+@@ -97,6 +97,11 @@
+     if (oldprio == OS_PRIO_SELF) {                          /* See if changing self                    */
+         oldprio = OSTCBCur->OSTCBPrio;                      /* Yes, get priority                       */
+     }
++    /* The resolved SELF target must retain the Idle priority sentinel. */
++    if (oldprio == OS_TASK_IDLE_PRIO) {
++        OS_EXIT_CRITICAL();
++        return (OS_ERR_PRIO_INVALID);
++    }
+     ptcb = OSTCBPrioTbl[oldprio];
+     if (ptcb == (OS_TCB *)0) {                              /* Does task to change exist?              */
+         OS_EXIT_CRITICAL();                                 /* No, can't change its priority!          */
+@@ -1043,6 +1048,8 @@
+         OS_EXIT_CRITICAL();
+         return (OS_ERR_TASK_NOT_EXIST);
+     }
++    /* Inherited and permanent priority slots may name the same TCB. */
++    self = (ptcb == OSTCBCur) ? OS_TRUE : OS_FALSE;
+     y            = ptcb->OSTCBY;
+     OSRdyTbl[y] &= (OS_PRIO)~ptcb->OSTCBBitX;                   /* Make task not ready                 */
+     if (OSRdyTbl[y] == 0u) {

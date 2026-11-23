@@ -1,0 +1,16 @@
+--- a/Source/os_flag.c
++++ b/Source/os_flag.c
+@@ -914,4 +914,13 @@
+     OS_ENTER_CRITICAL();
++    /* The group may have been deleted before interrupts were masked. */
++    if (((opt == OS_FLAG_CLR) || (opt == OS_FLAG_SET)) &&
++        (pgrp->OSFlagType != OS_EVENT_TYPE_FLAG)) {
++        OS_EXIT_CRITICAL();
++        *perr = OS_ERR_EVENT_TYPE;
++        OS_TRACE_FLAG_POST_EXIT(*perr);
++        return ((OS_FLAGS)0);
++    }
++
+     switch (opt) {
+         case OS_FLAG_CLR:
+              pgrp->OSFlagFlags &= (OS_FLAGS)~flags;  /* Clear the flags specified in the group         */

@@ -1,0 +1,317 @@
+Require Import Coq.ZArith.ZArith.
+Require Import Coq.Bool.Bool.
+Require Import Coq.Strings.String.
+Require Import Coq.Strings.Ascii.
+Require Import Coq.Lists.List.
+Require Import Coq.Classes.RelationClasses.
+Require Import Coq.Classes.Morphisms.
+Require Import Coq.micromega.Psatz.
+Require Import Coq.Sorting.Permutation.
+From AUXLib Require Import int_auto Axioms Feq Idents ListLib VMap.
+Require Import SetsClass.SetsClass. Import SetsNotation.
+From SimpleC.SL Require Import Mem SeparationLogic.
+From Ucos2Verify.VC.code.task Require Import task_change_prio_goal.
+From Ucos2Verify.VC.code.task Require Import task_change_prio_proof_auto.
+Require Import Logic.LogicGenerator.demo932.Interface.
+Local Open Scope Z_scope.
+Local Open Scope sets.
+Local Open Scope string_scope.
+Local Open Scope list.
+Import Snaive_C_Rules.
+Require Import Ucos2Verify.VC.code.task.spec.task_change_prio_spec.
+Import UCOS2_C_Rules TaskStateDef SchedStateDef EventStateDef.
+Local Open Scope Z_scope.
+Local Open Scope sac.
+Local Open Scope sac.
+
+Lemma proof_of_OSTaskChangePrio_safety_wit_23_split_goal_1 : OSTaskChangePrio_safety_wit_23_split_goal_1.
+Proof. Abort.
+
+Lemma proof_of_OSTaskChangePrio_safety_wit_23_split_goal_2 : OSTaskChangePrio_safety_wit_23_split_goal_2.
+Proof. Abort.
+
+Lemma proof_of_OSTaskChangePrio_safety_wit_24_split_goal_1 : OSTaskChangePrio_safety_wit_24_split_goal_1.
+Proof. Abort.
+
+Lemma proof_of_OSTaskChangePrio_safety_wit_24_split_goal_2 : OSTaskChangePrio_safety_wit_24_split_goal_2.
+Proof. Abort.
+
+Lemma proof_of_OSTaskChangePrio_safety_wit_25_split_goal_1 : OSTaskChangePrio_safety_wit_25_split_goal_1.
+Proof. Abort.
+
+Lemma proof_of_OSTaskChangePrio_safety_wit_25_split_goal_2 : OSTaskChangePrio_safety_wit_25_split_goal_2.
+Proof. Abort.
+
+Lemma proof_of_OSTaskChangePrio_safety_wit_26_split_goal_1 : OSTaskChangePrio_safety_wit_26_split_goal_1.
+Proof. Abort.
+
+Lemma proof_of_OSTaskChangePrio_safety_wit_26_split_goal_2 : OSTaskChangePrio_safety_wit_26_split_goal_2.
+Proof. Abort.
+
+Lemma proof_of_OSTaskChangePrio_entail_wit_2_1_split_goal_1 : OSTaskChangePrio_entail_wit_2_1_split_goal_1.
+Proof. Abort.
+
+Lemma proof_of_OSTaskChangePrio_entail_wit_2_1_split_goal_2 : OSTaskChangePrio_entail_wit_2_1_split_goal_2.
+Proof. Abort.
+
+Lemma proof_of_OSTaskChangePrio_entail_wit_2_1_split_goal_3 : OSTaskChangePrio_entail_wit_2_1_split_goal_3.
+Proof. Abort.
+
+Lemma proof_of_OSTaskChangePrio_entail_wit_2_2_split_goal_1 : OSTaskChangePrio_entail_wit_2_2_split_goal_1.
+Proof. Abort.
+
+Lemma proof_of_OSTaskChangePrio_entail_wit_3_1_split_goal_1 : OSTaskChangePrio_entail_wit_3_1_split_goal_1.
+Proof. Abort.
+
+Lemma proof_of_OSTaskChangePrio_entail_wit_3_1_split_goal_2 : OSTaskChangePrio_entail_wit_3_1_split_goal_2.
+Proof. Abort.
+
+Lemma proof_of_OSTaskChangePrio_entail_wit_3_1_split_goal_3 : OSTaskChangePrio_entail_wit_3_1_split_goal_3.
+Proof. Abort.
+
+Lemma proof_of_OSTaskChangePrio_entail_wit_3_1_split_goal_4 : OSTaskChangePrio_entail_wit_3_1_split_goal_4.
+Proof. Abort.
+
+Lemma proof_of_OSTaskChangePrio_entail_wit_3_1_split_goal_5 : OSTaskChangePrio_entail_wit_3_1_split_goal_5.
+Proof. Abort.
+
+Lemma proof_of_OSTaskChangePrio_entail_wit_3_2_split_goal_1 : OSTaskChangePrio_entail_wit_3_2_split_goal_1.
+Proof. Abort.
+
+Lemma proof_of_OSTaskChangePrio_entail_wit_3_2_split_goal_2 : OSTaskChangePrio_entail_wit_3_2_split_goal_2.
+Proof. Abort.
+
+Lemma proof_of_OSTaskChangePrio_entail_wit_3_2_split_goal_3 : OSTaskChangePrio_entail_wit_3_2_split_goal_3.
+Proof. Abort.
+
+Lemma proof_of_OSTaskChangePrio_entail_wit_3_2_split_goal_4 : OSTaskChangePrio_entail_wit_3_2_split_goal_4.
+Proof. Abort.
+
+Lemma proof_of_OSTaskChangePrio_entail_wit_3_2_split_goal_5 : OSTaskChangePrio_entail_wit_3_2_split_goal_5.
+Proof. Abort.
+
+Lemma proof_of_OSTaskChangePrio_entail_wit_3_3_split_goal_1 : OSTaskChangePrio_entail_wit_3_3_split_goal_1.
+Proof. Abort.
+
+Lemma proof_of_OSTaskChangePrio_entail_wit_3_3_split_goal_2 : OSTaskChangePrio_entail_wit_3_3_split_goal_2.
+Proof. Abort.
+
+Lemma proof_of_OSTaskChangePrio_entail_wit_3_3_split_goal_3 : OSTaskChangePrio_entail_wit_3_3_split_goal_3.
+Proof. Abort.
+
+Lemma proof_of_OSTaskChangePrio_entail_wit_3_3_split_goal_4 : OSTaskChangePrio_entail_wit_3_3_split_goal_4.
+Proof. Abort.
+
+Lemma proof_of_OSTaskChangePrio_entail_wit_3_3_split_goal_5 : OSTaskChangePrio_entail_wit_3_3_split_goal_5.
+Proof. Abort.
+
+Lemma proof_of_OSTaskChangePrio_entail_wit_3_4_split_goal_1 : OSTaskChangePrio_entail_wit_3_4_split_goal_1.
+Proof. Abort.
+
+Lemma proof_of_OSTaskChangePrio_entail_wit_3_4_split_goal_2 : OSTaskChangePrio_entail_wit_3_4_split_goal_2.
+Proof. Abort.
+
+Lemma proof_of_OSTaskChangePrio_entail_wit_3_4_split_goal_3 : OSTaskChangePrio_entail_wit_3_4_split_goal_3.
+Proof. Abort.
+
+Lemma proof_of_OSTaskChangePrio_entail_wit_3_4_split_goal_4 : OSTaskChangePrio_entail_wit_3_4_split_goal_4.
+Proof. Abort.
+
+Lemma proof_of_OSTaskChangePrio_entail_wit_3_4_split_goal_5 : OSTaskChangePrio_entail_wit_3_4_split_goal_5.
+Proof. Abort.
+
+Lemma proof_of_OSTaskChangePrio_entail_wit_3_5_split_goal_1 : OSTaskChangePrio_entail_wit_3_5_split_goal_1.
+Proof. Abort.
+
+Lemma proof_of_OSTaskChangePrio_entail_wit_3_5_split_goal_2 : OSTaskChangePrio_entail_wit_3_5_split_goal_2.
+Proof. Abort.
+
+Lemma proof_of_OSTaskChangePrio_entail_wit_3_5_split_goal_3 : OSTaskChangePrio_entail_wit_3_5_split_goal_3.
+Proof. Abort.
+
+Lemma proof_of_OSTaskChangePrio_entail_wit_3_5_split_goal_4 : OSTaskChangePrio_entail_wit_3_5_split_goal_4.
+Proof. Abort.
+
+Lemma proof_of_OSTaskChangePrio_entail_wit_3_5_split_goal_5 : OSTaskChangePrio_entail_wit_3_5_split_goal_5.
+Proof. Abort.
+
+Lemma proof_of_OSTaskChangePrio_entail_wit_3_6_split_goal_1 : OSTaskChangePrio_entail_wit_3_6_split_goal_1.
+Proof. Abort.
+
+Lemma proof_of_OSTaskChangePrio_entail_wit_3_6_split_goal_2 : OSTaskChangePrio_entail_wit_3_6_split_goal_2.
+Proof. Abort.
+
+Lemma proof_of_OSTaskChangePrio_entail_wit_3_6_split_goal_3 : OSTaskChangePrio_entail_wit_3_6_split_goal_3.
+Proof. Abort.
+
+Lemma proof_of_OSTaskChangePrio_entail_wit_3_6_split_goal_4 : OSTaskChangePrio_entail_wit_3_6_split_goal_4.
+Proof. Abort.
+
+Lemma proof_of_OSTaskChangePrio_entail_wit_3_6_split_goal_5 : OSTaskChangePrio_entail_wit_3_6_split_goal_5.
+Proof. Abort.
+
+Lemma proof_of_OSTaskChangePrio_entail_wit_4_1_split_goal_spatial : OSTaskChangePrio_entail_wit_4_1_split_goal_spatial.
+Proof. Abort.
+
+Lemma proof_of_OSTaskChangePrio_entail_wit_4_2_split_goal_spatial : OSTaskChangePrio_entail_wit_4_2_split_goal_spatial.
+Proof. Abort.
+
+Lemma proof_of_OSTaskChangePrio_entail_wit_4_3_split_goal_spatial : OSTaskChangePrio_entail_wit_4_3_split_goal_spatial.
+Proof. Abort.
+
+Lemma proof_of_OSTaskChangePrio_entail_wit_4_4_split_goal_spatial : OSTaskChangePrio_entail_wit_4_4_split_goal_spatial.
+Proof. Abort.
+
+Lemma proof_of_OSTaskChangePrio_entail_wit_5_1_split_goal_1 : OSTaskChangePrio_entail_wit_5_1_split_goal_1.
+Proof. Abort.
+
+Lemma proof_of_OSTaskChangePrio_entail_wit_5_2_split_goal_1 : OSTaskChangePrio_entail_wit_5_2_split_goal_1.
+Proof. Abort.
+
+Lemma proof_of_OSTaskChangePrio_entail_wit_5_3_split_goal_spatial : OSTaskChangePrio_entail_wit_5_3_split_goal_spatial.
+Proof. Abort.
+
+Lemma proof_of_OSTaskChangePrio_entail_wit_5_4_split_goal_spatial : OSTaskChangePrio_entail_wit_5_4_split_goal_spatial.
+Proof. Abort.
+
+Lemma proof_of_OSTaskChangePrio_entail_wit_6_1_split_goal_1 : OSTaskChangePrio_entail_wit_6_1_split_goal_1.
+Proof. Abort.
+
+Lemma proof_of_OSTaskChangePrio_entail_wit_6_2_split_goal_1 : OSTaskChangePrio_entail_wit_6_2_split_goal_1.
+Proof. Abort.
+
+Lemma proof_of_OSTaskChangePrio_entail_wit_6_3_split_goal_1 : OSTaskChangePrio_entail_wit_6_3_split_goal_1.
+Proof. Abort.
+
+Lemma proof_of_OSTaskChangePrio_entail_wit_6_4_split_goal_1 : OSTaskChangePrio_entail_wit_6_4_split_goal_1.
+Proof. Abort.
+
+Lemma proof_of_OSTaskChangePrio_entail_wit_7_1_split_goal_1 : OSTaskChangePrio_entail_wit_7_1_split_goal_1.
+Proof. Abort.
+
+Lemma proof_of_OSTaskChangePrio_entail_wit_7_1_split_goal_2 : OSTaskChangePrio_entail_wit_7_1_split_goal_2.
+Proof. Abort.
+
+Lemma proof_of_OSTaskChangePrio_entail_wit_7_1_split_goal_3 : OSTaskChangePrio_entail_wit_7_1_split_goal_3.
+Proof. Abort.
+
+Lemma proof_of_OSTaskChangePrio_entail_wit_7_1_split_goal_spatial : OSTaskChangePrio_entail_wit_7_1_split_goal_spatial.
+Proof. Abort.
+
+Lemma proof_of_OSTaskChangePrio_entail_wit_7_2_split_goal_1 : OSTaskChangePrio_entail_wit_7_2_split_goal_1.
+Proof. Abort.
+
+Lemma proof_of_OSTaskChangePrio_entail_wit_7_2_split_goal_2 : OSTaskChangePrio_entail_wit_7_2_split_goal_2.
+Proof. Abort.
+
+Lemma proof_of_OSTaskChangePrio_entail_wit_7_2_split_goal_3 : OSTaskChangePrio_entail_wit_7_2_split_goal_3.
+Proof. Abort.
+
+Lemma proof_of_OSTaskChangePrio_entail_wit_7_2_split_goal_spatial : OSTaskChangePrio_entail_wit_7_2_split_goal_spatial.
+Proof. Abort.
+
+Lemma proof_of_OSTaskChangePrio_return_wit_1_split_goal_spatial : OSTaskChangePrio_return_wit_1_split_goal_spatial.
+Proof. Abort.
+
+Lemma proof_of_OSTaskChangePrio_return_wit_2_split_goal_spatial : OSTaskChangePrio_return_wit_2_split_goal_spatial.
+Proof. Abort.
+
+Lemma proof_of_OSTaskChangePrio_return_wit_3_split_goal_spatial : OSTaskChangePrio_return_wit_3_split_goal_spatial.
+Proof. Abort.
+
+Lemma proof_of_OSTaskChangePrio_return_wit_4_split_goal_spatial : OSTaskChangePrio_return_wit_4_split_goal_spatial.
+Proof. Abort.
+
+Lemma proof_of_OSTaskChangePrio_return_wit_5_split_goal_spatial : OSTaskChangePrio_return_wit_5_split_goal_spatial.
+Proof. Abort.
+
+Lemma proof_of_OSTaskChangePrio_return_wit_6_split_goal_spatial : OSTaskChangePrio_return_wit_6_split_goal_spatial.
+Proof. Abort.
+
+Lemma proof_of_OSTaskChangePrio_return_wit_7_split_goal_spatial : OSTaskChangePrio_return_wit_7_split_goal_spatial.
+Proof. Abort.
+
+Lemma proof_of_OSTaskChangePrio_return_wit_8_split_goal_spatial : OSTaskChangePrio_return_wit_8_split_goal_spatial.
+Proof. Abort.
+
+Lemma proof_of_OSTaskChangePrio_return_wit_9_split_goal_spatial : OSTaskChangePrio_return_wit_9_split_goal_spatial.
+Proof. Abort.
+
+Lemma proof_of_OSTaskChangePrio_return_wit_10_split_goal_spatial : OSTaskChangePrio_return_wit_10_split_goal_spatial.
+Proof. Abort.
+
+Lemma proof_of_OSTaskChangePrio_return_wit_11_split_goal_spatial : OSTaskChangePrio_return_wit_11_split_goal_spatial.
+Proof. Abort.
+
+Lemma proof_of_OSTaskChangePrio_return_wit_12_split_goal_spatial : OSTaskChangePrio_return_wit_12_split_goal_spatial.
+Proof. Abort.
+
+Lemma proof_of_OSTaskChangePrio_return_wit_13_split_goal_spatial : OSTaskChangePrio_return_wit_13_split_goal_spatial.
+Proof. Abort.
+
+Lemma proof_of_OSTaskChangePrio_return_wit_14_split_goal_spatial : OSTaskChangePrio_return_wit_14_split_goal_spatial.
+Proof. Abort.
+
+Lemma proof_of_OSTaskChangePrio_return_wit_15_split_goal_spatial : OSTaskChangePrio_return_wit_15_split_goal_spatial.
+Proof. Abort.
+
+Lemma proof_of_OSTaskChangePrio_partial_solve_wit_79_pure_split_goal_1 : OSTaskChangePrio_partial_solve_wit_79_pure_split_goal_1.
+Proof. Abort.
+
+Lemma proof_of_OSTaskChangePrio_partial_solve_wit_80_pure_split_goal_1 : OSTaskChangePrio_partial_solve_wit_80_pure_split_goal_1.
+Proof. Abort.
+
+Lemma proof_of_OSTaskChangePrio_which_implies_wit_1_split_goal_1 : OSTaskChangePrio_which_implies_wit_1_split_goal_1.
+Proof. Abort.
+
+Lemma proof_of_OSTaskChangePrio_which_implies_wit_2_split_goal_spatial : OSTaskChangePrio_which_implies_wit_2_split_goal_spatial.
+Proof. Abort.
+
+Lemma proof_of_OSTaskChangePrio_which_implies_wit_3_split_goal_spatial : OSTaskChangePrio_which_implies_wit_3_split_goal_spatial.
+Proof. Abort.
+
+Lemma proof_of_OSTaskChangePrio_which_implies_wit_4_split_goal_spatial : OSTaskChangePrio_which_implies_wit_4_split_goal_spatial.
+Proof. Abort.
+
+Lemma proof_of_OSTaskChangePrio_which_implies_wit_6_split_goal_spatial : OSTaskChangePrio_which_implies_wit_6_split_goal_spatial.
+Proof. Abort.
+
+Lemma proof_of_OSTaskChangePrio_which_implies_wit_7_split_goal_spatial : OSTaskChangePrio_which_implies_wit_7_split_goal_spatial.
+Proof. Abort.
+
+Lemma proof_of_OSTaskChangePrio_which_implies_wit_8_split_goal_spatial : OSTaskChangePrio_which_implies_wit_8_split_goal_spatial.
+Proof. Abort.
+
+Lemma proof_of_OSTaskChangePrio_which_implies_wit_10_split_goal_1 : OSTaskChangePrio_which_implies_wit_10_split_goal_1.
+Proof. Abort.
+
+Lemma proof_of_OSTaskChangePrio_which_implies_wit_10_split_goal_2 : OSTaskChangePrio_which_implies_wit_10_split_goal_2.
+Proof. Abort.
+
+Lemma proof_of_OSTaskChangePrio_which_implies_wit_10_split_goal_3 : OSTaskChangePrio_which_implies_wit_10_split_goal_3.
+Proof. Abort.
+
+Lemma proof_of_OSTaskChangePrio_which_implies_wit_10_split_goal_4 : OSTaskChangePrio_which_implies_wit_10_split_goal_4.
+Proof. Abort.
+
+Lemma proof_of_OSTaskChangePrio_which_implies_wit_10_split_goal_5 : OSTaskChangePrio_which_implies_wit_10_split_goal_5.
+Proof. Abort.
+
+Lemma proof_of_OSTaskChangePrio_which_implies_wit_10_split_goal_6 : OSTaskChangePrio_which_implies_wit_10_split_goal_6.
+Proof. Abort.
+
+Lemma proof_of_OSTaskChangePrio_which_implies_wit_12_split_goal_spatial : OSTaskChangePrio_which_implies_wit_12_split_goal_spatial.
+Proof. Abort.
+
+Lemma proof_of_OSTaskChangePrio_which_implies_wit_13_split_goal_spatial : OSTaskChangePrio_which_implies_wit_13_split_goal_spatial.
+Proof. Abort.
+
+Lemma proof_of_OSTaskChangePrio_which_implies_wit_14_split_goal_spatial : OSTaskChangePrio_which_implies_wit_14_split_goal_spatial.
+Proof. Abort.
+
+Lemma proof_of_OSTaskChangePrio_which_implies_wit_15_split_goal_spatial : OSTaskChangePrio_which_implies_wit_15_split_goal_spatial.
+Proof. Abort.
+
+Lemma proof_of_OSTaskChangePrio_which_implies_wit_16_split_goal_spatial : OSTaskChangePrio_which_implies_wit_16_split_goal_spatial.
+Proof. Abort.
+

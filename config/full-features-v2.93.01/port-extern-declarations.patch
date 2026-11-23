@@ -1,0 +1,37 @@
+--- a/Ports/ARM-Cortex-A/ARMv7-A/GNU/os_cpu.h
++++ b/Ports/ARM-Cortex-A/ARMv7-A/GNU/os_cpu.h
+@@ -242,18 +242,24 @@
+                                                                 /* Variables used to measure interrupt disable time     */
++/* QCP currently rejects an object-like macro expanding to extern beside #if.
++ * This input verifies kernel C, not the OS_CPU_GLOBALS translation unit.
++ */
++#ifdef OS_CPU_GLOBALS
++#error This verification adapter is not a CPU implementation input
++#endif
+ #if OS_CPU_INT_DIS_MEAS_EN > 0u
+-OS_CPU_EXT  INT16U   OS_CPU_IntDisMeasNestingCtr;
+-OS_CPU_EXT  INT16U   OS_CPU_IntDisMeasCntsEnter;
+-OS_CPU_EXT  INT16U   OS_CPU_IntDisMeasCntsExit;
+-OS_CPU_EXT  INT16U   OS_CPU_IntDisMeasCntsMax;
+-OS_CPU_EXT  INT16U   OS_CPU_IntDisMeasCntsDelta;
+-OS_CPU_EXT  INT16U   OS_CPU_IntDisMeasCntsOvrhd;
++extern      INT16U   OS_CPU_IntDisMeasNestingCtr;
++extern      INT16U   OS_CPU_IntDisMeasCntsEnter;
++extern      INT16U   OS_CPU_IntDisMeasCntsExit;
++extern      INT16U   OS_CPU_IntDisMeasCntsMax;
++extern      INT16U   OS_CPU_IntDisMeasCntsDelta;
++extern      INT16U   OS_CPU_IntDisMeasCntsOvrhd;
+ #endif
+ 
+-OS_CPU_EXT  OS_STK   OS_CPU_ExceptStk[OS_CPU_EXCEPT_STK_SIZE];
+-OS_CPU_EXT  OS_STK  *OS_CPU_ExceptStkBase;
+-OS_CPU_EXT  OS_STK  *OS_CPU_ExceptStkPtr;
++extern      OS_STK   OS_CPU_ExceptStk[OS_CPU_EXCEPT_STK_SIZE];
++extern      OS_STK  *OS_CPU_ExceptStkBase;
++extern      OS_STK  *OS_CPU_ExceptStkPtr;
+ 
+-OS_CPU_EXT  INT32U   OS_CPU_ARM_DRegCnt;                        /* VFP/NEON register count                              */
++extern      INT32U   OS_CPU_ARM_DRegCnt;                        /* VFP/NEON register count                              */
+ 
+ 
+ /*

@@ -1,0 +1,321 @@
+Require Import Coq.ZArith.ZArith.
+Require Import Coq.Bool.Bool.
+Require Import Coq.Strings.String.
+Require Import Coq.Strings.Ascii.
+Require Import Coq.Lists.List.
+Require Import Coq.Classes.RelationClasses.
+Require Import Coq.Classes.Morphisms.
+Require Import Coq.micromega.Psatz.
+Require Import Coq.Sorting.Permutation.
+From AUXLib Require Import int_auto Axioms Feq Idents ListLib VMap.
+Require Import SetsClass.SetsClass. Import SetsNotation.
+From SimpleC.SL Require Import Mem SeparationLogic.
+From Ucos2Verify.VC.code.mutex Require Import create_publication_full_goal.
+Require Import Logic.LogicGenerator.demo932.Interface.
+Local Open Scope Z_scope.
+Local Open Scope sets.
+Local Open Scope string_scope.
+Local Open Scope list.
+Import Snaive_C_Rules.
+From MonadLib Require Import Monad.
+From MonadLib.StateRelMonad Require Export StateRelBasic safeexec_lib.
+Import Monad MonadNotation.
+Local Open Scope monad_scope.
+Require Import Ucos2Verify.lib.stable_glob_vars.
+Require Import Ucos2Verify.lib.ucos2_verify_state_def.
+Require Import Ucos2Verify.lib.ucos2_rules_lib.
+Require Import Ucos2Verify.lib.ucos2_verify_inv.
+Require Import Ucos2Verify.lib.atomic_ops_lib.
+Require Import Ucos2Verify.lib.interrupt.
+Require Import Ucos2Verify.lib.event.
+Require Import Ucos2Verify.lib.event_pool.
+Require Import Ucos2Verify.lib.mutex_create_spec.
+Require Import Ucos2Verify.VC.code.event.spec.event_wait_list_init_spec.
+Require Import Ucos2Verify.VC.code.mutex.spec.mutex_create_call_spec.
+Require Import Ucos2Verify.VC.code.mutex.spec.full_interrupt_localization.
+Require Import Ucos2Verify.VC.code.mutex.spec.mutex_create_publication_full_spec.
+Import UCOS2_C_Rules MutexCreateFull MutexCreateCall MutexCreateSpatial MutexCreateInitialization MutexCreatePrivateContext.
+Import MutexCreatePublicationFull.
+Local Open Scope Z_scope.
+Local Open Scope sac.
+From MonadLib Require Import Monad.
+From MonadLib.StateRelMonad Require Export StateRelBasic safeexec_lib.
+Import Monad MonadNotation.
+Local Open Scope monad_scope.
+Require Import Ucos2Verify.lib.stable_glob_vars.
+Require Import Ucos2Verify.lib.ucos2_verify_state_def.
+Require Import Ucos2Verify.lib.ucos2_rules_lib.
+Require Import Ucos2Verify.lib.ucos2_verify_inv.
+Require Import Ucos2Verify.lib.atomic_ops_lib.
+Require Import Ucos2Verify.lib.interrupt.
+Require Import Ucos2Verify.lib.event.
+Require Import Ucos2Verify.lib.event_pool.
+Require Import Ucos2Verify.lib.mutex_create_spec.
+Require Import Ucos2Verify.VC.code.event.spec.event_wait_list_init_spec.
+Require Import Ucos2Verify.VC.code.mutex.spec.mutex_create_call_spec.
+Require Import Ucos2Verify.VC.code.mutex.spec.full_interrupt_localization.
+Require Import Ucos2Verify.VC.code.mutex.spec.mutex_create_publication_full_spec.
+Import UCOS2_C_Rules MutexCreateFull MutexCreateCall MutexCreateSpatial MutexCreateInitialization MutexCreatePrivateContext.
+Import MutexCreatePublicationFull.
+Local Open Scope Z_scope.
+Local Open Scope sac.
+Local Open Scope sac.
+
+Lemma proof_of_OSMutexCreate_safety_wit_1 : OSMutexCreate_safety_wit_1.
+Proof. Admitted. 
+
+Lemma proof_of_OSMutexCreate_safety_wit_2 : OSMutexCreate_safety_wit_2.
+Proof. Admitted. 
+
+Lemma proof_of_OSMutexCreate_safety_wit_3 : OSMutexCreate_safety_wit_3.
+Proof. Admitted. 
+
+Lemma proof_of_OSMutexCreate_safety_wit_4_priority_enabled : OSMutexCreate_safety_wit_4_priority_enabled.
+Proof. Admitted. 
+
+Lemma proof_of_OSMutexCreate_safety_wit_5_priority_disabled : OSMutexCreate_safety_wit_5_priority_disabled.
+Proof. Admitted. 
+
+Lemma proof_of_OSMutexCreate_safety_wit_6_priority_enabled : OSMutexCreate_safety_wit_6_priority_enabled.
+Proof. Admitted. 
+
+Lemma proof_of_OSMutexCreate_safety_wit_7_priority_disabled : OSMutexCreate_safety_wit_7_priority_disabled.
+Proof. Admitted. 
+
+Lemma proof_of_OSMutexCreate_safety_wit_8_priority_enabled : OSMutexCreate_safety_wit_8_priority_enabled.
+Proof. Admitted. 
+
+Lemma proof_of_OSMutexCreate_safety_wit_9_priority_enabled : OSMutexCreate_safety_wit_9_priority_enabled.
+Proof. Admitted. 
+
+Lemma proof_of_OSMutexCreate_safety_wit_10_priority_enabled : OSMutexCreate_safety_wit_10_priority_enabled.
+Proof. Admitted. 
+
+Lemma proof_of_OSMutexCreate_safety_wit_11_priority_enabled : OSMutexCreate_safety_wit_11_priority_enabled.
+Proof. Admitted. 
+
+Lemma proof_of_OSMutexCreate_safety_wit_12_priority_enabled : OSMutexCreate_safety_wit_12_priority_enabled.
+Proof. Admitted. 
+
+Lemma proof_of_OSMutexCreate_safety_wit_13_priority_disabled : OSMutexCreate_safety_wit_13_priority_disabled.
+Proof. Admitted. 
+
+Lemma proof_of_OSMutexCreate_safety_wit_14_priority_enabled : OSMutexCreate_safety_wit_14_priority_enabled.
+Proof. Admitted. 
+
+Lemma proof_of_OSMutexCreate_safety_wit_15_priority_disabled : OSMutexCreate_safety_wit_15_priority_disabled.
+Proof. Admitted. 
+
+Lemma proof_of_OSMutexCreate_safety_wit_16_priority_enabled : OSMutexCreate_safety_wit_16_priority_enabled.
+Proof. Admitted. 
+
+Lemma proof_of_OSMutexCreate_safety_wit_17_priority_enabled : OSMutexCreate_safety_wit_17_priority_enabled.
+Proof. Admitted. 
+
+Lemma proof_of_OSMutexCreate_safety_wit_18_priority_disabled : OSMutexCreate_safety_wit_18_priority_disabled.
+Proof. Admitted. 
+
+Lemma proof_of_OSMutexCreate_safety_wit_20_priority_disabled : OSMutexCreate_safety_wit_20_priority_disabled.
+Proof. Admitted. 
+
+Lemma proof_of_OSMutexCreate_safety_wit_21_priority_enabled : OSMutexCreate_safety_wit_21_priority_enabled.
+Proof. Admitted. 
+
+Lemma proof_of_OSMutexCreate_safety_wit_22_priority_disabled : OSMutexCreate_safety_wit_22_priority_disabled.
+Proof. Admitted. 
+
+Lemma proof_of_OSMutexCreate_safety_wit_23_priority_enabled : OSMutexCreate_safety_wit_23_priority_enabled.
+Proof. Admitted. 
+
+Lemma proof_of_OSMutexCreate_safety_wit_24_priority_disabled : OSMutexCreate_safety_wit_24_priority_disabled.
+Proof. Admitted. 
+
+Lemma proof_of_OSMutexCreate_safety_wit_25_priority_enabled : OSMutexCreate_safety_wit_25_priority_enabled.
+Proof. Admitted. 
+
+Lemma proof_of_OSMutexCreate_safety_wit_26_priority_disabled : OSMutexCreate_safety_wit_26_priority_disabled.
+Proof. Admitted. 
+
+Lemma proof_of_OSMutexCreate_partial_solve_wit_1 : OSMutexCreate_partial_solve_wit_1.
+Proof. Admitted. 
+
+Lemma proof_of_OSMutexCreate_partial_solve_wit_2 : OSMutexCreate_partial_solve_wit_2.
+Proof. Admitted. 
+
+Lemma proof_of_OSMutexCreate_partial_solve_wit_3 : OSMutexCreate_partial_solve_wit_3.
+Proof. Admitted. 
+
+Lemma proof_of_OSMutexCreate_partial_solve_wit_4 : OSMutexCreate_partial_solve_wit_4.
+Proof. Admitted. 
+
+Lemma proof_of_OSMutexCreate_partial_solve_wit_5 : OSMutexCreate_partial_solve_wit_5.
+Proof. Admitted. 
+
+Lemma proof_of_OSMutexCreate_partial_solve_wit_6 : OSMutexCreate_partial_solve_wit_6.
+Proof. Admitted. 
+
+Lemma proof_of_OSMutexCreate_partial_solve_wit_7 : OSMutexCreate_partial_solve_wit_7.
+Proof. Admitted. 
+
+Lemma proof_of_OSMutexCreate_partial_solve_wit_8_priority_enabled_pure : OSMutexCreate_partial_solve_wit_8_priority_enabled_pure.
+Proof. Admitted. 
+
+Lemma proof_of_OSMutexCreate_partial_solve_wit_8_priority_enabled : OSMutexCreate_partial_solve_wit_8_priority_enabled.
+Proof. Admitted. 
+
+Lemma proof_of_OSMutexCreate_partial_solve_wit_9_priority_disabled_pure : OSMutexCreate_partial_solve_wit_9_priority_disabled_pure.
+Proof. Admitted. 
+
+Lemma proof_of_OSMutexCreate_partial_solve_wit_9_priority_disabled : OSMutexCreate_partial_solve_wit_9_priority_disabled.
+Proof. Admitted. 
+
+Lemma proof_of_OSMutexCreate_partial_solve_wit_10_priority_disabled : OSMutexCreate_partial_solve_wit_10_priority_disabled.
+Proof. Admitted. 
+
+Lemma proof_of_OSMutexCreate_partial_solve_wit_11_priority_enabled : OSMutexCreate_partial_solve_wit_11_priority_enabled.
+Proof. Admitted. 
+
+Lemma proof_of_OSMutexCreate_partial_solve_wit_12_priority_enabled : OSMutexCreate_partial_solve_wit_12_priority_enabled.
+Proof. Admitted. 
+
+Lemma proof_of_OSMutexCreate_partial_solve_wit_13_priority_disabled : OSMutexCreate_partial_solve_wit_13_priority_disabled.
+Proof. Admitted. 
+
+Lemma proof_of_OSMutexCreate_partial_solve_wit_14_priority_disabled_pure : OSMutexCreate_partial_solve_wit_14_priority_disabled_pure.
+Proof. Admitted. 
+
+Lemma proof_of_OSMutexCreate_partial_solve_wit_14_priority_disabled : OSMutexCreate_partial_solve_wit_14_priority_disabled.
+Proof. Admitted. 
+
+Lemma proof_of_OSMutexCreate_partial_solve_wit_15_priority_enabled_pure : OSMutexCreate_partial_solve_wit_15_priority_enabled_pure.
+Proof. Admitted. 
+
+Lemma proof_of_OSMutexCreate_partial_solve_wit_15_priority_enabled : OSMutexCreate_partial_solve_wit_15_priority_enabled.
+Proof. Admitted. 
+
+Lemma proof_of_OSMutexCreate_partial_solve_wit_16_priority_enabled_pure : OSMutexCreate_partial_solve_wit_16_priority_enabled_pure.
+Proof. Admitted. 
+
+Lemma proof_of_OSMutexCreate_partial_solve_wit_16_priority_enabled : OSMutexCreate_partial_solve_wit_16_priority_enabled.
+Proof. Admitted. 
+
+Lemma proof_of_OSMutexCreate_partial_solve_wit_17_priority_enabled_pure : OSMutexCreate_partial_solve_wit_17_priority_enabled_pure.
+Proof. Admitted. 
+
+Lemma proof_of_OSMutexCreate_partial_solve_wit_17_priority_enabled : OSMutexCreate_partial_solve_wit_17_priority_enabled.
+Proof. Admitted. 
+
+Lemma proof_of_OSMutexCreate_partial_solve_wit_18_priority_enabled_pure : OSMutexCreate_partial_solve_wit_18_priority_enabled_pure.
+Proof. Admitted. 
+
+Lemma proof_of_OSMutexCreate_partial_solve_wit_18_priority_enabled : OSMutexCreate_partial_solve_wit_18_priority_enabled.
+Proof. Admitted. 
+
+Lemma proof_of_OSMutexCreate_partial_solve_wit_19_priority_enabled_pure : OSMutexCreate_partial_solve_wit_19_priority_enabled_pure.
+Proof. Admitted. 
+
+Lemma proof_of_OSMutexCreate_partial_solve_wit_19_priority_enabled : OSMutexCreate_partial_solve_wit_19_priority_enabled.
+Proof. Admitted. 
+
+Lemma proof_of_OSMutexCreate_partial_solve_wit_20_priority_disabled_pure : OSMutexCreate_partial_solve_wit_20_priority_disabled_pure.
+Proof. Admitted. 
+
+Lemma proof_of_OSMutexCreate_partial_solve_wit_20_priority_disabled : OSMutexCreate_partial_solve_wit_20_priority_disabled.
+Proof. Admitted. 
+
+Lemma proof_of_OSMutexCreate_partial_solve_wit_21_priority_enabled_pure : OSMutexCreate_partial_solve_wit_21_priority_enabled_pure.
+Proof. Admitted. 
+
+Lemma proof_of_OSMutexCreate_partial_solve_wit_21_priority_enabled : OSMutexCreate_partial_solve_wit_21_priority_enabled.
+Proof. Admitted. 
+
+Lemma proof_of_OSMutexCreate_partial_solve_wit_22_priority_enabled_pure : OSMutexCreate_partial_solve_wit_22_priority_enabled_pure.
+Proof. Admitted. 
+
+Lemma proof_of_OSMutexCreate_partial_solve_wit_22_priority_enabled : OSMutexCreate_partial_solve_wit_22_priority_enabled.
+Proof. Admitted. 
+
+Lemma proof_of_OSMutexCreate_partial_solve_wit_23_priority_disabled_pure : OSMutexCreate_partial_solve_wit_23_priority_disabled_pure.
+Proof. Admitted. 
+
+Lemma proof_of_OSMutexCreate_partial_solve_wit_23_priority_disabled : OSMutexCreate_partial_solve_wit_23_priority_disabled.
+Proof. Admitted. 
+
+Lemma proof_of_OSMutexCreate_partial_solve_wit_24_priority_disabled_pure : OSMutexCreate_partial_solve_wit_24_priority_disabled_pure.
+Proof. Admitted. 
+
+Lemma proof_of_OSMutexCreate_partial_solve_wit_24_priority_disabled : OSMutexCreate_partial_solve_wit_24_priority_disabled.
+Proof. Admitted. 
+
+Lemma proof_of_OSMutexCreate_partial_solve_wit_25_priority_enabled_pure : OSMutexCreate_partial_solve_wit_25_priority_enabled_pure.
+Proof. Admitted. 
+
+Lemma proof_of_OSMutexCreate_partial_solve_wit_25_priority_enabled : OSMutexCreate_partial_solve_wit_25_priority_enabled.
+Proof. Admitted. 
+
+Lemma proof_of_OSMutexCreate_partial_solve_wit_26_priority_enabled_pure : OSMutexCreate_partial_solve_wit_26_priority_enabled_pure.
+Proof. Admitted. 
+
+Lemma proof_of_OSMutexCreate_partial_solve_wit_26_priority_enabled : OSMutexCreate_partial_solve_wit_26_priority_enabled.
+Proof. Admitted. 
+
+Lemma proof_of_OSMutexCreate_partial_solve_wit_27_priority_disabled_pure : OSMutexCreate_partial_solve_wit_27_priority_disabled_pure.
+Proof. Admitted. 
+
+Lemma proof_of_OSMutexCreate_partial_solve_wit_27_priority_disabled : OSMutexCreate_partial_solve_wit_27_priority_disabled.
+Proof. Admitted. 
+
+Lemma proof_of_OSMutexCreate_partial_solve_wit_28_priority_disabled_pure : OSMutexCreate_partial_solve_wit_28_priority_disabled_pure.
+Proof. Admitted. 
+
+Lemma proof_of_OSMutexCreate_partial_solve_wit_28_priority_disabled : OSMutexCreate_partial_solve_wit_28_priority_disabled.
+Proof. Admitted. 
+
+Lemma proof_of_OSMutexCreate_partial_solve_wit_29_priority_enabled_pure : OSMutexCreate_partial_solve_wit_29_priority_enabled_pure.
+Proof. Admitted. 
+
+Lemma proof_of_OSMutexCreate_partial_solve_wit_29_priority_enabled : OSMutexCreate_partial_solve_wit_29_priority_enabled.
+Proof. Admitted. 
+
+Lemma proof_of_OSMutexCreate_partial_solve_wit_30_priority_enabled : OSMutexCreate_partial_solve_wit_30_priority_enabled.
+Proof. Admitted. 
+
+Lemma proof_of_OSMutexCreate_partial_solve_wit_31_priority_disabled : OSMutexCreate_partial_solve_wit_31_priority_disabled.
+Proof. Admitted. 
+
+Lemma proof_of_OSMutexCreate_partial_solve_wit_32_priority_disabled_pure : OSMutexCreate_partial_solve_wit_32_priority_disabled_pure.
+Proof. Admitted. 
+
+Lemma proof_of_OSMutexCreate_partial_solve_wit_32_priority_disabled : OSMutexCreate_partial_solve_wit_32_priority_disabled.
+Proof. Admitted. 
+
+Lemma proof_of_OSMutexCreate_partial_solve_wit_33_priority_enabled_pure : OSMutexCreate_partial_solve_wit_33_priority_enabled_pure.
+Proof. Admitted. 
+
+Lemma proof_of_OSMutexCreate_partial_solve_wit_33_priority_enabled : OSMutexCreate_partial_solve_wit_33_priority_enabled.
+Proof. Admitted. 
+
+Lemma proof_of_OSMutexCreate_partial_solve_wit_34_priority_enabled : OSMutexCreate_partial_solve_wit_34_priority_enabled.
+Proof. Admitted. 
+
+Lemma proof_of_OSMutexCreate_partial_solve_wit_35_priority_disabled : OSMutexCreate_partial_solve_wit_35_priority_disabled.
+Proof. Admitted. 
+
+Lemma proof_of_OSMutexCreate_partial_solve_wit_36_priority_disabled : OSMutexCreate_partial_solve_wit_36_priority_disabled.
+Proof. Admitted. 
+
+Lemma proof_of_OSMutexCreate_partial_solve_wit_37_priority_enabled : OSMutexCreate_partial_solve_wit_37_priority_enabled.
+Proof. Admitted. 
+
+Lemma proof_of_OSMutexCreate_partial_solve_wit_38_priority_enabled_pure : OSMutexCreate_partial_solve_wit_38_priority_enabled_pure.
+Proof. Admitted. 
+
+Lemma proof_of_OSMutexCreate_partial_solve_wit_38_priority_enabled : OSMutexCreate_partial_solve_wit_38_priority_enabled.
+Proof. Admitted. 
+
+Lemma proof_of_OSMutexCreate_partial_solve_wit_39_priority_disabled_pure : OSMutexCreate_partial_solve_wit_39_priority_disabled_pure.
+Proof. Admitted. 
+
+Lemma proof_of_OSMutexCreate_partial_solve_wit_39_priority_disabled : OSMutexCreate_partial_solve_wit_39_priority_disabled.
+Proof. Admitted. 
+

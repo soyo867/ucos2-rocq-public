@@ -1,0 +1,27 @@
+--- a/Source/os_task.c
++++ b/Source/os_task.c
+@@ -453,6 +453,7 @@
+     OS_FLAG_NODE *pnode;
+ #endif
+     OS_TCB       *ptcb;
++    BOOLEAN       lock_added;
+ #if OS_CRITICAL_METHOD == 3u                            /* Allocate storage for CPU status register    */
+     OS_CPU_SR     cpu_sr = 0u;
+ #endif
+@@ -521,13 +522,15 @@
+     ptcb->OSTCBDly      = 0u;                           /* Prevent OSTimeTick() from updating          */
+     ptcb->OSTCBStat     = OS_STAT_RDY;                  /* Prevent task from being resumed             */
+     ptcb->OSTCBStatPend = OS_STAT_PEND_OK;
++    lock_added          = OS_FALSE;
+     if (OSLockNesting < 255u) {                         /* Make sure we don't context switch           */
+         OSLockNesting++;
++        lock_added = OS_TRUE;
+     }
+     OS_EXIT_CRITICAL();                                 /* Enabling INT. ignores next instruc.         */
+     OS_Dummy();                                         /* ... Dummy ensures that INTs will be         */
+     OS_ENTER_CRITICAL();                                /* ... disabled HERE!                          */
+-    if (OSLockNesting > 0u) {                           /* Remove context switch lock                  */
++    if ((lock_added == OS_TRUE) && (OSLockNesting > 0u)) { /* Release only this call's added lock        */
+         OSLockNesting--;
+     }
+     OSTaskDelHook(ptcb);                                /* Call user defined hook                      */

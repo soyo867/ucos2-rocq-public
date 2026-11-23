@@ -1,0 +1,17 @@
+--- a/Source/os_flag.c
++++ b/Source/os_flag.c
+@@ -362,6 +362,14 @@
+         return (pgrp);
+     }
+     OS_ENTER_CRITICAL();
++    /* Another task may have deleted this group before interrupts were masked. */
++    if (((opt == OS_DEL_NO_PEND) || (opt == OS_DEL_ALWAYS)) &&
++        (pgrp->OSFlagType != OS_EVENT_TYPE_FLAG)) {
++        OS_EXIT_CRITICAL();
++        *perr = OS_ERR_EVENT_TYPE;
++        OS_TRACE_FLAG_DEL_EXIT(*perr);
++        return (pgrp);
++    }
+     if (pgrp->OSFlagWaitList != (void *)0) {               /* See if any tasks waiting on event flags  */
+         tasks_waiting = OS_TRUE;                           /* Yes                                      */
+     } else {

@@ -1,0 +1,12 @@
+--- a/Source/os_task.c
++++ b/Source/os_task.c
+@@ -169,6 +169,9 @@
+     ptcb->OSTCBX    = x_new;
+     ptcb->OSTCBBitY = bity_new;
+     ptcb->OSTCBBitX = bitx_new;
++    if (ptcb == OSTCBCur) {
++        OSPrioCur = newprio;
++    }
+     OS_EXIT_CRITICAL();
+     if (OSRunning == OS_TRUE) {
+         OS_Sched();                                         /* Find new highest priority task          */

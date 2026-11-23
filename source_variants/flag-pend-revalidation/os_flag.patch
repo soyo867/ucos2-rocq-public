@@ -1,0 +1,20 @@
+--- a/Source/os_flag.c
++++ b/Source/os_flag.c
+@@ -673,6 +673,17 @@
+     }
+ 
+     OS_ENTER_CRITICAL();
++    /* A task may delete the group before this first protected observation. */
++    if (((wait_type == OS_FLAG_WAIT_SET_ALL) || (wait_type == OS_FLAG_WAIT_SET_ANY)
++#if OS_FLAG_WAIT_CLR_EN > 0u
++         || (wait_type == OS_FLAG_WAIT_CLR_ALL) || (wait_type == OS_FLAG_WAIT_CLR_ANY)
++#endif
++        ) && (pgrp->OSFlagType != OS_EVENT_TYPE_FLAG)) {
++        OS_EXIT_CRITICAL();
++        *perr = OS_ERR_EVENT_TYPE;
++        OS_TRACE_FLAG_PEND_EXIT(*perr);
++        return ((OS_FLAGS)0);
++    }
+     switch (wait_type) {
+         case OS_FLAG_WAIT_SET_ALL:                         /* See if all required flags are set        */
+              flags_rdy = (OS_FLAGS)(pgrp->OSFlagFlags & flags);   /* Extract only the bits we want     */

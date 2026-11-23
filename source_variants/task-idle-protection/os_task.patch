@@ -1,0 +1,14 @@
+--- a/Source/os_task.c
++++ b/Source/os_task.c
+@@ -1029,6 +1029,11 @@
+     } else {
+         self = OS_FALSE;                                        /* No suspending another task          */
+     }
++    /* SELF must obey the same Idle protection as an explicit priority. */
++    if (prio == OS_TASK_IDLE_PRIO) {
++        OS_EXIT_CRITICAL();
++        return (OS_ERR_TASK_SUSPEND_IDLE);
++    }
+     ptcb = OSTCBPrioTbl[prio];
+     if (ptcb == (OS_TCB *)0) {                                  /* Task to suspend must exist          */
+         OS_EXIT_CRITICAL();

@@ -1,0 +1,48 @@
+--- a/Source/os_core.c
++++ b/Source/os_core.c
+@@ -1878,7 +1878,9 @@
+ #if OS_TASK_STAT_EN > 0u
+ void  OS_TaskStat (void *p_arg)
+ {
+-    INT8S  usage;
++    INT32U idle_pct;
++    INT32U idle_max;
++    INT32U idle_run;
+ #if OS_CRITICAL_METHOD == 3u                     /* Allocate storage for CPU status register           */
+     OS_CPU_SR  cpu_sr = 0u;
+ #endif
+@@ -1890,7 +1892,7 @@
+         OSTimeDly(2u * OS_TICKS_PER_SEC / 10u);  /* Wait until statistic task is ready                 */
+     }
+     OSIdleCtrMax /= 100uL;
+-    if (OSIdleCtrMax == 0uL) {
++    while (OSIdleCtrMax == 0uL) {
+         OSCPUUsage = 0u;
+ #if OS_TASK_SUSPEND_EN > 0u
+         (void)OSTaskSuspend(OS_PRIO_SELF);
+@@ -1914,14 +1916,20 @@
+ 
+         OS_ENTER_CRITICAL();
+         OSIdleCtrRun = OSIdleCtr;                /* Store number of cycles which elapsed while idle    */
++        idle_run     = OSIdleCtrRun;
++        idle_max     = OSIdleCtrMax;
+         OS_EXIT_CRITICAL();
+ 
+-        usage            = 100 - (INT8S)(OSIdleCtrRun / OSIdleCtrMax);
+-        if (usage >= 0) {                        /* Make sure we don't have a negative percentage      */
+-            OSCPUUsage   = (INT8U)usage;
++        if (idle_max == 0uL) {                  /* Recalibration must not introduce a zero divisor    */
++            OSCPUUsage = 0u;
+         } else {
+-            OSCPUUsage   = 0u;
+-            OSIdleCtrMax = OSIdleCtrRun / 100uL; /* Update max counter value to current one            */
++            idle_pct = idle_run / idle_max;
++            if (idle_pct <= 100uL) {
++                OSCPUUsage = (INT8U)(100uL - idle_pct);
++            } else {
++                OSCPUUsage   = 0u;
++                OSIdleCtrMax = idle_run / 100uL; /* Update from the same sampled counter              */
++            }
+         }
+ 
+         OSTaskStatHook();                        /* Invoke user definable hook                         */

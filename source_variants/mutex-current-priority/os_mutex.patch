@@ -1,0 +1,13 @@
+--- a/Source/os_mutex.c
++++ b/Source/os_mutex.c
+@@ -797,7 +797,9 @@
+         OSRdyGrp &= (OS_PRIO)~ptcb->OSTCBBitY;
+     }
+     ptcb->OSTCBPrio         = prio;
+-    OSPrioCur               = prio;                        /* The current task is now at this priority */
++    if (ptcb == OSTCBCur) {
++        OSPrioCur = prio;
++    }
+ #if OS_LOWEST_PRIO <= 63u
+     ptcb->OSTCBY            = (INT8U)((INT8U)(prio >> 3u) & 0x07u);
+     ptcb->OSTCBX            = (INT8U)(prio & 0x07u);

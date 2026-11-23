@@ -1,0 +1,371 @@
+Require Import Coq.ZArith.ZArith.
+Require Import Coq.Bool.Bool.
+Require Import Coq.Strings.String.
+Require Import Coq.Strings.Ascii.
+Require Import Coq.Lists.List.
+Require Import Coq.Classes.RelationClasses.
+Require Import Coq.Classes.Morphisms.
+Require Import Coq.micromega.Psatz.
+Require Import Coq.Sorting.Permutation.
+From AUXLib Require Import int_auto Axioms Feq Idents ListLib VMap.
+Require Import SetsClass.SetsClass. Import SetsNotation.
+From SimpleC.SL Require Import Mem SeparationLogic.
+From Ucos2Verify.VC.code.task Require Import task_del_goal.
+From Ucos2Verify.VC.code.task Require Import task_del_proof_auto.
+Require Import Logic.LogicGenerator.demo932.Interface.
+Local Open Scope Z_scope.
+Local Open Scope sets.
+Local Open Scope string_scope.
+Local Open Scope list.
+Import Snaive_C_Rules.
+Require Import Ucos2Verify.VC.code.task.spec.task_del_api_spec Ucos2Verify.VC.code.sched.spec.sched_continuation_history_spec.
+Require Import Ucos2Verify.lib.ucos2_verify_state_def Ucos2Verify.lib.stable_glob_vars Ucos2Verify.lib.ucos2_verify_inv Ucos2Verify.lib.ucos2_rules_lib Ucos2Verify.lib.task Ucos2Verify.lib.task_storage Ucos2Verify.lib.task_retirement Ucos2Verify.lib.interrupt Ucos2Verify.lib.kernel_program_storage.
+Require Import Ucos2Verify.VC.code.sched.spec.sched_spec Ucos2Verify.VC.code.sched.spec.kernel_call_save_heap_spec Ucos2Verify.VC.code.task.spec.task_tcb_init_stack_interface_spec.
+Import TaskStateDef SchedStateDef UCOS2_C_Rules ListNotations.
+Local Open Scope sac.
+
+Lemma proof_of_OSTaskDel_entail_wit_1_7_split_goal_spatial : OSTaskDel_entail_wit_1_7_split_goal_spatial.
+Proof. Abort.
+
+Lemma proof_of_OSTaskDel_entail_wit_1_8_split_goal_spatial : OSTaskDel_entail_wit_1_8_split_goal_spatial.
+Proof. Abort.
+
+Lemma proof_of_OSTaskDel_entail_wit_1_9_split_goal_spatial : OSTaskDel_entail_wit_1_9_split_goal_spatial.
+Proof. Abort.
+
+Lemma proof_of_OSTaskDel_entail_wit_1_10_split_goal_spatial : OSTaskDel_entail_wit_1_10_split_goal_spatial.
+Proof. Abort.
+
+Lemma proof_of_OSTaskDel_entail_wit_1_11_split_goal_spatial : OSTaskDel_entail_wit_1_11_split_goal_spatial.
+Proof. Abort.
+
+Lemma proof_of_OSTaskDel_entail_wit_1_12_split_goal_spatial : OSTaskDel_entail_wit_1_12_split_goal_spatial.
+Proof. Abort.
+
+Lemma proof_of_OSTaskDel_entail_wit_2_2_split_goal_spatial : OSTaskDel_entail_wit_2_2_split_goal_spatial.
+Proof. Abort.
+
+Lemma proof_of_OSTaskDel_entail_wit_3_1_split_goal_1 : OSTaskDel_entail_wit_3_1_split_goal_1.
+Proof. Abort.
+
+Lemma proof_of_OSTaskDel_entail_wit_3_2_split_goal_1 : OSTaskDel_entail_wit_3_2_split_goal_1.
+Proof. Abort.
+
+Lemma proof_of_OSTaskDel_return_wit_7_split_goal_spatial : OSTaskDel_return_wit_7_split_goal_spatial.
+Proof. Abort.
+
+Lemma proof_of_OSTaskDel_return_wit_8_split_goal_spatial : OSTaskDel_return_wit_8_split_goal_spatial.
+Proof. Abort.
+
+Lemma proof_of_OSTaskDel_return_wit_9_split_goal_spatial : OSTaskDel_return_wit_9_split_goal_spatial.
+Proof. Abort.
+
+Lemma proof_of_OSTaskDel_return_wit_10_split_goal_spatial : OSTaskDel_return_wit_10_split_goal_spatial.
+Proof. Abort.
+
+Lemma proof_of_OSTaskDel_return_wit_11_split_goal_spatial : OSTaskDel_return_wit_11_split_goal_spatial.
+Proof. Abort.
+
+Lemma proof_of_OSTaskDel_return_wit_12_split_goal_spatial : OSTaskDel_return_wit_12_split_goal_spatial.
+Proof. Abort.
+
+Lemma proof_of_OSTaskDel_return_wit_13_split_goal_spatial : OSTaskDel_return_wit_13_split_goal_spatial.
+Proof. Abort.
+
+Lemma proof_of_OSTaskDel_return_wit_14_split_goal_spatial : OSTaskDel_return_wit_14_split_goal_spatial.
+Proof. Abort.
+
+Lemma proof_of_OSTaskDel_return_wit_15_split_goal_spatial : OSTaskDel_return_wit_15_split_goal_spatial.
+Proof. Abort.
+
+Lemma proof_of_OSTaskDel_return_wit_16_split_goal_spatial : OSTaskDel_return_wit_16_split_goal_spatial.
+Proof. Abort.
+
+Lemma proof_of_OSTaskDel_return_wit_17_split_goal_spatial : OSTaskDel_return_wit_17_split_goal_spatial.
+Proof. Abort.
+
+Lemma proof_of_OSTaskDel_return_wit_18_split_goal_spatial : OSTaskDel_return_wit_18_split_goal_spatial.
+Proof. Abort.
+
+Lemma proof_of_OSTaskDel_return_wit_19_split_goal_spatial : OSTaskDel_return_wit_19_split_goal_spatial.
+Proof. Abort.
+
+Lemma proof_of_OSTaskDel_return_wit_20_split_goal_spatial : OSTaskDel_return_wit_20_split_goal_spatial.
+Proof. Abort.
+
+Lemma proof_of_OSTaskDel_return_wit_21_split_goal_spatial : OSTaskDel_return_wit_21_split_goal_spatial.
+Proof. Abort.
+
+Lemma proof_of_OSTaskDel_partial_solve_wit_2_pure_split_goal_1 : OSTaskDel_partial_solve_wit_2_pure_split_goal_1.
+Proof. Abort.
+
+Lemma proof_of_OSTaskDel_partial_solve_wit_2_pure_split_goal_2 : OSTaskDel_partial_solve_wit_2_pure_split_goal_2.
+Proof. Abort.
+
+Lemma proof_of_OSTaskDel_partial_solve_wit_3_pure_split_goal_1 : OSTaskDel_partial_solve_wit_3_pure_split_goal_1.
+Proof. Abort.
+
+Lemma proof_of_OSTaskDel_partial_solve_wit_3_pure_split_goal_2 : OSTaskDel_partial_solve_wit_3_pure_split_goal_2.
+Proof. Abort.
+
+Lemma proof_of_OSTaskDel_partial_solve_wit_15_pure_split_goal_1 : OSTaskDel_partial_solve_wit_15_pure_split_goal_1.
+Proof. Abort.
+
+Lemma proof_of_OSTaskDel_partial_solve_wit_15_pure_split_goal_2 : OSTaskDel_partial_solve_wit_15_pure_split_goal_2.
+Proof. Abort.
+
+Lemma proof_of_OSTaskDel_partial_solve_wit_15_pure_split_goal_3 : OSTaskDel_partial_solve_wit_15_pure_split_goal_3.
+Proof. Abort.
+
+Lemma proof_of_OSTaskDel_partial_solve_wit_15_pure_split_goal_4 : OSTaskDel_partial_solve_wit_15_pure_split_goal_4.
+Proof. Abort.
+
+Lemma proof_of_OSTaskDel_partial_solve_wit_16_pure_split_goal_1 : OSTaskDel_partial_solve_wit_16_pure_split_goal_1.
+Proof. Abort.
+
+Lemma proof_of_OSTaskDel_partial_solve_wit_16_pure_split_goal_2 : OSTaskDel_partial_solve_wit_16_pure_split_goal_2.
+Proof. Abort.
+
+Lemma proof_of_OSTaskDel_partial_solve_wit_16_pure_split_goal_3 : OSTaskDel_partial_solve_wit_16_pure_split_goal_3.
+Proof. Abort.
+
+Lemma proof_of_OSTaskDel_partial_solve_wit_16_pure_split_goal_4 : OSTaskDel_partial_solve_wit_16_pure_split_goal_4.
+Proof. Abort.
+
+Lemma proof_of_OSTaskDel_partial_solve_wit_17_pure_split_goal_1 : OSTaskDel_partial_solve_wit_17_pure_split_goal_1.
+Proof. Abort.
+
+Lemma proof_of_OSTaskDel_partial_solve_wit_17_pure_split_goal_2 : OSTaskDel_partial_solve_wit_17_pure_split_goal_2.
+Proof. Abort.
+
+Lemma proof_of_OSTaskDel_partial_solve_wit_39_pure_split_goal_1 : OSTaskDel_partial_solve_wit_39_pure_split_goal_1.
+Proof. Abort.
+
+Lemma proof_of_OSTaskDel_partial_solve_wit_39_pure_split_goal_2 : OSTaskDel_partial_solve_wit_39_pure_split_goal_2.
+Proof. Abort.
+
+Lemma proof_of_OSTaskDel_partial_solve_wit_40_pure_split_goal_1 : OSTaskDel_partial_solve_wit_40_pure_split_goal_1.
+Proof. Abort.
+
+Lemma proof_of_OSTaskDel_partial_solve_wit_40_pure_split_goal_2 : OSTaskDel_partial_solve_wit_40_pure_split_goal_2.
+Proof. Abort.
+
+Lemma proof_of_OSTaskDel_partial_solve_wit_41_pure_split_goal_1 : OSTaskDel_partial_solve_wit_41_pure_split_goal_1.
+Proof. Abort.
+
+Lemma proof_of_OSTaskDel_partial_solve_wit_41_pure_split_goal_2 : OSTaskDel_partial_solve_wit_41_pure_split_goal_2.
+Proof. Abort.
+
+Lemma proof_of_OSTaskDel_partial_solve_wit_42_pure_split_goal_1 : OSTaskDel_partial_solve_wit_42_pure_split_goal_1.
+Proof. Abort.
+
+Lemma proof_of_OSTaskDel_partial_solve_wit_42_pure_split_goal_2 : OSTaskDel_partial_solve_wit_42_pure_split_goal_2.
+Proof. Abort.
+
+Lemma proof_of_OSTaskDel_partial_solve_wit_43_pure_split_goal_1 : OSTaskDel_partial_solve_wit_43_pure_split_goal_1.
+Proof. Abort.
+
+Lemma proof_of_OSTaskDel_partial_solve_wit_43_pure_split_goal_2 : OSTaskDel_partial_solve_wit_43_pure_split_goal_2.
+Proof. Abort.
+
+Lemma proof_of_OSTaskDel_partial_solve_wit_44_pure_split_goal_1 : OSTaskDel_partial_solve_wit_44_pure_split_goal_1.
+Proof. Abort.
+
+Lemma proof_of_OSTaskDel_partial_solve_wit_44_pure_split_goal_2 : OSTaskDel_partial_solve_wit_44_pure_split_goal_2.
+Proof. Abort.
+
+Lemma proof_of_OSTaskDel_partial_solve_wit_74_pure_split_goal_1 : OSTaskDel_partial_solve_wit_74_pure_split_goal_1.
+Proof. Abort.
+
+Lemma proof_of_OSTaskDel_partial_solve_wit_75_pure_split_goal_1 : OSTaskDel_partial_solve_wit_75_pure_split_goal_1.
+Proof. Abort.
+
+Lemma proof_of_OSTaskDel_partial_solve_wit_84_pure_split_goal_1 : OSTaskDel_partial_solve_wit_84_pure_split_goal_1.
+Proof. Abort.
+
+Lemma proof_of_OSTaskDel_partial_solve_wit_85_pure_split_goal_1 : OSTaskDel_partial_solve_wit_85_pure_split_goal_1.
+Proof. Abort.
+
+Lemma proof_of_OSTaskDel_partial_solve_wit_86_pure_split_goal_1 : OSTaskDel_partial_solve_wit_86_pure_split_goal_1.
+Proof. Abort.
+
+Lemma proof_of_OSTaskDel_partial_solve_wit_105_pure_split_goal_1 : OSTaskDel_partial_solve_wit_105_pure_split_goal_1.
+Proof. Abort.
+
+Lemma proof_of_OSTaskDel_partial_solve_wit_105_pure_split_goal_2 : OSTaskDel_partial_solve_wit_105_pure_split_goal_2.
+Proof. Abort.
+
+Lemma proof_of_OSTaskDel_partial_solve_wit_105_pure_split_goal_3 : OSTaskDel_partial_solve_wit_105_pure_split_goal_3.
+Proof. Abort.
+
+Lemma proof_of_OSTaskDel_partial_solve_wit_106_pure_split_goal_1 : OSTaskDel_partial_solve_wit_106_pure_split_goal_1.
+Proof. Abort.
+
+Lemma proof_of_OSTaskDel_partial_solve_wit_106_pure_split_goal_2 : OSTaskDel_partial_solve_wit_106_pure_split_goal_2.
+Proof. Abort.
+
+Lemma proof_of_OSTaskDel_partial_solve_wit_106_pure_split_goal_3 : OSTaskDel_partial_solve_wit_106_pure_split_goal_3.
+Proof. Abort.
+
+Lemma proof_of_OSTaskDel_partial_solve_wit_107_pure_split_goal_1 : OSTaskDel_partial_solve_wit_107_pure_split_goal_1.
+Proof. Abort.
+
+Lemma proof_of_OSTaskDel_partial_solve_wit_107_pure_split_goal_2 : OSTaskDel_partial_solve_wit_107_pure_split_goal_2.
+Proof. Abort.
+
+Lemma proof_of_OSTaskDel_partial_solve_wit_107_pure_split_goal_3 : OSTaskDel_partial_solve_wit_107_pure_split_goal_3.
+Proof. Abort.
+
+Lemma proof_of_OSTaskDel_partial_solve_wit_108_pure_split_goal_1 : OSTaskDel_partial_solve_wit_108_pure_split_goal_1.
+Proof. Abort.
+
+Lemma proof_of_OSTaskDel_partial_solve_wit_108_pure_split_goal_2 : OSTaskDel_partial_solve_wit_108_pure_split_goal_2.
+Proof. Abort.
+
+Lemma proof_of_OSTaskDel_partial_solve_wit_108_pure_split_goal_3 : OSTaskDel_partial_solve_wit_108_pure_split_goal_3.
+Proof. Abort.
+
+Lemma proof_of_OSTaskDel_partial_solve_wit_109_pure_split_goal_1 : OSTaskDel_partial_solve_wit_109_pure_split_goal_1.
+Proof. Abort.
+
+Lemma proof_of_OSTaskDel_partial_solve_wit_109_pure_split_goal_2 : OSTaskDel_partial_solve_wit_109_pure_split_goal_2.
+Proof. Abort.
+
+Lemma proof_of_OSTaskDel_partial_solve_wit_109_pure_split_goal_3 : OSTaskDel_partial_solve_wit_109_pure_split_goal_3.
+Proof. Abort.
+
+Lemma proof_of_OSTaskDel_partial_solve_wit_110_pure_split_goal_1 : OSTaskDel_partial_solve_wit_110_pure_split_goal_1.
+Proof. Abort.
+
+Lemma proof_of_OSTaskDel_partial_solve_wit_110_pure_split_goal_2 : OSTaskDel_partial_solve_wit_110_pure_split_goal_2.
+Proof. Abort.
+
+Lemma proof_of_OSTaskDel_partial_solve_wit_110_pure_split_goal_3 : OSTaskDel_partial_solve_wit_110_pure_split_goal_3.
+Proof. Abort.
+
+Lemma proof_of_OSTaskDel_partial_solve_wit_135_pure_split_goal_1 : OSTaskDel_partial_solve_wit_135_pure_split_goal_1.
+Proof. Abort.
+
+Lemma proof_of_OSTaskDel_partial_solve_wit_136_pure_split_goal_1 : OSTaskDel_partial_solve_wit_136_pure_split_goal_1.
+Proof. Abort.
+
+Lemma proof_of_OSTaskDel_partial_solve_wit_137_pure_split_goal_1 : OSTaskDel_partial_solve_wit_137_pure_split_goal_1.
+Proof. Abort.
+
+Lemma proof_of_OSTaskDel_partial_solve_wit_138_pure_split_goal_1 : OSTaskDel_partial_solve_wit_138_pure_split_goal_1.
+Proof. Abort.
+
+Lemma proof_of_OSTaskDel_partial_solve_wit_139_pure_split_goal_1 : OSTaskDel_partial_solve_wit_139_pure_split_goal_1.
+Proof. Abort.
+
+Lemma proof_of_OSTaskDel_partial_solve_wit_140_pure_split_goal_1 : OSTaskDel_partial_solve_wit_140_pure_split_goal_1.
+Proof. Abort.
+
+Lemma proof_of_OSTaskDel_which_implies_wit_1_split_goal_1 : OSTaskDel_which_implies_wit_1_split_goal_1.
+Proof. Abort.
+
+Lemma proof_of_OSTaskDel_which_implies_wit_1_split_goal_spatial : OSTaskDel_which_implies_wit_1_split_goal_spatial.
+Proof. Abort.
+
+Lemma proof_of_OSTaskDel_which_implies_wit_2_split_goal_1 : OSTaskDel_which_implies_wit_2_split_goal_1.
+Proof. Abort.
+
+Lemma proof_of_OSTaskDel_which_implies_wit_2_split_goal_2 : OSTaskDel_which_implies_wit_2_split_goal_2.
+Proof. Abort.
+
+Lemma proof_of_OSTaskDel_which_implies_wit_2_split_goal_3 : OSTaskDel_which_implies_wit_2_split_goal_3.
+Proof. Abort.
+
+Lemma proof_of_OSTaskDel_which_implies_wit_2_split_goal_4 : OSTaskDel_which_implies_wit_2_split_goal_4.
+Proof. Abort.
+
+Lemma proof_of_OSTaskDel_which_implies_wit_2_split_goal_5 : OSTaskDel_which_implies_wit_2_split_goal_5.
+Proof. Abort.
+
+Lemma proof_of_OSTaskDel_which_implies_wit_2_split_goal_spatial : OSTaskDel_which_implies_wit_2_split_goal_spatial.
+Proof. Abort.
+
+Lemma proof_of_OSTaskDel_which_implies_wit_6_split_goal_1 : OSTaskDel_which_implies_wit_6_split_goal_1.
+Proof. Abort.
+
+Lemma proof_of_OSTaskDel_which_implies_wit_6_split_goal_spatial : OSTaskDel_which_implies_wit_6_split_goal_spatial.
+Proof. Abort.
+
+Lemma proof_of_OSTaskDel_which_implies_wit_8_split_goal_spatial : OSTaskDel_which_implies_wit_8_split_goal_spatial.
+Proof. Abort.
+
+Lemma proof_of_OSTaskDel_which_implies_wit_9_split_goal_spatial : OSTaskDel_which_implies_wit_9_split_goal_spatial.
+Proof. Abort.
+
+Lemma proof_of_OSTaskDel_which_implies_wit_10_split_goal_spatial : OSTaskDel_which_implies_wit_10_split_goal_spatial.
+Proof. Abort.
+
+Lemma proof_of_OSTaskDel_which_implies_wit_11_split_goal_spatial : OSTaskDel_which_implies_wit_11_split_goal_spatial.
+Proof. Abort.
+
+Lemma proof_of_OSTaskDel_which_implies_wit_13_split_goal_spatial : OSTaskDel_which_implies_wit_13_split_goal_spatial.
+Proof. Abort.
+
+Lemma proof_of_OSTaskDel_which_implies_wit_14_split_goal_spatial : OSTaskDel_which_implies_wit_14_split_goal_spatial.
+Proof. Abort.
+
+Lemma proof_of_OSTaskDel_which_implies_wit_15_split_goal_spatial : OSTaskDel_which_implies_wit_15_split_goal_spatial.
+Proof. Abort.
+
+Lemma proof_of_OSTaskDel_which_implies_wit_17_split_goal_spatial : OSTaskDel_which_implies_wit_17_split_goal_spatial.
+Proof. Abort.
+
+Lemma proof_of_OSTaskDel_which_implies_wit_20_split_goal_spatial : OSTaskDel_which_implies_wit_20_split_goal_spatial.
+Proof. Abort.
+
+Lemma proof_of_OSTaskDel_which_implies_wit_22_split_goal_spatial : OSTaskDel_which_implies_wit_22_split_goal_spatial.
+Proof. Abort.
+
+Lemma proof_of_OSTaskDel_which_implies_wit_27_split_goal_1 : OSTaskDel_which_implies_wit_27_split_goal_1.
+Proof. Abort.
+
+Lemma proof_of_OSTaskDel_which_implies_wit_27_split_goal_2 : OSTaskDel_which_implies_wit_27_split_goal_2.
+Proof. Abort.
+
+Lemma proof_of_OSTaskDel_which_implies_wit_27_split_goal_spatial : OSTaskDel_which_implies_wit_27_split_goal_spatial.
+Proof. Abort.
+
+Lemma proof_of_OSTaskDel_which_implies_wit_28_split_goal_spatial : OSTaskDel_which_implies_wit_28_split_goal_spatial.
+Proof. Abort.
+
+Lemma proof_of_OSTaskDel_which_implies_wit_29_split_goal_spatial : OSTaskDel_which_implies_wit_29_split_goal_spatial.
+Proof. Abort.
+
+Lemma proof_of_OSTaskDel_which_implies_wit_30_split_goal_spatial : OSTaskDel_which_implies_wit_30_split_goal_spatial.
+Proof. Abort.
+
+Lemma proof_of_OSTaskDel_which_implies_wit_31_split_goal_spatial : OSTaskDel_which_implies_wit_31_split_goal_spatial.
+Proof. Abort.
+
+Lemma proof_of_OSTaskDel_which_implies_wit_32_split_goal_spatial : OSTaskDel_which_implies_wit_32_split_goal_spatial.
+Proof. Abort.
+
+Lemma proof_of_OSTaskDel_which_implies_wit_33_split_goal_spatial : OSTaskDel_which_implies_wit_33_split_goal_spatial.
+Proof. Abort.
+
+Lemma proof_of_OSTaskDel_which_implies_wit_34_split_goal_spatial : OSTaskDel_which_implies_wit_34_split_goal_spatial.
+Proof. Abort.
+
+Lemma proof_of_OSTaskDel_which_implies_wit_35_split_goal_1 : OSTaskDel_which_implies_wit_35_split_goal_1.
+Proof. Abort.
+
+Lemma proof_of_OSTaskDel_which_implies_wit_35_split_goal_spatial : OSTaskDel_which_implies_wit_35_split_goal_spatial.
+Proof. Abort.
+
+Lemma proof_of_OSTaskDel_which_implies_wit_37_split_goal_spatial : OSTaskDel_which_implies_wit_37_split_goal_spatial.
+Proof. Abort.
+
+Lemma proof_of_OSTaskDel_which_implies_wit_38_split_goal_spatial : OSTaskDel_which_implies_wit_38_split_goal_spatial.
+Proof. Abort.
+
+Lemma proof_of_OSTaskDel_which_implies_wit_39_split_goal_spatial : OSTaskDel_which_implies_wit_39_split_goal_spatial.
+Proof. Abort.
+
+Lemma proof_of_OSTaskDel_which_implies_wit_40_split_goal_spatial : OSTaskDel_which_implies_wit_40_split_goal_spatial.
+Proof. Abort.
+

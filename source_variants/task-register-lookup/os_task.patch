@@ -1,0 +1,42 @@
+--- a/Source/os_task.c
++++ b/Source/os_task.c
+@@ -1135,6 +1135,7 @@
+ *                        OS_ERR_NONE            if the call was successful
+ *                        OS_ERR_PRIO_INVALID    if you specified an invalid priority
+ *                        OS_ERR_ID_INVALID      if the 'id' is not between 0 and OS_TASK_REG_TBL_SIZE-1
++*                        OS_ERR_TASK_NOT_EXIST  if the selected task no longer exists or is reserved
+ *
+ * Returns    : The current value of the task's register or 0 if an error is detected.
+ *
+@@ -1181,6 +1182,11 @@
+         ptcb = OSTCBPrioTbl[prio];
+     }
++    if ((ptcb == (OS_TCB *)0) || (ptcb == OS_TCB_RESERVED)) {
++        OS_EXIT_CRITICAL();
++        *perr = OS_ERR_TASK_NOT_EXIST;
++        return (0u);
++    }
+     value = ptcb->OSTCBRegTbl[id];
+     OS_EXIT_CRITICAL();
+     *perr = OS_ERR_NONE;
+     return (value);
+@@ -1258,6 +1264,7 @@
+ *                        OS_ERR_NONE            if the call was successful
+ *                        OS_ERR_PRIO_INVALID    if you specified an invalid priority
+ *                        OS_ERR_ID_INVALID      if the 'id' is not between 0 and OS_TASK_REG_TBL_SIZE-1
++*                        OS_ERR_TASK_NOT_EXIST  if the selected task no longer exists or is reserved
+ *
+ * Returns    : The current value of the task's variable or 0 if an error is detected.
+ *
+@@ -1303,6 +1310,11 @@
+         ptcb = OSTCBPrioTbl[prio];
+     }
++    if ((ptcb == (OS_TCB *)0) || (ptcb == OS_TCB_RESERVED)) {
++        OS_EXIT_CRITICAL();
++        *perr = OS_ERR_TASK_NOT_EXIST;
++        return;
++    }
+     ptcb->OSTCBRegTbl[id] = value;
+     OS_EXIT_CRITICAL();
+     *perr                 = OS_ERR_NONE;
+ }

@@ -1,0 +1,33 @@
+{
+  "schema_version": "qcp-ucos2-idle-hook-source-binding/v1",
+  "profile_id": "task-idle-v2.93.01-official-empty-hook",
+  "user_selection": "2026-10-13: proceed with the recommended empty Idle hook and resolved-SELF implementation protection",
+  "upstream": {
+    "repository": "https://github.com/weston-embedded/uC-OS2.git",
+    "commit": "bfc6120f20cb27a927a9fc5dd667f9e455495777",
+    "release_commit": "0c4a48e6fbc6e915714e816196619a5481accf0c",
+    "application_template": "Cfg/Template/app_hooks.c",
+    "port_wrapper": "Ports/ARM-Cortex-A/ARMv7-A/os_cpu_c.c",
+    "kernel_caller": "Source/os_core.c",
+    "kernel_function": "OS_TaskIdle"
+  },
+  "selected_application_source": "uC-OS2_verify/config/task-idle-v2.93.01/idle_hook.c",
+  "configuration": {
+    "OS_CPU_HOOKS_EN": 1,
+    "OS_APP_HOOKS_EN": 1
+  },
+  "dispatch": {
+    "kernel_hook": "OSTaskIdleHook",
+    "application_hook": "App_TaskIdleHook"
+  },
+  "effect_scope": {
+    "direct_application_body": "empty; normal void return",
+    "heap_or_global_writes": false,
+    "nested_calls": false,
+    "interrupt_interference_removed": false,
+    "other_application_hooks_selected": false,
+    "old_creation_hook_binding_rewritten": false
+  },
+  "formal_status": "source selection; concrete call and environment preservation require their own source proofs",
+  "custom_hook_extension": "retain the call interface, bind a new source version and prove its resource, return and Idle-readiness preservation obligations"
+}

@@ -1,0 +1,139 @@
+{
+  "schema_version": "qcp-ucos2-configuration-profile/v1",
+  "profile_id": "queue-v2.93.01-first-round",
+  "target": {
+    "rtos": "uC/OS-II",
+    "declared_source_version": "V2.93.01",
+    "module": "queue",
+    "first_target": "OS_QInit",
+    "claim_stage": "source-and-configuration-freeze"
+  },
+  "upstream": {
+    "repository": "https://github.com/weston-embedded/uC-OS2.git",
+    "commit": "bfc6120f20cb27a927a9fc5dd667f9e455495777",
+    "audited_ref": "develop",
+    "files": [
+      {
+        "path": "Source/os_q.c",
+        "sha256": "246eb61cd70e44a793dcc6f2393bbaca49235a86b03a6e976d325b9f095e42aa",
+        "role": "queue-implementation"
+      },
+      {
+        "path": "Source/ucos_ii.h",
+        "sha256": "be144099fce9f05f578fcd359f40a922ad17290b8bb553bfd83ff9bb99b7113e",
+        "role": "kernel-types-and-declarations"
+      },
+      {
+        "path": "Source/os_core.c",
+        "sha256": "96eef5dc1a519887499cffd8f9a6c8873b96978ed9646c42e52eb6992422fea5",
+        "role": "OS_MemClr-implementation"
+      },
+      {
+        "path": "Cfg/Template/os_cfg.h",
+        "sha256": "96e00ce3ddac973a71302ee68649f92e9b9887c6a0c743d463e47f560c8e1caf",
+        "role": "configuration-template"
+      },
+      {
+        "path": "Cfg/Template/app_cfg.h",
+        "sha256": "d2e9b36c81637af5b884bbb17c3ce6ec3a6aecdac9bf963d85079f122881cb7a",
+        "role": "application-configuration-template"
+      }
+    ]
+  },
+  "target_source_slice": {
+    "path": "Source/os_q.c",
+    "first_line": 936,
+    "last_line": 962,
+    "sha256": "6243a8974806f6420d309ba7b49d7b334570c5f61d5951d18720f5086b275b91",
+    "standalone_target_path": "uC-OS2_verify/annotated_C/src/queue/OS_QInit.c"
+  },
+  "configuration_derivation": {
+    "algorithm": "copy upstream template bytes, then replace only the three declared macro values",
+    "os_cfg": {
+      "source_path": "Cfg/Template/os_cfg.h",
+      "source_sha256": "96e00ce3ddac973a71302ee68649f92e9b9887c6a0c743d463e47f560c8e1caf",
+      "transformations": [
+        {
+          "macro": "OS_EVENT_MULTI_EN",
+          "from": "1u",
+          "to": "0u"
+        },
+        {
+          "macro": "OS_EVENT_NAME_EN",
+          "from": "1u",
+          "to": "0u"
+        },
+        {
+          "macro": "OS_TASK_PROFILE_EN",
+          "from": "1u",
+          "to": "0u"
+        }
+      ],
+      "output_path": "uC-OS2_verify/config/queue-v2.93.01-first-round/os_cfg.h",
+      "output_sha256": "60d5523d550e3baa72fd8c824f2b3dc54972bffc2e3612c97afba77a776cfbc6"
+    },
+    "app_cfg": {
+      "derivation": "byte-for-byte copy",
+      "source_path": "Cfg/Template/app_cfg.h",
+      "source_sha256": "d2e9b36c81637af5b884bbb17c3ce6ec3a6aecdac9bf963d85079f122881cb7a",
+      "output_path": "uC-OS2_verify/config/queue-v2.93.01-first-round/app_cfg.h",
+      "output_sha256": "d2e9b36c81637af5b884bbb17c3ce6ec3a6aecdac9bf963d85079f122881cb7a"
+    },
+    "closed_world_rule": "any additional byte difference creates a different profile"
+  },
+  "features": {
+    "OS_ARG_CHK_EN": 1,
+    "OS_EVENT_MULTI_EN": 0,
+    "OS_EVENT_NAME_EN": 0,
+    "OS_LOWEST_PRIO": 63,
+    "OS_MAX_QS": 4,
+    "OS_Q_EN": 1,
+    "OS_Q_ACCEPT_EN": 1,
+    "OS_Q_DEL_EN": 1,
+    "OS_Q_FLUSH_EN": 1,
+    "OS_Q_PEND_ABORT_EN": 1,
+    "OS_Q_POST_EN": 1,
+    "OS_Q_POST_FRONT_EN": 1,
+    "OS_Q_POST_OPT_EN": 1,
+    "OS_Q_QUERY_EN": 1,
+    "OS_TASK_PROFILE_EN": 0,
+    "OS_TLS_TBL_SIZE": 0,
+    "OS_TRACE_EN": 0,
+    "OS_SAFETY_CRITICAL": "undefined",
+    "OS_SAFETY_CRITICAL_IEC61508": "undefined"
+  },
+  "port_resolution": {
+    "status": "policy-selected-no-existing-provenance",
+    "prior_provenance": "ambiguous-no-existing-provenance",
+    "selection_kind": "new-policy-choice",
+    "selected_path": "Ports/ARM-Cortex-A/ARMv7-A/GNU/os_cpu.h",
+    "selected_sha256": "0ae5c8fbc199343c6f864fab7dd60a89a4f88ae085d57a65a28d4c1a0934e5a2",
+    "selection_basis": "official 32-bit GNU ARMv7-A port chosen for a reproducible first Queue profile",
+    "historical_build_provenance_claimed": false
+  },
+  "machine_model": {
+    "architecture": "ARMv7-A",
+    "abi": "ILP32",
+    "pointer_bits": 32,
+    "int_bits": 32,
+    "short_bits": 16,
+    "endianness": "little",
+    "qcp_canonical_flags": [
+      "--arch=32",
+      "--endian=little"
+    ],
+    "qcp_expected_rules_module": "Snaive_C_Rules",
+    "host_abi_or_default_endian_inference_allowed": false,
+    "OS_Q_expected_size_bytes": 24,
+    "OSQTbl_expected_size_bytes": 96,
+    "OS_MemClr_size_argument_fits_INT16U": true
+  },
+  "model_scope": {
+    "tcb_representation": "verification-slice",
+    "tcb_scope_note": "The current verification model and standalone annotated C cases expose only the task fields needed by verified operations; they are not a claim that the complete official OS_TCB physical layout has been modeled.",
+    "full_official_OS_TCB_layout_claimed": false,
+    "queue_function_source_order_preserved": true,
+    "function_annotation_status": "OS_QInit-authored-canonical-symexec-passed",
+    "proof_status": "OS_QInit-manual-VCs-11-of-11-fixed-coqc-passed"
+  }
+}

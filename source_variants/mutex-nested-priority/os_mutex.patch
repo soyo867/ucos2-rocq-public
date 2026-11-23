@@ -1,0 +1,134 @@
+--- a/Source/os_mutex.c
++++ b/Source/os_mutex.c
+@@ -56,3 +56,5 @@
+ static  void  OSMutex_RdyAtPrio(OS_TCB *ptcb, INT8U prio);
++static  INT8U OSMutex_BasePrio(OS_TCB *ptcb);
++static  INT8U OSMutex_EffectivePrio(OS_TCB *ptcb);
+ 
+ 
+@@ -366,3 +368,11 @@
+                  if (pcp != OS_PRIO_MUTEX_CEIL_DIS) {
++                     ptcb = (OS_TCB *)pevent->OSEventPtr;
+                      OSTCBPrioTbl[pcp] = (OS_TCB *)0;      /* Free up the PCP                          */
++                     if (ptcb != (OS_TCB *)0) {
++                         prio = OSMutex_EffectivePrio(ptcb);
++                         if (ptcb->OSTCBPrio != prio) {
++                             OS_TRACE_MUTEX_TASK_PRIO_DISINHERIT(ptcb, prio);
++                             OSMutex_RdyAtPrio(ptcb, prio);
++                         }
++                     }
+                  }
+@@ -382,8 +393,9 @@
+-                 prio = (INT8U)(pevent->OSEventCnt & OS_MUTEX_KEEP_LOWER_8); /* Get owner's orig prio  */
+                  ptcb = (OS_TCB *)pevent->OSEventPtr;
++                 OSTCBPrioTbl[pcp] = (OS_TCB *)0;
+                  if (ptcb != (OS_TCB *)0) {                /* See if any task owns the mutex           */
+-                     if (ptcb->OSTCBPrio == pcp) {         /* See if original prio was changed         */
+-                         OS_TRACE_MUTEX_TASK_PRIO_DISINHERIT(OSTCBCur, prio);
+-                         OSMutex_RdyAtPrio(ptcb, prio);    /* Yes, Restore the task's original prio    */
++                     prio = OSMutex_EffectivePrio(ptcb);
++                     if (ptcb->OSTCBPrio != prio) {
++                         OS_TRACE_MUTEX_TASK_PRIO_DISINHERIT(ptcb, prio);
++                         OSMutex_RdyAtPrio(ptcb, prio);
+                      }
+                  }
+@@ -533,3 +545,3 @@
+-        mprio = (INT8U)(pevent->OSEventCnt & OS_MUTEX_KEEP_LOWER_8); /*  Get priority of mutex owner   */
+         ptcb  = (OS_TCB *)(pevent->OSEventPtr);                   /*     Point to TCB of mutex owner   */
++        mprio = OSMutex_BasePrio(ptcb);
+         if (ptcb->OSTCBPrio > pcp) {                              /*     Need to promote prio of owner?*/
+@@ -581,4 +593,7 @@
+                 OSTCBPrioTbl[pcp] = ptcb;
+             }
++        } else if ((mprio > OSTCBCur->OSTCBPrio) && (mprio > pcp)) {
++            /* Keep this demand even while another held mutex masks it. */
++            OSTCBPrioTbl[pcp] = ptcb;
+         }
+     }
+@@ -674,8 +689,9 @@
+     if (pcp != OS_PRIO_MUTEX_CEIL_DIS) {
+-        if (OSTCBCur->OSTCBPrio == pcp) {             /* Did we have to raise current task's priority? */
++        OSTCBPrioTbl[pcp] = OS_TCB_RESERVED;
++        prio = OSMutex_EffectivePrio(OSTCBCur);
++        if (OSTCBCur->OSTCBPrio != prio) {
+             OS_TRACE_MUTEX_TASK_PRIO_DISINHERIT(OSTCBCur, prio);
+-            OSMutex_RdyAtPrio(OSTCBCur, prio);        /* Restore the task's original priority          */
++            OSMutex_RdyAtPrio(OSTCBCur, prio);
+         }
+-        OSTCBPrioTbl[pcp] = OS_TCB_RESERVED;          /* Reserve table entry                           */
+     }
+     if (pevent->OSEventGrp != 0u) {                   /* Any task waiting for the mutex?               */
+@@ -787,17 +803,55 @@
++/* The permanent task slot is the greatest owner alias. Mutex boosts only
++ * add lower-numbered aliases; releasing a mutex removes only its own alias.
++ * These helpers require the owner-use/lifetime protocol documented with the
++ * source variant. They neither inspect private Event nodes nor change ABI.
++ */
++static  INT8U OSMutex_BasePrio(OS_TCB *ptcb)
++{
++    INT16U i;
++    INT8U prio = ptcb->OSTCBPrio;
++
++    for (i = 0u; i <= OS_LOWEST_PRIO; i++) {
++        if (OSTCBPrioTbl[i] == ptcb) {
++            prio = (INT8U)i;
++        }
++    }
++    return prio;
++}
++
++static  INT8U OSMutex_EffectivePrio(OS_TCB *ptcb)
++{
++    INT16U i;
++
++    for (i = 0u; i <= OS_LOWEST_PRIO; i++) {
++        if (OSTCBPrioTbl[i] == ptcb) {
++            return (INT8U)i;
++        }
++    }
++    /* Outside the stated invariant this fallback is literal raw behavior,
++     * not a claim that a missing permanent slot is a valid kernel state. */
++    return ptcb->OSTCBPrio;
++}
++
+ static  void  OSMutex_RdyAtPrio (OS_TCB  *ptcb,
+                                  INT8U    prio)
+ {
+     INT8U  y;
++    BOOLEAN rdy;
+ 
+ 
+     y            =  ptcb->OSTCBY;                          /* Remove owner from ready list at 'pcp'    */
+-    OSRdyTbl[y] &= (OS_PRIO)~ptcb->OSTCBBitX;
+-    OS_TRACE_TASK_SUSPENDED(ptcb);
+-    if (OSRdyTbl[y] == 0u) {
+-        OSRdyGrp &= (OS_PRIO)~ptcb->OSTCBBitY;
++    rdy = (OSRdyTbl[y] & ptcb->OSTCBBitX) != 0u;
++    if (rdy == OS_TRUE) {
++        OSRdyTbl[y] &= (OS_PRIO)~ptcb->OSTCBBitX;
++        OS_TRACE_TASK_SUSPENDED(ptcb);
++        if (OSRdyTbl[y] == 0u) {
++            OSRdyGrp &= (OS_PRIO)~ptcb->OSTCBBitY;
++        }
+     }
+     ptcb->OSTCBPrio         = prio;
+-    OSPrioCur               = prio;                        /* The current task is now at this priority */
++    if (ptcb == OSTCBCur) {
++        OSPrioCur = prio;
++    }
+ #if OS_LOWEST_PRIO <= 63u
+     ptcb->OSTCBY            = (INT8U)((INT8U)(prio >> 3u) & 0x07u);
+     ptcb->OSTCBX            = (INT8U)(prio & 0x07u);
+@@ -812,5 +870,9 @@
+-    OSRdyGrp               |= ptcb->OSTCBBitY;             /* Make task ready at original priority     */
+-    OSRdyTbl[ptcb->OSTCBY] |= ptcb->OSTCBBitX;
++    if (rdy == OS_TRUE) {
++        OSRdyGrp               |= ptcb->OSTCBBitY;
++        OSRdyTbl[ptcb->OSTCBY] |= ptcb->OSTCBBitX;
++    }
+     OSTCBPrioTbl[prio]      = ptcb;
+-    OS_TRACE_TASK_READY(ptcb);
++    if (rdy == OS_TRUE) {
++        OS_TRACE_TASK_READY(ptcb);
++    }
+ }

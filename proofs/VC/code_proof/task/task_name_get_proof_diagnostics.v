@@ -1,0 +1,111 @@
+Require Import Coq.ZArith.ZArith.
+Require Import Coq.Bool.Bool.
+Require Import Coq.Strings.String.
+Require Import Coq.Strings.Ascii.
+Require Import Coq.Lists.List.
+Require Import Coq.Classes.RelationClasses.
+Require Import Coq.Classes.Morphisms.
+Require Import Coq.micromega.Psatz.
+Require Import Coq.Sorting.Permutation.
+From AUXLib Require Import int_auto Axioms Feq Idents ListLib VMap.
+Require Import SetsClass.SetsClass. Import SetsNotation.
+From SimpleC.SL Require Import Mem SeparationLogic.
+From Ucos2Verify.VC.code.task Require Import task_name_get_goal.
+From Ucos2Verify.VC.code.task Require Import task_name_get_proof_auto.
+Require Import Logic.LogicGenerator.demo932.Interface.
+Local Open Scope Z_scope.
+Local Open Scope sets.
+Local Open Scope string_scope.
+Local Open Scope list.
+Import Snaive_C_Rules.
+Require Import Ucos2Verify.VC.code.task.spec.task_name_get_spec.
+Require Import Ucos2Verify.VC.code.core.OS_StrLen_goal_check.
+Import UCOS2_C_Rules.
+Local Open Scope Z_scope.
+Local Open Scope sac.
+Local Open Scope sac.
+
+Lemma proof_of_OSTaskNameGet_entail_wit_2_2_split_goal_1 : OSTaskNameGet_entail_wit_2_2_split_goal_1.
+Proof. Abort.
+
+Lemma proof_of_OSTaskNameGet_return_wit_1_split_goal_spatial : OSTaskNameGet_return_wit_1_split_goal_spatial.
+Proof. Abort.
+
+Lemma proof_of_OSTaskNameGet_return_wit_2_split_goal_spatial : OSTaskNameGet_return_wit_2_split_goal_spatial.
+Proof. Abort.
+
+Lemma proof_of_OSTaskNameGet_return_wit_3_split_goal_spatial : OSTaskNameGet_return_wit_3_split_goal_spatial.
+Proof. Abort.
+
+Lemma proof_of_OSTaskNameGet_return_wit_4_split_goal_spatial : OSTaskNameGet_return_wit_4_split_goal_spatial.
+Proof. Abort.
+
+Lemma proof_of_OSTaskNameGet_return_wit_5_split_goal_spatial : OSTaskNameGet_return_wit_5_split_goal_spatial.
+Proof. Abort.
+
+Lemma proof_of_OSTaskNameGet_return_wit_6_split_goal_spatial : OSTaskNameGet_return_wit_6_split_goal_spatial.
+Proof. Abort.
+
+Lemma proof_of_OSTaskNameGet_return_wit_7_split_goal_spatial : OSTaskNameGet_return_wit_7_split_goal_spatial.
+Proof. Abort.
+
+Lemma proof_of_OSTaskNameGet_return_wit_8_split_goal_spatial : OSTaskNameGet_return_wit_8_split_goal_spatial.
+Proof. Abort.
+
+Lemma proof_of_OSTaskNameGet_partial_solve_wit_12_pure_split_goal_1 : OSTaskNameGet_partial_solve_wit_12_pure_split_goal_1.
+Proof. Abort.
+
+Lemma proof_of_OSTaskNameGet_which_implies_wit_2_split_goal_spatial : OSTaskNameGet_which_implies_wit_2_split_goal_spatial.
+Proof. Abort.
+
+Lemma proof_of_OSTaskNameGet_which_implies_wit_3_split_goal_spatial : OSTaskNameGet_which_implies_wit_3_split_goal_spatial.
+Proof. Abort.
+
+Lemma proof_of_OSTaskNameGet_which_implies_wit_4_split_goal_1 : OSTaskNameGet_which_implies_wit_4_split_goal_1.
+Proof. Abort.
+
+Lemma proof_of_OSTaskNameGet_which_implies_wit_4_split_goal_2 : OSTaskNameGet_which_implies_wit_4_split_goal_2.
+Proof. Abort.
+
+Lemma proof_of_OSTaskNameGet_which_implies_wit_4_split_goal_spatial : OSTaskNameGet_which_implies_wit_4_split_goal_spatial.
+Proof. Abort.
+
+Lemma proof_of_OSTaskNameGet_which_implies_wit_5_split_goal_spatial : OSTaskNameGet_which_implies_wit_5_split_goal_spatial.
+Proof. Abort.
+
+Lemma proof_of_OSTaskNameGet_which_implies_wit_7_split_goal_1 : OSTaskNameGet_which_implies_wit_7_split_goal_1.
+Proof. Abort.
+
+Lemma proof_of_OSTaskNameGet_which_implies_wit_7_split_goal_spatial : OSTaskNameGet_which_implies_wit_7_split_goal_spatial.
+Proof. Abort.
+
+Lemma proof_of_OSTaskNameGet_which_implies_wit_8_split_goal_1 : OSTaskNameGet_which_implies_wit_8_split_goal_1.
+Proof. Abort.
+
+Lemma proof_of_OSTaskNameGet_which_implies_wit_8_split_goal_spatial : OSTaskNameGet_which_implies_wit_8_split_goal_spatial.
+Proof. Abort.
+
+Lemma proof_of_OSTaskNameGet_which_implies_wit_9_split_goal_1 : OSTaskNameGet_which_implies_wit_9_split_goal_1.
+Proof. Abort.
+
+Lemma proof_of_OSTaskNameGet_which_implies_wit_9_split_goal_spatial : OSTaskNameGet_which_implies_wit_9_split_goal_spatial.
+Proof. Abort.
+
+Lemma proof_of_OSTaskNameGet_which_implies_wit_10_split_goal_spatial : OSTaskNameGet_which_implies_wit_10_split_goal_spatial.
+Proof. Abort.
+
+Lemma proof_of_OSTaskNameGet_which_implies_wit_12_split_goal_spatial : OSTaskNameGet_which_implies_wit_12_split_goal_spatial.
+Proof. Abort.
+
+Lemma proof_of_OSTaskNameGet_which_implies_wit_13_split_goal_1 : OSTaskNameGet_which_implies_wit_13_split_goal_1.
+Proof. Abort.
+
+Lemma proof_of_OSTaskNameGet_which_implies_wit_13_split_goal_spatial : OSTaskNameGet_which_implies_wit_13_split_goal_spatial.
+Proof. Abort.
+
+Lemma proof_of_OSTaskNameGet_which_implies_wit_14_split_goal_spatial : OSTaskNameGet_which_implies_wit_14_split_goal_spatial.
+Proof. Abort.
+
+Lemma proof_of_OSTaskNameGet_which_implies_wit_16_split_goal_spatial : OSTaskNameGet_which_implies_wit_16_split_goal_spatial.
+Proof. Abort.
+

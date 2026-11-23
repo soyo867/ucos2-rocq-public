@@ -1,0 +1,13 @@
+--- a/Source/os_flag.c
++++ b/Source/os_flag.c
+@@ -757,7 +757,9 @@
+     if (OSTCBCur->OSTCBStatPend != OS_STAT_PEND_OK) {      /* Have we timed-out or aborted?            */
+         pend_stat                = OSTCBCur->OSTCBStatPend;
+         OSTCBCur->OSTCBStatPend  = OS_STAT_PEND_OK;
+-        OS_FlagUnlink(&node);
++        if (pend_stat != OS_STAT_PEND_ABORT) {            /* Delete already unlinked aborted waiters. */
++            OS_FlagUnlink(&node);
++        }
+         OSTCBCur->OSTCBStat      = OS_STAT_RDY;            /* Yes, make task ready-to-run              */
+         OS_EXIT_CRITICAL();
+         flags_rdy                = (OS_FLAGS)0;

@@ -1,0 +1,19 @@
+{
+  "profile_id": "timer-v2.93.01",
+  "upstream_commit": "bfc6120f20cb27a927a9fc5dd667f9e455495777",
+  "source_directory": "Source",
+  "port_directory": "Ports/ARM-Cortex-A/ARMv7-A/GNU",
+  "configuration_directory": "Cfg/Template",
+  "required_defines": {
+    "OS_EVENT_MULTI_EN": "0u",
+    "OS_EVENT_NAME_EN": "0u",
+    "OS_TASK_PROFILE_EN": "0u"
+  },
+  "arch": 32,
+  "endian": "little",
+  "patches": [
+    "app-cfg-freestanding.patch",
+    "port-extern-declarations.patch",
+    "timer-old-features.patch"
+  ]
+}

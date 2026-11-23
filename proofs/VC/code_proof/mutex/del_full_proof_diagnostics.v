@@ -1,0 +1,304 @@
+Require Import Coq.ZArith.ZArith.
+Require Import Coq.Bool.Bool.
+Require Import Coq.Strings.String.
+Require Import Coq.Strings.Ascii.
+Require Import Coq.Lists.List.
+Require Import Coq.Classes.RelationClasses.
+Require Import Coq.Classes.Morphisms.
+Require Import Coq.micromega.Psatz.
+Require Import Coq.Sorting.Permutation.
+From AUXLib Require Import int_auto Axioms Feq Idents ListLib VMap.
+Require Import SetsClass.SetsClass. Import SetsNotation.
+From SimpleC.SL Require Import Mem SeparationLogic.
+From Ucos2Verify.VC.code.mutex Require Import del_full_goal.
+From Ucos2Verify.VC.code.mutex Require Import del_full_proof_auto.
+Require Import Logic.LogicGenerator.demo932.Interface.
+Local Open Scope Z_scope.
+Local Open Scope sets.
+Local Open Scope string_scope.
+Local Open Scope list.
+Import naive_C_Rules.
+Local Open Scope Z_scope.
+Local Open Scope sac.
+From MonadLib Require Import Monad.
+From MonadLib.StateRelMonad Require Export StateRelBasic safeexec_lib.
+Import Monad MonadNotation.
+Local Open Scope monad_scope.
+Require Import Ucos2Verify.lib.stable_glob_vars.
+Require Import Ucos2Verify.lib.ucos2_verify_state_def.
+Require Import Ucos2Verify.lib.task.
+Require Import Ucos2Verify.lib.interrupt.
+Require Import Ucos2Verify.lib.sched.
+Require Import Ucos2Verify.lib.event.
+Require Import Ucos2Verify.lib.mutex.
+Require Import Ucos2Verify.lib.error_codes.
+Require Import Ucos2Verify.lib.atomic_ops_lib.
+Require Import Ucos2Verify.lib.ucos2_rules_lib.
+Require Import Ucos2Verify.lib.ucos2_verify_inv.
+Require Import Ucos2Verify.lib.mutex_del_spec.
+Require Import Ucos2Verify.lib.array_abstraction.
+Require Import Ucos2Verify.lib.tick.
+Require Import Ucos2Verify.lib.cross_module_invariants.
+Local Open Scope sac.
+
+Lemma proof_of_OSMutexDel_FirstSet8_return_wit_1_split_goal_1 : OSMutexDel_FirstSet8_return_wit_1_split_goal_1.
+Proof. Abort.
+
+Lemma proof_of_OSMutexDel_FirstSet8_return_wit_2_split_goal_1 : OSMutexDel_FirstSet8_return_wit_2_split_goal_1.
+Proof. Abort.
+
+Lemma proof_of_OSMutexDel_FirstSet8_return_wit_3_split_goal_1 : OSMutexDel_FirstSet8_return_wit_3_split_goal_1.
+Proof. Abort.
+
+Lemma proof_of_OSMutexDel_FirstSet8_return_wit_4_split_goal_1 : OSMutexDel_FirstSet8_return_wit_4_split_goal_1.
+Proof. Abort.
+
+Lemma proof_of_OSMutexDel_FirstSet8_return_wit_5_split_goal_1 : OSMutexDel_FirstSet8_return_wit_5_split_goal_1.
+Proof. Abort.
+
+Lemma proof_of_OSMutexDel_FirstSet8_return_wit_6_split_goal_1 : OSMutexDel_FirstSet8_return_wit_6_split_goal_1.
+Proof. Abort.
+
+Lemma proof_of_OSMutexDel_FirstSet8_return_wit_7_split_goal_1 : OSMutexDel_FirstSet8_return_wit_7_split_goal_1.
+Proof. Abort.
+
+Lemma proof_of_OSMutexDel_FirstSet8_return_wit_8_split_goal_1 : OSMutexDel_FirstSet8_return_wit_8_split_goal_1.
+Proof. Abort.
+
+Lemma proof_of_OSMutexDel_RefreshHighReady_partial_solve_wit_2_pure_split_goal_1 : OSMutexDel_RefreshHighReady_partial_solve_wit_2_pure_split_goal_1.
+Proof. Abort.
+
+Lemma proof_of_OSMutexDel_RefreshHighReady_partial_solve_wit_5_pure_split_goal_1 : OSMutexDel_RefreshHighReady_partial_solve_wit_5_pure_split_goal_1.
+Proof. Abort.
+
+Lemma proof_of_OSMutexDel_RefreshHighReady_partial_solve_wit_5_pure_split_goal_2 : OSMutexDel_RefreshHighReady_partial_solve_wit_5_pure_split_goal_2.
+Proof. Abort.
+
+Lemma proof_of_OSMutexDel_RefreshHighReady_partial_solve_wit_8_pure_split_goal_1 : OSMutexDel_RefreshHighReady_partial_solve_wit_8_pure_split_goal_1.
+Proof. Abort.
+
+Lemma proof_of_OSMutexDel_RefreshHighReady_partial_solve_wit_8_pure_split_goal_2 : OSMutexDel_RefreshHighReady_partial_solve_wit_8_pure_split_goal_2.
+Proof. Abort.
+
+Lemma proof_of_OSMutexDel_RefreshHighReady_partial_solve_wit_8_pure_split_goal_3 : OSMutexDel_RefreshHighReady_partial_solve_wit_8_pure_split_goal_3.
+Proof. Abort.
+
+Lemma proof_of_OSMutexDel_RefreshHighReady_partial_solve_wit_8_pure_split_goal_4 : OSMutexDel_RefreshHighReady_partial_solve_wit_8_pure_split_goal_4.
+Proof. Abort.
+
+Lemma proof_of_OSMutexDel_RefreshHighReady_partial_solve_wit_11_pure_split_goal_1 : OSMutexDel_RefreshHighReady_partial_solve_wit_11_pure_split_goal_1.
+Proof. Abort.
+
+Lemma proof_of_OSMutexDel_RefreshHighReady_which_implies_wit_2_split_goal_spatial : OSMutexDel_RefreshHighReady_which_implies_wit_2_split_goal_spatial.
+Proof. Abort.
+
+Lemma proof_of_OSMutexDel_RefreshHighReady_which_implies_wit_3_split_goal_spatial : OSMutexDel_RefreshHighReady_which_implies_wit_3_split_goal_spatial.
+Proof. Abort.
+
+Lemma proof_of_OSMutexDel_RefreshHighReady_which_implies_wit_4_split_goal_spatial : OSMutexDel_RefreshHighReady_which_implies_wit_4_split_goal_spatial.
+Proof. Abort.
+
+Lemma proof_of_OSMutexDel_RefreshHighReady_which_implies_wit_5_split_goal_spatial : OSMutexDel_RefreshHighReady_which_implies_wit_5_split_goal_spatial.
+Proof. Abort.
+
+Lemma proof_of_OSMutexDel_RefreshHighReady_which_implies_wit_6_split_goal_spatial : OSMutexDel_RefreshHighReady_which_implies_wit_6_split_goal_spatial.
+Proof. Abort.
+
+Lemma proof_of_OSMutexDel_RefreshHighReady_which_implies_wit_7_split_goal_spatial : OSMutexDel_RefreshHighReady_which_implies_wit_7_split_goal_spatial.
+Proof. Abort.
+
+Lemma proof_of_OSMutexDel_RefreshHighReady_which_implies_wit_8_split_goal_spatial : OSMutexDel_RefreshHighReady_which_implies_wit_8_split_goal_spatial.
+Proof. Abort.
+
+Lemma proof_of_OSMutexDel_RefreshHighReady_which_implies_wit_9_split_goal_spatial : OSMutexDel_RefreshHighReady_which_implies_wit_9_split_goal_spatial.
+Proof. Abort.
+
+Lemma proof_of_OSMutexDel_RefreshHighReady_which_implies_wit_10_split_goal_spatial : OSMutexDel_RefreshHighReady_which_implies_wit_10_split_goal_spatial.
+Proof. Abort.
+
+Lemma proof_of_OSMutexDel_RefreshHighReady_which_implies_wit_11_split_goal_spatial : OSMutexDel_RefreshHighReady_which_implies_wit_11_split_goal_spatial.
+Proof. Abort.
+
+Lemma proof_of_OSMutexDel_full_safety_wit_3_split_goal_1 : OSMutexDel_full_safety_wit_3_split_goal_1.
+Proof. Abort.
+
+Lemma proof_of_OSMutexDel_full_safety_wit_3_split_goal_2 : OSMutexDel_full_safety_wit_3_split_goal_2.
+Proof. Abort.
+
+Lemma proof_of_OSMutexDel_full_safety_wit_3_split_goal_3 : OSMutexDel_full_safety_wit_3_split_goal_3.
+Proof. Abort.
+
+Lemma proof_of_OSMutexDel_full_safety_wit_7_split_goal_1 : OSMutexDel_full_safety_wit_7_split_goal_1.
+Proof. Abort.
+
+Lemma proof_of_OSMutexDel_full_safety_wit_7_split_goal_2 : OSMutexDel_full_safety_wit_7_split_goal_2.
+Proof. Abort.
+
+Lemma proof_of_OSMutexDel_full_safety_wit_7_split_goal_3 : OSMutexDel_full_safety_wit_7_split_goal_3.
+Proof. Abort.
+
+Lemma proof_of_OSMutexDel_full_safety_wit_10_split_goal_1 : OSMutexDel_full_safety_wit_10_split_goal_1.
+Proof. Abort.
+
+Lemma proof_of_OSMutexDel_full_safety_wit_10_split_goal_2 : OSMutexDel_full_safety_wit_10_split_goal_2.
+Proof. Abort.
+
+Lemma proof_of_OSMutexDel_full_safety_wit_10_split_goal_3 : OSMutexDel_full_safety_wit_10_split_goal_3.
+Proof. Abort.
+
+Lemma proof_of_OSMutexDel_full_entail_wit_1_split_goal_spatial : OSMutexDel_full_entail_wit_1_split_goal_spatial.
+Proof. Abort.
+
+Lemma proof_of_OSMutexDel_full_entail_wit_2_1_split_goal_1 : OSMutexDel_full_entail_wit_2_1_split_goal_1.
+Proof. Abort.
+
+Lemma proof_of_OSMutexDel_full_entail_wit_2_1_split_goal_2 : OSMutexDel_full_entail_wit_2_1_split_goal_2.
+Proof. Abort.
+
+Lemma proof_of_OSMutexDel_full_entail_wit_2_1_split_goal_spatial : OSMutexDel_full_entail_wit_2_1_split_goal_spatial.
+Proof. Abort.
+
+Lemma proof_of_OSMutexDel_full_entail_wit_2_2_split_goal_1 : OSMutexDel_full_entail_wit_2_2_split_goal_1.
+Proof. Abort.
+
+Lemma proof_of_OSMutexDel_full_entail_wit_2_2_split_goal_2 : OSMutexDel_full_entail_wit_2_2_split_goal_2.
+Proof. Abort.
+
+Lemma proof_of_OSMutexDel_full_entail_wit_2_2_split_goal_spatial : OSMutexDel_full_entail_wit_2_2_split_goal_spatial.
+Proof. Abort.
+
+Lemma proof_of_OSMutexDel_full_entail_wit_3_1_split_goal_1 : OSMutexDel_full_entail_wit_3_1_split_goal_1.
+Proof. Abort.
+
+Lemma proof_of_OSMutexDel_full_entail_wit_3_1_split_goal_spatial : OSMutexDel_full_entail_wit_3_1_split_goal_spatial.
+Proof. Abort.
+
+Lemma proof_of_OSMutexDel_full_entail_wit_3_2_split_goal_1 : OSMutexDel_full_entail_wit_3_2_split_goal_1.
+Proof. Abort.
+
+Lemma proof_of_OSMutexDel_full_entail_wit_3_2_split_goal_spatial : OSMutexDel_full_entail_wit_3_2_split_goal_spatial.
+Proof. Abort.
+
+Lemma proof_of_OSMutexDel_full_entail_wit_3_3_split_goal_1 : OSMutexDel_full_entail_wit_3_3_split_goal_1.
+Proof. Abort.
+
+Lemma proof_of_OSMutexDel_full_entail_wit_3_3_split_goal_spatial : OSMutexDel_full_entail_wit_3_3_split_goal_spatial.
+Proof. Abort.
+
+Lemma proof_of_OSMutexDel_full_entail_wit_4_1_split_goal_spatial : OSMutexDel_full_entail_wit_4_1_split_goal_spatial.
+Proof. Abort.
+
+Lemma proof_of_OSMutexDel_full_entail_wit_4_2_split_goal_1 : OSMutexDel_full_entail_wit_4_2_split_goal_1.
+Proof. Abort.
+
+Lemma proof_of_OSMutexDel_full_entail_wit_4_2_split_goal_spatial : OSMutexDel_full_entail_wit_4_2_split_goal_spatial.
+Proof. Abort.
+
+Lemma proof_of_OSMutexDel_full_entail_wit_5_split_goal_spatial : OSMutexDel_full_entail_wit_5_split_goal_spatial.
+Proof. Abort.
+
+Lemma proof_of_OSMutexDel_full_entail_wit_6_split_goal_spatial : OSMutexDel_full_entail_wit_6_split_goal_spatial.
+Proof. Abort.
+
+Lemma proof_of_OSMutexDel_full_entail_wit_7_split_goal_spatial : OSMutexDel_full_entail_wit_7_split_goal_spatial.
+Proof. Abort.
+
+Lemma proof_of_OSMutexDel_full_entail_wit_8_split_goal_spatial : OSMutexDel_full_entail_wit_8_split_goal_spatial.
+Proof. Abort.
+
+Lemma proof_of_OSMutexDel_full_entail_wit_12_split_goal_1 : OSMutexDel_full_entail_wit_12_split_goal_1.
+Proof. Abort.
+
+Lemma proof_of_OSMutexDel_full_entail_wit_12_split_goal_spatial : OSMutexDel_full_entail_wit_12_split_goal_spatial.
+Proof. Abort.
+
+Lemma proof_of_OSMutexDel_full_entail_wit_13_1_split_goal_1 : OSMutexDel_full_entail_wit_13_1_split_goal_1.
+Proof. Abort.
+
+Lemma proof_of_OSMutexDel_full_entail_wit_13_1_split_goal_spatial : OSMutexDel_full_entail_wit_13_1_split_goal_spatial.
+Proof. Abort.
+
+Lemma proof_of_OSMutexDel_full_entail_wit_13_2_split_goal_1 : OSMutexDel_full_entail_wit_13_2_split_goal_1.
+Proof. Abort.
+
+Lemma proof_of_OSMutexDel_full_entail_wit_13_2_split_goal_spatial : OSMutexDel_full_entail_wit_13_2_split_goal_spatial.
+Proof. Abort.
+
+Lemma proof_of_OSMutexDel_full_entail_wit_14_split_goal_spatial : OSMutexDel_full_entail_wit_14_split_goal_spatial.
+Proof. Abort.
+
+Lemma proof_of_OSMutexDel_full_entail_wit_15_split_goal_spatial : OSMutexDel_full_entail_wit_15_split_goal_spatial.
+Proof. Abort.
+
+Lemma proof_of_OSMutexDel_full_entail_wit_16_1_split_goal_spatial : OSMutexDel_full_entail_wit_16_1_split_goal_spatial.
+Proof. Abort.
+
+Lemma proof_of_OSMutexDel_full_entail_wit_16_2_split_goal_spatial : OSMutexDel_full_entail_wit_16_2_split_goal_spatial.
+Proof. Abort.
+
+Lemma proof_of_OSMutexDel_full_entail_wit_17_split_goal_spatial : OSMutexDel_full_entail_wit_17_split_goal_spatial.
+Proof. Abort.
+
+Lemma proof_of_OSMutexDel_full_entail_wit_18_split_goal_spatial : OSMutexDel_full_entail_wit_18_split_goal_spatial.
+Proof. Abort.
+
+Lemma proof_of_OSMutexDel_full_return_wit_8_split_goal_1 : OSMutexDel_full_return_wit_8_split_goal_1.
+Proof. Abort.
+
+Lemma proof_of_OSMutexDel_full_partial_solve_wit_6_pure_split_goal_1 : OSMutexDel_full_partial_solve_wit_6_pure_split_goal_1.
+Proof. Abort.
+
+Lemma proof_of_OSMutexDel_full_partial_solve_wit_12_pure_split_goal_1 : OSMutexDel_full_partial_solve_wit_12_pure_split_goal_1.
+Proof. Abort.
+
+Lemma proof_of_OSMutexDel_full_partial_solve_wit_12_pure_split_goal_2 : OSMutexDel_full_partial_solve_wit_12_pure_split_goal_2.
+Proof. Abort.
+
+Lemma proof_of_OSMutexDel_full_partial_solve_wit_22_pure_split_goal_1 : OSMutexDel_full_partial_solve_wit_22_pure_split_goal_1.
+Proof. Abort.
+
+Lemma proof_of_OSMutexDel_full_partial_solve_wit_23_pure_split_goal_1 : OSMutexDel_full_partial_solve_wit_23_pure_split_goal_1.
+Proof. Abort.
+
+Lemma proof_of_OSMutexDel_full_partial_solve_wit_23_pure_split_goal_2 : OSMutexDel_full_partial_solve_wit_23_pure_split_goal_2.
+Proof. Abort.
+
+Lemma proof_of_OSMutexDel_full_which_implies_wit_2_split_goal_spatial : OSMutexDel_full_which_implies_wit_2_split_goal_spatial.
+Proof. Abort.
+
+Lemma proof_of_OSMutexDel_full_which_implies_wit_3_split_goal_spatial : OSMutexDel_full_which_implies_wit_3_split_goal_spatial.
+Proof. Abort.
+
+Lemma proof_of_OSMutexDel_full_which_implies_wit_4_split_goal_spatial : OSMutexDel_full_which_implies_wit_4_split_goal_spatial.
+Proof. Abort.
+
+Lemma proof_of_OSMutexDel_full_which_implies_wit_5_split_goal_spatial : OSMutexDel_full_which_implies_wit_5_split_goal_spatial.
+Proof. Abort.
+
+Lemma proof_of_OSMutexDel_full_which_implies_wit_6_split_goal_spatial : OSMutexDel_full_which_implies_wit_6_split_goal_spatial.
+Proof. Abort.
+
+Lemma proof_of_OSMutexDel_full_which_implies_wit_7_split_goal_spatial : OSMutexDel_full_which_implies_wit_7_split_goal_spatial.
+Proof. Abort.
+
+Lemma proof_of_OSMutexDel_full_which_implies_wit_8_split_goal_spatial : OSMutexDel_full_which_implies_wit_8_split_goal_spatial.
+Proof. Abort.
+
+Lemma proof_of_OSMutexDel_full_which_implies_wit_9_split_goal_spatial : OSMutexDel_full_which_implies_wit_9_split_goal_spatial.
+Proof. Abort.
+
+Lemma proof_of_OSMutexDel_full_which_implies_wit_13_split_goal_spatial : OSMutexDel_full_which_implies_wit_13_split_goal_spatial.
+Proof. Abort.
+
+Lemma proof_of_OSMutexDel_full_which_implies_wit_14_split_goal_spatial : OSMutexDel_full_which_implies_wit_14_split_goal_spatial.
+Proof. Abort.
+
+Lemma proof_of_OSMutexDel_full_which_implies_wit_15_split_goal_spatial : OSMutexDel_full_which_implies_wit_15_split_goal_spatial.
+Proof. Abort.
+
+Lemma proof_of_OSMutexDel_full_which_implies_wit_20_split_goal_spatial : OSMutexDel_full_which_implies_wit_20_split_goal_spatial.
+Proof. Abort.
+
+Lemma proof_of_OSMutexDel_full_which_implies_wit_21_split_goal_spatial : OSMutexDel_full_which_implies_wit_21_split_goal_spatial.
+Proof. Abort.
+

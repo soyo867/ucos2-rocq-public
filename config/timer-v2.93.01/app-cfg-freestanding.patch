@@ -1,0 +1,15 @@
+--- a/Cfg/Template/app_cfg.h
++++ b/Cfg/Template/app_cfg.h
+@@ -33,8 +33,10 @@
+ *********************************************************************************************************
+ */
+ 
+-#include  <stdarg.h>
+-#include  <stdio.h>
++/* Kernel-only verification input: the selected kernel does not consume the
++ * application printf/varargs declarations. Keep application macros unchanged.
++ * This projection does not cover application tracing or libc implementations.
++ */
+ 
+ 
+ /*

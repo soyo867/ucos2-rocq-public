@@ -1,0 +1,122 @@
+Require Import Coq.ZArith.ZArith.
+Require Import Coq.Bool.Bool.
+Require Import Coq.Strings.String.
+Require Import Coq.Strings.Ascii.
+Require Import Coq.Lists.List.
+Require Import Coq.Classes.RelationClasses.
+Require Import Coq.Classes.Morphisms.
+Require Import Coq.micromega.Psatz.
+Require Import Coq.Sorting.Permutation.
+From AUXLib Require Import int_auto Axioms Feq Idents ListLib VMap.
+Require Import SetsClass.SetsClass. Import SetsNotation.
+From SimpleC.SL Require Import Mem SeparationLogic.
+From Ucos2Verify.VC.code.time Require Import time_dly_goal.
+From Ucos2Verify.VC.code.time Require Import time_dly_proof_auto.
+Require Import Logic.LogicGenerator.demo932.Interface.
+Local Open Scope Z_scope.
+Local Open Scope sets.
+Local Open Scope string_scope.
+Local Open Scope list.
+Import Snaive_C_Rules.
+Require Import Ucos2Verify.VC.code.time.spec.time_dly_spec.
+Import UCOS2_C_Rules TaskStateDef SchedStateDef.
+Local Open Scope Z_scope.
+Local Open Scope sac.
+Local Open Scope sac.
+
+Lemma proof_of_OSTimeDly_entail_wit_2_1_split_goal_1 : OSTimeDly_entail_wit_2_1_split_goal_1.
+Proof. Abort.
+
+Lemma proof_of_OSTimeDly_entail_wit_2_1_split_goal_2 : OSTimeDly_entail_wit_2_1_split_goal_2.
+Proof. Abort.
+
+Lemma proof_of_OSTimeDly_entail_wit_2_1_split_goal_spatial : OSTimeDly_entail_wit_2_1_split_goal_spatial.
+Proof. Abort.
+
+Lemma proof_of_OSTimeDly_entail_wit_2_2_split_goal_1 : OSTimeDly_entail_wit_2_2_split_goal_1.
+Proof. Abort.
+
+Lemma proof_of_OSTimeDly_entail_wit_2_2_split_goal_2 : OSTimeDly_entail_wit_2_2_split_goal_2.
+Proof. Abort.
+
+Lemma proof_of_OSTimeDly_entail_wit_2_2_split_goal_spatial : OSTimeDly_entail_wit_2_2_split_goal_spatial.
+Proof. Abort.
+
+Lemma proof_of_OSTimeDly_entail_wit_3_split_goal_spatial : OSTimeDly_entail_wit_3_split_goal_spatial.
+Proof. Abort.
+
+Lemma proof_of_OSTimeDly_return_wit_1_split_goal_spatial : OSTimeDly_return_wit_1_split_goal_spatial.
+Proof. Abort.
+
+Lemma proof_of_OSTimeDly_return_wit_2_split_goal_spatial : OSTimeDly_return_wit_2_split_goal_spatial.
+Proof. Abort.
+
+Lemma proof_of_OSTimeDly_return_wit_3_split_goal_spatial : OSTimeDly_return_wit_3_split_goal_spatial.
+Proof. Abort.
+
+Lemma proof_of_OSTimeDly_return_wit_4_split_goal_spatial : OSTimeDly_return_wit_4_split_goal_spatial.
+Proof. Abort.
+
+Lemma proof_of_OSTimeDly_which_implies_wit_1_split_goal_1 : OSTimeDly_which_implies_wit_1_split_goal_1.
+Proof. Abort.
+
+Lemma proof_of_OSTimeDly_which_implies_wit_1_split_goal_2 : OSTimeDly_which_implies_wit_1_split_goal_2.
+Proof. Abort.
+
+Lemma proof_of_OSTimeDly_which_implies_wit_1_split_goal_3 : OSTimeDly_which_implies_wit_1_split_goal_3.
+Proof. Abort.
+
+Lemma proof_of_OSTimeDly_which_implies_wit_1_split_goal_4 : OSTimeDly_which_implies_wit_1_split_goal_4.
+Proof. Abort.
+
+Lemma proof_of_OSTimeDly_which_implies_wit_1_split_goal_5 : OSTimeDly_which_implies_wit_1_split_goal_5.
+Proof. Abort.
+
+Lemma proof_of_OSTimeDly_which_implies_wit_1_split_goal_spatial : OSTimeDly_which_implies_wit_1_split_goal_spatial.
+Proof. Abort.
+
+Lemma proof_of_OSTimeDly_which_implies_wit_2_split_goal_spatial : OSTimeDly_which_implies_wit_2_split_goal_spatial.
+Proof. Abort.
+
+Lemma proof_of_OSTimeDly_which_implies_wit_3_split_goal_1 : OSTimeDly_which_implies_wit_3_split_goal_1.
+Proof. Abort.
+
+Lemma proof_of_OSTimeDly_which_implies_wit_3_split_goal_2 : OSTimeDly_which_implies_wit_3_split_goal_2.
+Proof. Abort.
+
+Lemma proof_of_OSTimeDly_which_implies_wit_3_split_goal_spatial : OSTimeDly_which_implies_wit_3_split_goal_spatial.
+Proof. Abort.
+
+Lemma proof_of_OSTimeDly_which_implies_wit_4_split_goal_spatial : OSTimeDly_which_implies_wit_4_split_goal_spatial.
+Proof. Abort.
+
+Lemma proof_of_OSTimeDly_which_implies_wit_5_split_goal_1 : OSTimeDly_which_implies_wit_5_split_goal_1.
+Proof. Abort.
+
+Lemma proof_of_OSTimeDly_which_implies_wit_5_split_goal_2 : OSTimeDly_which_implies_wit_5_split_goal_2.
+Proof. Abort.
+
+Lemma proof_of_OSTimeDly_which_implies_wit_5_split_goal_spatial : OSTimeDly_which_implies_wit_5_split_goal_spatial.
+Proof. Abort.
+
+Lemma proof_of_OSTimeDly_which_implies_wit_6_split_goal_spatial : OSTimeDly_which_implies_wit_6_split_goal_spatial.
+Proof. Abort.
+
+Lemma proof_of_OSTimeDly_which_implies_wit_7_split_goal_1 : OSTimeDly_which_implies_wit_7_split_goal_1.
+Proof. Abort.
+
+Lemma proof_of_OSTimeDly_which_implies_wit_7_split_goal_2 : OSTimeDly_which_implies_wit_7_split_goal_2.
+Proof. Abort.
+
+Lemma proof_of_OSTimeDly_which_implies_wit_7_split_goal_spatial : OSTimeDly_which_implies_wit_7_split_goal_spatial.
+Proof. Abort.
+
+Lemma proof_of_OSTimeDly_which_implies_wit_8_split_goal_spatial : OSTimeDly_which_implies_wit_8_split_goal_spatial.
+Proof. Abort.
+
+Lemma proof_of_OSTimeDly_which_implies_wit_9_split_goal_spatial : OSTimeDly_which_implies_wit_9_split_goal_spatial.
+Proof. Abort.
+
+Lemma proof_of_OSTimeDly_which_implies_wit_10_split_goal_spatial : OSTimeDly_which_implies_wit_10_split_goal_spatial.
+Proof. Abort.
+

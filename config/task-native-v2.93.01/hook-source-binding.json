@@ -1,0 +1,49 @@
+{
+  "schema_version": "qcp-ucos2-task-hook-source-binding/v1",
+  "profile_id": "task-native-v2.93.01-official-empty-creation-hooks",
+  "user_selection": "2026-09-08: official empty creation hooks; retain an extensible effect/frame contract",
+  "base_configuration": {
+    "repository_commit": "bc43cbe9bb7d157d20ab1cf813d00e78da607dfb",
+    "files": [
+      "uC-OS2_verify/config/queue-v2.93.01-first-round/profile.json",
+      "uC-OS2_verify/config/queue-v2.93.01-first-round/os_cfg.h",
+      "uC-OS2_verify/config/queue-v2.93.01-first-round/app_cfg.h"
+    ],
+    "historical_profile_rewritten": false
+  },
+  "upstream": {
+    "repository": "https://github.com/weston-embedded/uC-OS2.git",
+    "release_tag": "v2.93.01",
+    "release_commit": "0c4a48e6fbc6e915714e816196619a5481accf0c",
+    "application_template": "Cfg/Template/app_hooks.c",
+    "port_wrappers": "Ports/ARM-Cortex-A/ARMv7-A/os_cpu_c.c",
+    "header_dependencies": [
+      "Source/os.h",
+      "Source/ucos_ii.h",
+      "Source/os_trace.h",
+      "Ports/ARM-Cortex-A/ARMv7-A/GNU/os_cpu.h"
+    ]
+  },
+  "selected_application_source": "uC-OS2_verify/config/task-native-v2.93.01/creation_hooks.c",
+  "configuration": {
+    "OS_CPU_HOOKS_EN": 1,
+    "OS_APP_HOOKS_EN": 1
+  },
+  "call_order": [
+    {"kernel_hook": "OSTCBInitHook", "application_hook": "App_TCBInitHook"},
+    {"kernel_hook": "OSTaskCreateHook", "application_hook": "App_TaskCreateHook"}
+  ],
+  "effect_claim": {
+    "scope": "direct application-hook bodies only",
+    "implementation": "each body is exactly (void)ptcb; with normal void return",
+    "heap_or_global_writes": false,
+    "nested_calls": false,
+    "environment_interference_removed": false,
+    "other_application_hooks_selected": false
+  },
+  "formal_integration": {
+    "claim": "source selection and diagnostic input, not proof or acceptance evidence",
+    "frozen_handoffs_rewritten": false,
+    "required": "Consume this selection in a new controller-bound source/claim version; prove the concrete hook instance and preserve the source-constrained environment relation. Do not silently upgrade an old candidate's assumptions."
+  }
+}

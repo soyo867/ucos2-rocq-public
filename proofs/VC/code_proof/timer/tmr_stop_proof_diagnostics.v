@@ -1,0 +1,229 @@
+From SimpleC.Verification Require Import VCPrelude.
+From Ucos2Verify.VC.code.timer Require Import tmr_stop_goal.
+From Ucos2Verify.VC.code.timer Require Import tmr_stop_proof_auto.
+From SimpleC.CoreLang Require Import CTypes.
+Import SimpleCtypeNotations.
+Require Import Ucos2Verify.VC.code.timer.spec.timer_callback_semantics.
+Import TimerCallback_C_Rules.
+Require Import Ucos2Verify.VC.code.timer.spec.tmr_unlink_spec.
+Require Import Ucos2Verify.VC.code.timer.spec.timer_callee_lift_spec.
+Require Import Ucos2Verify.VC.code.timer.spec.tmr_stop_fields_spec.
+Require Import Ucos2Verify.VC.code.timer.spec.tmr_stop_call_resources_spec.
+Import TimerCallback_C_Rules TimerCallback_C_Rules.Rules.
+Local Open Scope Z_scope.
+Local Open Scope sac.
+Local Open Scope sac.
+
+Lemma proof_of_OSTmrStop_entail_wit_1_split_goal_spatial : OSTmrStop_entail_wit_1_split_goal_spatial.
+Proof. Abort.
+
+Lemma proof_of_OSTmrStop_entail_wit_2_split_goal_spatial : OSTmrStop_entail_wit_2_split_goal_spatial.
+Proof. Abort.
+
+Lemma proof_of_OSTmrStop_entail_wit_3_split_goal_spatial : OSTmrStop_entail_wit_3_split_goal_spatial.
+Proof. Abort.
+
+Lemma proof_of_OSTmrStop_entail_wit_4_1_split_goal_spatial : OSTmrStop_entail_wit_4_1_split_goal_spatial.
+Proof. Abort.
+
+Lemma proof_of_OSTmrStop_entail_wit_4_2_split_goal_spatial : OSTmrStop_entail_wit_4_2_split_goal_spatial.
+Proof. Abort.
+
+Lemma proof_of_OSTmrStop_entail_wit_5_split_goal_spatial : OSTmrStop_entail_wit_5_split_goal_spatial.
+Proof. Abort.
+
+Lemma proof_of_OSTmrStop_entail_wit_6_split_goal_spatial : OSTmrStop_entail_wit_6_split_goal_spatial.
+Proof. Abort.
+
+Lemma proof_of_OSTmrStop_partial_solve_wit_5_pure_split_goal_1 : OSTmrStop_partial_solve_wit_5_pure_split_goal_1.
+Proof. Abort.
+
+Lemma proof_of_OSTmrStop_partial_solve_wit_8_pure_split_goal_1 : OSTmrStop_partial_solve_wit_8_pure_split_goal_1.
+Proof. Abort.
+
+Lemma proof_of_OSTmrStop_partial_solve_wit_15_pure_split_goal_1 : OSTmrStop_partial_solve_wit_15_pure_split_goal_1.
+Proof. Abort.
+
+Lemma proof_of_OSTmrStop_partial_solve_wit_29_pure_split_goal_1 : OSTmrStop_partial_solve_wit_29_pure_split_goal_1.
+Proof. Abort.
+
+Lemma proof_of_OSTmrStop_partial_solve_wit_38_pure_split_goal_1 : OSTmrStop_partial_solve_wit_38_pure_split_goal_1.
+Proof. Abort.
+
+Lemma proof_of_OSTmrStop_partial_solve_wit_72_pure_split_goal_1 : OSTmrStop_partial_solve_wit_72_pure_split_goal_1.
+Proof. Abort.
+
+Lemma proof_of_OSTmrStop_partial_solve_wit_72_pure_split_goal_2 : OSTmrStop_partial_solve_wit_72_pure_split_goal_2.
+Proof. Abort.
+
+Lemma proof_of_OSTmrStop_partial_solve_wit_73_pure_split_goal_1 : OSTmrStop_partial_solve_wit_73_pure_split_goal_1.
+Proof. Abort.
+
+Lemma proof_of_OSTmrStop_partial_solve_wit_73_pure_split_goal_2 : OSTmrStop_partial_solve_wit_73_pure_split_goal_2.
+Proof. Abort.
+
+Lemma proof_of_OSTmrStop_which_implies_wit_1_split_goal_1 : OSTmrStop_which_implies_wit_1_split_goal_1.
+Proof. Abort.
+
+Lemma proof_of_OSTmrStop_which_implies_wit_1_split_goal_2 : OSTmrStop_which_implies_wit_1_split_goal_2.
+Proof. Abort.
+
+Lemma proof_of_OSTmrStop_which_implies_wit_1_split_goal_spatial : OSTmrStop_which_implies_wit_1_split_goal_spatial.
+Proof. Abort.
+
+Lemma proof_of_OSTmrStop_which_implies_wit_3_split_goal_spatial : OSTmrStop_which_implies_wit_3_split_goal_spatial.
+Proof. Abort.
+
+Lemma proof_of_OSTmrStop_which_implies_wit_5_split_goal_spatial : OSTmrStop_which_implies_wit_5_split_goal_spatial.
+Proof. Abort.
+
+Lemma proof_of_OSTmrStop_which_implies_wit_7_split_goal_spatial : OSTmrStop_which_implies_wit_7_split_goal_spatial.
+Proof. Abort.
+
+Lemma proof_of_OSTmrStop_which_implies_wit_8_split_goal_spatial : OSTmrStop_which_implies_wit_8_split_goal_spatial.
+Proof. Abort.
+
+Lemma proof_of_OSTmrStop_which_implies_wit_9_split_goal_1 : OSTmrStop_which_implies_wit_9_split_goal_1.
+Proof. Abort.
+
+Lemma proof_of_OSTmrStop_which_implies_wit_9_split_goal_2 : OSTmrStop_which_implies_wit_9_split_goal_2.
+Proof. Abort.
+
+Lemma proof_of_OSTmrStop_which_implies_wit_9_split_goal_spatial : OSTmrStop_which_implies_wit_9_split_goal_spatial.
+Proof. Abort.
+
+Lemma proof_of_OSTmrStop_which_implies_wit_10_split_goal_spatial : OSTmrStop_which_implies_wit_10_split_goal_spatial.
+Proof. Abort.
+
+Lemma proof_of_OSTmrStop_which_implies_wit_12_split_goal_spatial : OSTmrStop_which_implies_wit_12_split_goal_spatial.
+Proof. Abort.
+
+Lemma proof_of_OSTmrStop_which_implies_wit_13_split_goal_spatial : OSTmrStop_which_implies_wit_13_split_goal_spatial.
+Proof. Abort.
+
+Lemma proof_of_OSTmrStop_which_implies_wit_14_split_goal_spatial : OSTmrStop_which_implies_wit_14_split_goal_spatial.
+Proof. Abort.
+
+Lemma proof_of_OSTmrStop_which_implies_wit_17_split_goal_1 : OSTmrStop_which_implies_wit_17_split_goal_1.
+Proof. Abort.
+
+Lemma proof_of_OSTmrStop_which_implies_wit_18_split_goal_spatial : OSTmrStop_which_implies_wit_18_split_goal_spatial.
+Proof. Abort.
+
+Lemma proof_of_OSTmrStop_which_implies_wit_19_split_goal_1 : OSTmrStop_which_implies_wit_19_split_goal_1.
+Proof. Abort.
+
+Lemma proof_of_OSTmrStop_which_implies_wit_19_split_goal_2 : OSTmrStop_which_implies_wit_19_split_goal_2.
+Proof. Abort.
+
+Lemma proof_of_OSTmrStop_which_implies_wit_19_split_goal_3 : OSTmrStop_which_implies_wit_19_split_goal_3.
+Proof. Abort.
+
+Lemma proof_of_OSTmrStop_which_implies_wit_19_split_goal_spatial : OSTmrStop_which_implies_wit_19_split_goal_spatial.
+Proof. Abort.
+
+Lemma proof_of_OSTmrStop_which_implies_wit_22_split_goal_spatial : OSTmrStop_which_implies_wit_22_split_goal_spatial.
+Proof. Abort.
+
+Lemma proof_of_OSTmrStop_which_implies_wit_24_split_goal_spatial : OSTmrStop_which_implies_wit_24_split_goal_spatial.
+Proof. Abort.
+
+Lemma proof_of_OSTmrStop_which_implies_wit_26_split_goal_1 : OSTmrStop_which_implies_wit_26_split_goal_1.
+Proof. Abort.
+
+Lemma proof_of_OSTmrStop_which_implies_wit_26_split_goal_2 : OSTmrStop_which_implies_wit_26_split_goal_2.
+Proof. Abort.
+
+Lemma proof_of_OSTmrStop_which_implies_wit_27_split_goal_spatial : OSTmrStop_which_implies_wit_27_split_goal_spatial.
+Proof. Abort.
+
+Lemma proof_of_OSTmrStop_which_implies_wit_28_split_goal_spatial : OSTmrStop_which_implies_wit_28_split_goal_spatial.
+Proof. Abort.
+
+Lemma proof_of_OSTmrStop_which_implies_wit_29_split_goal_spatial : OSTmrStop_which_implies_wit_29_split_goal_spatial.
+Proof. Abort.
+
+Lemma proof_of_OSTmrStop_which_implies_wit_30_split_goal_spatial : OSTmrStop_which_implies_wit_30_split_goal_spatial.
+Proof. Abort.
+
+Lemma proof_of_OSTmrStop_which_implies_wit_31_split_goal_spatial : OSTmrStop_which_implies_wit_31_split_goal_spatial.
+Proof. Abort.
+
+Lemma proof_of_OSTmrStop_which_implies_wit_33_split_goal_spatial : OSTmrStop_which_implies_wit_33_split_goal_spatial.
+Proof. Abort.
+
+Lemma proof_of_OSTmrStop_which_implies_wit_34_split_goal_1 : OSTmrStop_which_implies_wit_34_split_goal_1.
+Proof. Abort.
+
+Lemma proof_of_OSTmrStop_which_implies_wit_34_split_goal_2 : OSTmrStop_which_implies_wit_34_split_goal_2.
+Proof. Abort.
+
+Lemma proof_of_OSTmrStop_which_implies_wit_35_split_goal_spatial : OSTmrStop_which_implies_wit_35_split_goal_spatial.
+Proof. Abort.
+
+Lemma proof_of_OSTmrStop_which_implies_wit_36_split_goal_spatial : OSTmrStop_which_implies_wit_36_split_goal_spatial.
+Proof. Abort.
+
+Lemma proof_of_OSTmrStop_which_implies_wit_37_split_goal_spatial : OSTmrStop_which_implies_wit_37_split_goal_spatial.
+Proof. Abort.
+
+Lemma proof_of_OSTmrStop_which_implies_wit_38_split_goal_spatial : OSTmrStop_which_implies_wit_38_split_goal_spatial.
+Proof. Abort.
+
+Lemma proof_of_OSTmrStop_which_implies_wit_39_split_goal_spatial : OSTmrStop_which_implies_wit_39_split_goal_spatial.
+Proof. Abort.
+
+Lemma proof_of_OSTmrStop_which_implies_wit_40_split_goal_spatial : OSTmrStop_which_implies_wit_40_split_goal_spatial.
+Proof. Abort.
+
+Lemma proof_of_OSTmrStop_which_implies_wit_41_split_goal_spatial : OSTmrStop_which_implies_wit_41_split_goal_spatial.
+Proof. Abort.
+
+Lemma proof_of_OSTmrStop_which_implies_wit_42_split_goal_spatial : OSTmrStop_which_implies_wit_42_split_goal_spatial.
+Proof. Abort.
+
+Lemma proof_of_OSTmrStop_which_implies_wit_43_split_goal_spatial : OSTmrStop_which_implies_wit_43_split_goal_spatial.
+Proof. Abort.
+
+Lemma proof_of_OSTmrStop_which_implies_wit_45_split_goal_spatial : OSTmrStop_which_implies_wit_45_split_goal_spatial.
+Proof. Abort.
+
+Lemma proof_of_OSTmrStop_which_implies_wit_46_split_goal_spatial : OSTmrStop_which_implies_wit_46_split_goal_spatial.
+Proof. Abort.
+
+Lemma proof_of_OSTmrStop_which_implies_wit_47_split_goal_spatial : OSTmrStop_which_implies_wit_47_split_goal_spatial.
+Proof. Abort.
+
+Lemma proof_of_OSTmrStop_which_implies_wit_48_split_goal_1 : OSTmrStop_which_implies_wit_48_split_goal_1.
+Proof. Abort.
+
+Lemma proof_of_OSTmrStop_which_implies_wit_48_split_goal_spatial : OSTmrStop_which_implies_wit_48_split_goal_spatial.
+Proof. Abort.
+
+Lemma proof_of_OSTmrStop_which_implies_wit_51_split_goal_spatial : OSTmrStop_which_implies_wit_51_split_goal_spatial.
+Proof. Abort.
+
+Lemma proof_of_OSTmrStop_which_implies_wit_52_split_goal_spatial : OSTmrStop_which_implies_wit_52_split_goal_spatial.
+Proof. Abort.
+
+Lemma proof_of_OSTmrStop_which_implies_wit_53_split_goal_1 : OSTmrStop_which_implies_wit_53_split_goal_1.
+Proof. Abort.
+
+Lemma proof_of_OSTmrStop_which_implies_wit_53_split_goal_spatial : OSTmrStop_which_implies_wit_53_split_goal_spatial.
+Proof. Abort.
+
+Lemma proof_of_OSTmrStop_which_implies_wit_56_split_goal_spatial : OSTmrStop_which_implies_wit_56_split_goal_spatial.
+Proof. Abort.
+
+Lemma proof_of_OSTmrStop_which_implies_wit_57_split_goal_spatial : OSTmrStop_which_implies_wit_57_split_goal_spatial.
+Proof. Abort.
+
+Lemma proof_of_OSTmrStop_which_implies_wit_60_split_goal_1 : OSTmrStop_which_implies_wit_60_split_goal_1.
+Proof. Abort.
+
+Lemma proof_of_OSTmrStop_which_implies_wit_60_split_goal_spatial : OSTmrStop_which_implies_wit_60_split_goal_spatial.
+Proof. Abort.
+
+Lemma proof_of_OSTmrStop_which_implies_wit_61_split_goal_spatial : OSTmrStop_which_implies_wit_61_split_goal_spatial.
+Proof. Abort.
+

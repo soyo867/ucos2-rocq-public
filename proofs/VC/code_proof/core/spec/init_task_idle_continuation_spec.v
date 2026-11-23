@@ -1,0 +1,878 @@
+(** Ordered CreateExt/NameSet composition for the unchanged OS_InitTaskIdle body.
+    The real CreateExt returned context is consumed by NameSet. The output
+    owns only the actual named/current continuation world; the private child
+    failure buffer and missing literal pool remain separate. *)
+Require Export Ucos2Verify.VC.code.core.spec.init_task_idle_spec.
+Require Export Ucos2Verify.VC.code.task.spec.task_create_ext_continuation_spec.
+Require Export Ucos2Verify.VC.code.task.spec.task_name_set_continuation_spec.
+Require Import Ucos2Verify.VC.code.sched.spec.sched_stack_return_spec.
+Require Import Ucos2Verify.VC.code.interrupt.spec.armv7a_irq_entry_spec.
+Require Import Ucos2Verify.VC.code.interrupt.spec.armv7a_irq_counter_spec.
+Require Import Ucos2Verify.VC.code.interrupt.spec.int_exit_spec.
+Require Import Ucos2Verify.VC.code.interrupt.spec.int_exit_selection_heap_spec.
+Require Import Ucos2Verify.lib.cross_module_invariants.
+Require Import Coq.ZArith.ZArith Coq.Lists.List Coq.Strings.String Coq.micromega.Lia.
+From SimpleC.SL Require Import Mem SeparationLogic.
+From MonadLib.StateRelMonad Require Import StateRelBasic safeexec_lib.
+Import UCOS2_C_Rules TaskStateDef SchedStateDef ListNotations.
+Local Open Scope Z_scope.
+Local Open Scope string_scope.
+Local Open Scope list_scope.
+Local Open Scope sac_scope.
+
+
+Lemma init_task_idle_continuation_name_api_pre_entry :
+  forall environment critical saved_local sg region args task_return lower old_frame upper
+    call mask initial LitMap literals,
+  task_create_name_api_pre environment critical saved_local sg region args task_return
+    lower old_frame upper call mask initial LitMap literals |--
+  coq_prop (task_create_stack_entry sg args (LitMap "?") call initial) &&
+  task_create_name_api_pre environment critical saved_local sg region args task_return
+    lower old_frame upper call mask initial LitMap literals.
+Proof.
+  intros environment critical saved_local sg region args task_return lower old_frame upper
+    call mask initial LitMap literals heap Hpre.
+  split; [|exact Hpre].
+  pose proof (task_create_name_api_pre_open environment critical saved_local sg region args task_return
+    lower old_frame upper call mask initial LitMap literals heap Hpre) as [_ Hopened].
+  destruct Hopened as (owned & strings & Hjoin & Hcontinuation & Hstrings).
+  exact (proj1 (proj1 Hcontinuation)).
+Qed.
+
+
+(** These facts concern the source allocation lifecycle. They do not infer
+    a complete returned context from [same_call] or supply an invariant
+    omitted by an intervening pure-program projection. *)
+Lemma init_task_continuation_no_reservation_after_frame : forall invocation before after,
+  task_create_stack_no_reservation before invocation ->
+  task_creation_frame invocation before.(TskState) after.(TskState) ->
+  task_create_stack_no_reservation after invocation.
+Proof.
+  intros invocation before after Hnone Hframe priority entry Hentry Hinvocation.
+  assert (Hreverse : task_creation_frame invocation after.(TskState) before.(TskState)).
+  { unfold task_creation_frame in *; symmetry; exact Hframe. }
+  exact (Hnone priority entry
+    (task_creation_frame_lookup invocation _ _ priority entry Hreverse Hentry Hinvocation)
+    Hinvocation).
+Qed.
+
+Lemma init_task_continuation_entry_same_call : forall sg args name original returned state,
+  task_tcb_init_stack_same_call returned original ->
+  task_create_stack_entry sg args name original state ->
+  task_create_stack_entry sg args name returned state.
+Proof.
+  intros * [Hinvocation [Horigin Hstack]] Hentry.
+  unfold task_create_stack_entry in *; rewrite Hinvocation, Horigin; exact Hentry.
+Qed.
+
+Lemma init_task_continuation_save_preserves_call :
+  forall environment critical sg original mask before returned saved current,
+  task_create_save_program environment critical sg original mask before (returned, saved) current ->
+  task_tcb_init_call_preserved sg original.(os_sched_call_invocation) before current.
+Proof.
+  intros * [Hsource Hhistory].
+  eapply task_tcb_init_interval_preserves_call.
+  eapply kernel_call_save_source_region_interval; exact Hsource.
+Qed.
+
+Lemma init_task_continuation_restore_preserves_call :
+  forall environment critical sg original before returned current,
+  task_create_restore_program environment critical sg original before returned current ->
+  task_tcb_init_call_preserved sg original.(os_sched_call_invocation) before current.
+Proof.
+  intros * [Hsource Hhistory].
+  eapply task_tcb_init_interval_preserves_call.
+  exact (proj1 (kernel_resumption_task_source_trace_erases _ _ _ _ _ _ _ _ _ _ _ Hsource)).
+Qed.
+
+Lemma init_task_continuation_reserve_entry : forall sg args name call before,
+  task_create_stack_entry sg args name call before ->
+  task_priority_in_range sg args.(createPriority) ->
+  before.(TskState).(prioTbl) args.(createPriority) = PTFree ->
+  task_tcb_init_entry sg (task_tcb_init_stack_call_args args name)
+    call.(os_sched_call_invocation) call.(os_sched_call_origin)
+    (task_create_stack_reserved args call before).
+Proof.
+  intros sg args name call before [Hvalid [Hactive [Hnone Hname]]] Hpriority Hfree.
+  assert (Hguard : task_reserve_guard sg before.(TskState) args.(createPriority)
+    call.(os_sched_call_invocation) call.(os_sched_call_origin)).
+  { unfold task_reserve_guard, task_invocation_active in *; tauto. }
+  pose proof (UCOS2_task_reserve_preserves_validity sg before args.(createPriority)
+    call.(os_sched_call_invocation) call.(os_sched_call_origin) Hvalid Hguard) as Hpost.
+  assert (Hprio : (task_tcb_init_stack_call_args args name).(initPrio) = args.(createPriority)).
+  { unfold task_tcb_init_stack_call_args, task_create_tcb_args; destruct args.(createExtension); reflexivity. }
+  unfold task_tcb_init_entry, task_tcb_init_pending; rewrite Hprio.
+  split; [exact Hpost|]. split; [exact Hpriority|]. split; [exact Hactive|]. split.
+  - cbn; destruct (Z.eq_dec args.(createPriority) args.(createPriority)); [reflexivity|contradiction].
+  - exact Hname.
+Qed.
+
+Lemma init_task_continuation_rollback_no_reservation : forall sg args invocation state,
+  UCOS2_state_inv sg state ->
+  task_rollback_guard state.(TskState) args.(createPriority) invocation ->
+  task_create_stack_no_reservation (task_create_stack_rolled_back args state) invocation.
+Proof.
+  intros sg args invocation state Hvalid [entry [Hentry [Hinvocation Hempty]]]
+    priority other Hother Hsame.
+  pose proof (proj1 (proj2 (proj2 (proj2 (proj1 (proj2 Hvalid)))))) as Hclosure.
+  destruct Hclosure as [Hbindings Hunique].
+  cbn in Hother; destruct (Z.eq_dec priority args.(createPriority)) as [Heq|Hne];
+    [discriminate|].
+  apply Hne; eapply Hunique; [exact Hother|exact Hentry|congruence].
+Qed.
+
+Lemma init_task_continuation_rollback_preserves_active : forall args invocation origin state,
+  task_invocation_active state.(TskState) invocation origin ->
+  task_invocation_active (task_create_stack_rolled_back args state).(TskState) invocation origin.
+Proof.
+  intros args invocation origin state Hactive.
+  unfold task_invocation_active, task_invocation_origin_live in *.
+  destruct origin; exact Hactive.
+Qed.
+
+Lemma init_task_continuation_commit_no_reservation : forall sg args invocation node state entry,
+  UCOS2_state_inv sg state ->
+  state.(TskState).(taskLifecycle).(taskReservations) args.(initPrio) = Some entry ->
+  entry.(creationInvocation) = invocation ->
+  task_create_stack_no_reservation (task_tcb_init_commit_state sg args invocation node state) invocation.
+Proof.
+  intros sg args invocation node state entry Hvalid Hentry Hinvocation
+    priority other Hother Hsame.
+  pose proof (proj1 (proj2 (proj2 (proj2 (proj1 (proj2 Hvalid)))))) as Hclosure.
+  destruct Hclosure as [Hbindings Hunique].
+  cbn in Hother; destruct (Z.eq_dec priority args.(initPrio)) as [Heq|Hne];
+    [discriminate|].
+  apply Hne; eapply Hunique; [exact Hother|exact Hentry|congruence].
+Qed.
+
+Lemma init_task_continuation_tcb_call_lifecycle :
+  forall sg args invocation origin initial error released,
+  task_tcb_init_entry sg args invocation origin initial ->
+  task_tcb_init_call_result sg args invocation origin initial error released ->
+  task_invocation_active released.(TskState) invocation origin /\
+  (error = 0 -> task_create_stack_no_reservation released invocation) /\
+  (error = 66 -> task_rollback_guard released.(TskState) args.(initPrio) invocation).
+Proof.
+  intros sg args invocation origin initial error released Hentry Hresult.
+  destruct Hresult as
+    [acquired Hpreserved Hempty Hpending Hvalid
+    |acquired slot rest old current entry allocation node Hfirst Hdetach Hsecond
+      Hlookup Hinvocation Horigin Hallocation Hslot Hgeneration Hidentity Hlayout Hvalid Hcommitted].
+  - pose proof (task_tcb_init_call_preserves_entry sg args invocation origin initial acquired
+      Hentry Hpreserved) as Hacquired.
+    split; [exact (proj1 (proj2 (proj2 Hacquired)))|]. split; [discriminate|].
+    intros _; exists (task_tcb_init_initial_entry invocation origin).
+    split; [exact Hpending|split; reflexivity].
+  - pose proof (task_tcb_init_call_preserves_entry sg args invocation origin initial acquired
+      Hentry Hfirst) as Hacquired.
+    destruct (task_tcb_init_call_preserves_allocation sg args invocation origin acquired
+      slot rest old current Hacquired Hdetach Hsecond) as [_ [_ Hactive]].
+    split.
+    + eapply task_commit_preserves_invocation_active;
+        [exact (proj1 (proj2 Hvalid))|exact Hidentity|exact Hactive].
+    + split; [intros _|discriminate].
+      eapply init_task_continuation_commit_no_reservation; eassumption.
+Qed.
+
+Lemma init_task_continuation_return_lifecycle : forall original released current,
+  task_tcb_init_stack_return_preserved original released current ->
+  task_invocation_active released.(TskState) original.(os_sched_call_invocation)
+    original.(os_sched_call_origin) ->
+  task_create_stack_no_reservation released original.(os_sched_call_invocation) ->
+  task_invocation_active current.(TskState) original.(os_sched_call_invocation)
+    original.(os_sched_call_origin) /\
+  task_create_stack_no_reservation current original.(os_sched_call_invocation).
+Proof.
+  intros original released current [Hframe [Hactive Hsource]] Hlive Hnone.
+  split; [apply Hactive; exact Hlive|].
+  eapply init_task_continuation_no_reservation_after_frame; eassumption.
+Qed.
+
+
+Lemma init_task_continuation_name_post_preserves_entry :
+  forall environment critical sg args initial_name original mask request name
+    before returned error current X,
+  task_create_stack_entry sg args initial_name original before ->
+  task_name_set_continuation_call_post environment critical sg original mask request name
+    before returned error current X ->
+  task_create_stack_entry sg args initial_name returned current.
+Proof.
+  intros * Hentry [Hresult [Hpreserved Hsafe]].
+  eapply init_task_continuation_entry_same_call.
+  - eapply task_name_set_continuation_call_result_same_call; exact Hresult.
+  - eapply task_create_stack_entry_after_call; eassumption.
+Qed.
+
+Lemma init_task_continuation_name_program_preserves_entry :
+  forall environment critical sg args initial_name original mask request name
+    before returned error current,
+  task_create_stack_entry sg args initial_name original before ->
+  task_name_set_continuation_call_program environment critical sg original mask request name
+    before (returned, error) current ->
+  task_tcb_init_stack_same_call returned original ->
+  task_create_stack_entry sg args initial_name returned current.
+Proof.
+  intros * Hentry Hrun Hsame.
+  eapply init_task_continuation_entry_same_call; [exact Hsame|].
+  eapply task_create_stack_entry_after_call; [exact Hentry|].
+  eapply task_name_set_continuation_call_program_preserves_call; exact Hrun.
+Qed.
+
+
+Lemma init_task_continuation_priority_in_range : forall sg state priority,
+  UCOS2_state_inv sg state -> 0 <= priority <= 63 -> task_priority_in_range sg priority.
+Proof.
+  intros sg state priority Hvalid Hpriority.
+  pose proof (proj1 (proj1 Hvalid)) as Hstable.
+  unfold task_priority_in_range, valid_stable_glob_vars in *; tauto || lia.
+Qed.
+
+Lemma init_task_continuation_tcb_entry_same_call : forall sg args name original returned state,
+  task_tcb_init_stack_same_call returned original ->
+  task_tcb_init_entry sg (task_tcb_init_stack_call_args args name)
+    original.(os_sched_call_invocation) original.(os_sched_call_origin) state ->
+  task_tcb_init_entry sg (task_tcb_init_stack_call_args args name)
+    returned.(os_sched_call_invocation) returned.(os_sched_call_origin) state.
+Proof. intros * [Hi [Ho Hstack]] Hentry; rewrite Hi, Ho; exact Hentry. Qed.
+
+Lemma init_task_continuation_save_entry :
+  forall environment critical sg args name original mask before returned saved current,
+  task_create_stack_entry sg args name original before ->
+  task_create_save_program environment critical sg original mask before (returned, saved) current ->
+  task_create_stack_entry sg args name returned current.
+Proof.
+  intros * Hentry Hrun.
+  pose proof Hrun as [Hsource [[Hsame Havailable] Hcontrol]].
+  eapply init_task_continuation_entry_same_call; [exact Hsame|].
+  eapply task_create_stack_entry_after_call; [exact Hentry|].
+  eapply init_task_continuation_save_preserves_call; exact Hrun.
+Qed.
+
+Lemma init_task_continuation_restore_entry :
+  forall environment critical sg args name original before returned current,
+  task_create_stack_entry sg args name original before ->
+  task_create_restore_program environment critical sg original before returned current ->
+  task_create_stack_entry sg args name returned current.
+Proof.
+  intros * Hentry Hrun.
+  pose proof Hrun as [Hsource [[Hsame Havailable] Hcontrol]].
+  eapply init_task_continuation_entry_same_call; [exact Hsame|].
+  eapply task_create_stack_entry_after_call; [exact Hentry|].
+  eapply init_task_continuation_restore_preserves_call; exact Hrun.
+Qed.
+
+Lemma init_task_continuation_restore_tcb_entry :
+  forall environment critical sg args name original before returned current,
+  task_tcb_init_entry sg (task_tcb_init_stack_call_args args name)
+    original.(os_sched_call_invocation) original.(os_sched_call_origin) before ->
+  task_create_restore_program environment critical sg original before returned current ->
+  task_tcb_init_entry sg (task_tcb_init_stack_call_args args name)
+    returned.(os_sched_call_invocation) returned.(os_sched_call_origin) current.
+Proof.
+  intros * Hentry Hrun.
+  pose proof Hrun as [Hsource [[Hsame Havailable] Hcontrol]].
+  eapply init_task_continuation_tcb_entry_same_call; [exact Hsame|].
+  eapply task_tcb_init_call_preserves_entry; [exact Hentry|].
+  eapply init_task_continuation_restore_preserves_call; exact Hrun.
+Qed.
+
+Lemma init_task_continuation_stack_result_lifecycle :
+  forall critical sg region args task_return lower upper name invocation origin initial error released,
+  task_tcb_init_entry sg (task_tcb_init_stack_call_args args name) invocation origin initial ->
+  task_tcb_init_stack_call_result critical sg region args task_return lower upper name
+    invocation origin initial error released ->
+  task_invocation_active released.(TskState) invocation origin /\
+  (error = 0 -> task_create_stack_no_reservation released invocation) /\
+  (error = 66 -> task_rollback_guard released.(TskState) args.(createPriority) invocation).
+Proof.
+  intros * Hentry Hresult.
+  assert (Hprio : (task_tcb_init_stack_call_args args name).(initPrio) = args.(createPriority)).
+  { unfold task_tcb_init_stack_call_args, task_create_tcb_args; destruct args.(createExtension); reflexivity. }
+  destruct Hresult as [released Hraw|acquired current slot image lease Hraw Hpublication].
+  - pose proof (init_task_continuation_tcb_call_lifecycle sg
+      (task_tcb_init_stack_call_args args name) invocation origin initial 66 released Hentry Hraw) as Hlife.
+    rewrite Hprio in Hlife; exact Hlife.
+  - destruct (init_task_continuation_tcb_call_lifecycle sg
+      (task_tcb_init_stack_call_args args name) invocation origin initial 0 _ Hentry Hraw)
+      as [Hactive [Hnone Hguard]].
+    split.
+    + unfold task_invocation_active, task_invocation_origin_live in *.
+      destruct origin; exact Hactive.
+    + split; [intros _; exact (Hnone eq_refl)|discriminate].
+Qed.
+
+Lemma init_task_continuation_tcb_program_lifecycle :
+  forall critical sg region args task_return lower upper name original initial returned error current,
+  task_tcb_init_entry sg (task_tcb_init_stack_call_args args name)
+    original.(os_sched_call_invocation) original.(os_sched_call_origin) initial ->
+  task_create_ext_continuation_tcb_program critical sg region args task_return lower upper name
+    original initial (returned, error) current ->
+  task_tcb_init_stack_same_call returned original /\ UCOS2_state_inv sg current /\
+  task_invocation_active current.(TskState) returned.(os_sched_call_invocation)
+    returned.(os_sched_call_origin) /\
+  (error = 0 -> task_create_stack_no_reservation current returned.(os_sched_call_invocation)) /\
+  (error = 66 -> task_rollback_guard current.(TskState) args.(createPriority)
+    returned.(os_sched_call_invocation)).
+Proof.
+  intros * Hentry [Hproject Hcurrent].
+  destruct Hproject as (released & Hresult & Hreleased & Hsource & Hsame & Hreturn & Hready & Hhistory & Hnames).
+  cbn in Hsame.
+  destruct Hreturn as [Hframe [Hresume Hordinary]].
+  destruct (init_task_continuation_stack_result_lifecycle critical sg region args task_return lower upper name
+    original.(os_sched_call_invocation) original.(os_sched_call_origin) initial error released Hentry Hresult)
+    as [Hactive [Hnone Hguard]].
+  split; [exact Hsame|]. split; [exact Hcurrent|].
+  destruct Hsame as [Hi [Ho Hstack]]; rewrite Hi, Ho.
+  split; [apply Hresume; exact Hactive|]. split.
+  - intros Herr; eapply init_task_continuation_no_reservation_after_frame;
+      [apply Hnone; exact Herr|exact Hframe].
+  - intros Herr; destruct (Hguard Herr) as [entry [HentryLookup [Hinv Hempty]]].
+    exists entry; split; [|auto].
+    eapply task_creation_frame_lookup; eassumption.
+Qed.
+
+Lemma init_task_continuation_rollback_entry :
+  forall environment critical sg args name original mask before returned error current,
+  UCOS2_state_inv sg before ->
+  task_invocation_active before.(TskState) original.(os_sched_call_invocation) original.(os_sched_call_origin) ->
+  task_tcb_init_name_valid sg (task_tcb_init_stack_call_args args name) before ->
+  task_rollback_guard before.(TskState) args.(createPriority) original.(os_sched_call_invocation) ->
+  task_create_ext_continuation_rollback_program environment critical sg args original mask
+    before (returned, error) current ->
+  task_create_stack_entry sg args name returned current.
+Proof.
+  intros * Hvalid Hactive Hname Hguard
+    [[acquired_call saved] [acquired [Hsave [ignored [released [Hupdate [restored [final [Hrestore Hret]]]]]]]]].
+  unfold update', update in Hupdate; change (released = task_create_stack_rolled_back args acquired) in Hupdate.
+  subst released; destruct Hret as [Hresult Hcurrent]; inversion Hresult; subst restored error final.
+  pose proof Hsave as [Hsource [[Hsame Havailable] Hcontrol]].
+  destruct (init_task_continuation_save_preserves_call environment critical sg original mask
+    before acquired_call saved acquired Hsave Hvalid) as [Hacquired [Hframe [Hresume Hnames]]].
+  cbn in Hsame.
+  destruct Hsame as [Hi [Ho Hstack]].
+  assert (Hacquired_guard : task_rollback_guard acquired.(TskState) args.(createPriority)
+    acquired_call.(os_sched_call_invocation)).
+  { rewrite Hi; destruct Hguard as [entry [Hlookup [Hinv Hempty]]].
+    exists entry; split; [eapply task_creation_frame_lookup; eassumption|auto]. }
+  assert (Hrolled : task_create_stack_entry sg args name acquired_call
+    (task_create_stack_rolled_back args acquired)).
+  { split.
+    - eapply UCOS2_task_rollback_preserves_validity; eassumption.
+    - split.
+      + apply init_task_continuation_rollback_preserves_active; rewrite Hi, Ho.
+        apply Hresume; exact Hactive.
+      + split.
+        * eapply init_task_continuation_rollback_no_reservation; eassumption.
+        * unfold task_tcb_init_name_valid in *; cbn; rewrite <- Hnames; exact Hname. }
+  eapply init_task_continuation_restore_entry; [exact Hrolled|exact Hrestore].
+Qed.
+
+Lemma init_task_continuation_tcb_return_entry :
+  forall environment critical sg args name original mask before tcb_error returned error current,
+  before.(SchedState).(isRunning) = false -> UCOS2_state_inv sg before ->
+  task_invocation_active before.(TskState) original.(os_sched_call_invocation) original.(os_sched_call_origin) ->
+  task_tcb_init_name_valid sg (task_tcb_init_stack_call_args args name) before ->
+  (tcb_error = 0 \/ tcb_error = 66) ->
+  (tcb_error = 0 -> task_create_stack_no_reservation before original.(os_sched_call_invocation)) ->
+  (tcb_error = 66 -> task_rollback_guard before.(TskState) args.(createPriority)
+    original.(os_sched_call_invocation)) ->
+  task_create_ext_continuation_tcb_return_program environment critical sg args original mask tcb_error
+    before (returned, error) current ->
+  task_create_stack_entry sg args name returned current.
+Proof.
+  intros * Hstop Hvalid Hactive Hname Hcodes Hnone Hguard Hrun.
+  unfold task_create_ext_continuation_tcb_return_program in Hrun.
+  destruct Hcodes as [Hsuccess | Hfailure]; subst tcb_error; cbn in Hrun.
+  - destruct Hrun as [running [middle [[Hrunning Hmiddle] Hrun]]]; subst running middle.
+    rewrite Hstop in Hrun; destruct Hrun as [Hresult Hcurrent]; inversion Hresult; subst returned error current.
+    split; [exact Hvalid|]. split; [exact Hactive|]. split; [apply Hnone; reflexivity|exact Hname].
+  - eapply init_task_continuation_rollback_entry; eauto.
+Qed.
+
+Lemma init_task_continuation_initialized_entry :
+  forall environment critical sg region args task_return lower upper name original mask
+    before returned error current,
+  before.(SchedState).(isRunning) = false ->
+  task_tcb_init_entry sg (task_tcb_init_stack_call_args args name)
+    original.(os_sched_call_invocation) original.(os_sched_call_origin) before ->
+  task_create_ext_continuation_initialized_program environment critical sg region args task_return
+    lower upper name original mask before (returned, error) current ->
+  task_create_stack_entry sg args name returned current.
+Proof.
+  intros * Hstop Hentry [[tcb_call tcb_error] [checkpoint [Htcb Hnext]]].
+  pose proof (proj1 Htcb) as (released & Hresult & Hreleased & Hsource & Hsame & Hreturn & Hready & Hhistory & Hnames).
+  destruct Hhistory as [[Hsame' Havailable] [Hrunning Hnesting]].
+  pose proof (proj2 Htcb) as Hcurrent.
+  destruct (init_task_continuation_tcb_program_lifecycle critical sg region args task_return lower upper name
+    original before tcb_call tcb_error checkpoint Hentry Htcb) as [_ [_ [Hactive [Hnone Hguard]]]].
+  assert (Hcodes : tcb_error = 0 \/ tcb_error = 66).
+  { cbn in Hresult; inversion Hresult; subst; auto. }
+  assert (Hname : task_tcb_init_name_valid sg (task_tcb_init_stack_call_args args name) checkpoint).
+  { unfold task_tcb_init_name_valid; rewrite <- Hnames; exact (proj2 (proj2 (proj2 (proj2 Hentry)))). }
+  eapply (init_task_continuation_tcb_return_entry environment critical sg args name tcb_call mask
+    checkpoint tcb_error returned error current).
+  - rewrite Hrunning; exact Hstop.
+  - exact Hcurrent.
+  - exact Hactive.
+  - exact Hname.
+  - exact Hcodes.
+  - exact Hnone.
+  - exact Hguard.
+  - exact Hnext.
+Qed.
+
+Lemma init_task_continuation_initialize_entry :
+  forall environment critical sg region args task_return lower upper name original mask
+    before returned error current,
+  before.(SchedState).(isRunning) = false ->
+  task_tcb_init_entry sg (task_tcb_init_stack_call_args args name)
+    original.(os_sched_call_invocation) original.(os_sched_call_origin) before ->
+  task_create_ext_continuation_initialize_program environment critical sg region args task_return
+    lower upper name original mask before (returned, error) current ->
+  task_create_stack_entry sg args name returned current.
+Proof.
+  intros * Hstop Hentry [[initialized_call sp] [initialized [Hstep Hnext]]].
+  destruct Hstep as (Hsp & Hpreserved & Hsource & Hhistory & Hnames).
+  destruct Hhistory as [[Hsame Havailable] [Hrunning Hnesting]].
+  eapply (init_task_continuation_initialized_entry environment critical sg region args task_return
+    lower upper name initialized_call mask initialized returned error current).
+  - rewrite Hrunning; exact Hstop.
+  - eapply init_task_continuation_tcb_entry_same_call; [exact Hsame|].
+    exact (Hpreserved name Hentry).
+  - exact Hnext.
+Qed.
+
+Lemma init_task_continuation_reserved_entry :
+  forall environment critical sg region args task_return lower upper name original mask
+    before returned error current,
+  before.(SchedState).(isRunning) = false ->
+  task_tcb_init_entry sg (task_tcb_init_stack_call_args args name)
+    original.(os_sched_call_invocation) original.(os_sched_call_origin) before ->
+  task_create_ext_continuation_reserved_program environment critical sg region args task_return
+    lower upper name original mask before (returned, error) current ->
+  task_create_stack_entry sg args name returned current.
+Proof.
+  intros * Hstop Hentry [restored [checkpoint [Hrestore Hnext]]].
+  pose proof Hrestore as [Hsource [[Hsame Havailable] [Hrunning Hnesting]]].
+  eapply (init_task_continuation_initialize_entry environment critical sg region args task_return
+    lower upper name restored mask checkpoint returned error current).
+  - rewrite Hrunning; exact Hstop.
+  - eapply init_task_continuation_restore_tcb_entry; [exact Hentry|exact Hrestore].
+  - exact Hnext.
+Qed.
+
+Lemma init_task_continuation_acquired_entry :
+  forall environment critical sg region args task_return lower upper name original active mask
+    before returned error current,
+  before.(SchedState).(isRunning) = false ->
+  task_priority_in_range sg args.(createPriority) ->
+  task_tcb_init_stack_same_call active original ->
+  task_create_stack_entry sg args name active before ->
+  task_create_ext_continuation_acquired_program environment critical sg region args task_return
+    lower upper name original active mask before (returned, error) current ->
+  task_create_stack_entry sg args name returned current.
+Proof.
+  intros * Hstop Hpriority Hsame Hentry [acquired [middle [[Hacquired Hmiddle] Hnext]]].
+  subst acquired middle.
+  destruct (Z.ltb 0 (task_create_stack_nesting before)).
+  - destruct Hnext as [restored [final [Hrestore Hret]]].
+    destruct Hret as [Hresult Hcurrent]; inversion Hresult; subst restored error final.
+    eapply init_task_continuation_restore_entry; [exact Hentry|exact Hrestore].
+  - destruct (Z.eqb (task_create_stack_priority sg args before) 0) eqn:Hfree.
+    + destruct Hnext as [ignored [reserved [Hupdate Hnext]]].
+      unfold update', update in Hupdate; change (reserved = task_create_stack_reserved args original before) in Hupdate.
+      subst reserved.
+      assert (Horiginal : task_create_stack_entry sg args name original before).
+      { destruct Hsame as [Hi [Ho Hstack]]; unfold task_create_stack_entry in Hentry |- *;
+          rewrite Hi, Ho in Hentry; exact Hentry. }
+      assert (Hreserved : task_tcb_init_entry sg (task_tcb_init_stack_call_args args name)
+        original.(os_sched_call_invocation) original.(os_sched_call_origin)
+        (task_create_stack_reserved args original before)).
+      { apply init_task_continuation_reserve_entry; [exact Horiginal|exact Hpriority|].
+        eapply task_create_stack_priority_zero_is_free; [exact (proj1 Horiginal)|exact Hpriority|].
+        apply Z.eqb_eq; exact Hfree. }
+      eapply (init_task_continuation_reserved_entry environment critical sg region args task_return
+        lower upper name active mask (task_create_stack_reserved args original before) returned error current).
+      * exact Hstop.
+      * eapply init_task_continuation_tcb_entry_same_call; [exact Hsame|exact Hreserved].
+      * exact Hnext.
+    + destruct Hnext as [restored [final [Hrestore Hret]]].
+      destruct Hret as [Hresult Hcurrent]; inversion Hresult; subst restored error final.
+      eapply init_task_continuation_restore_entry; [exact Hentry|exact Hrestore].
+Qed.
+
+Lemma init_task_continuation_program_preserves_entry :
+  forall environment critical sg region args task_return lower upper name original mask
+    before returned error current,
+  before.(SchedState).(isRunning) = false ->
+  0 <= args.(createPriority) <= 63 ->
+  task_create_stack_entry sg args name original before ->
+  task_create_ext_continuation_program environment critical sg region args task_return
+    lower upper name original mask before (returned, error) current ->
+  task_create_stack_entry sg args name returned current.
+Proof.
+  intros * Hstop Hpriority Hentry Hrun.
+  unfold task_create_ext_continuation_program in Hrun.
+  destruct (Z.ltb 63 (unsigned_last_nbits args.(createPriority) 32)).
+  - destruct Hrun as [Hresult Hcurrent]; inversion Hresult; subst returned error current; exact Hentry.
+  - destruct Hrun as [[active saved] [acquired [Hsave Hnext]]].
+    pose proof Hsave as [Hsource [[Hsame Havailable] [Hrunning Hnesting]]].
+    pose proof (init_task_continuation_save_entry environment critical sg args name original mask
+      before active saved acquired Hentry Hsave) as Hacquired.
+    eapply (init_task_continuation_acquired_entry environment critical sg region args task_return
+      lower upper name original active mask acquired returned error current).
+    + rewrite Hrunning; exact Hstop.
+    + eapply init_task_continuation_priority_in_range; [exact (proj1 Hacquired)|exact Hpriority].
+    + exact Hsame.
+    + exact Hacquired.
+    + exact Hnext.
+Qed.
+
+Definition init_task_idle_continuation_phase_frame (before after : UCOS2_Verify_State) : Prop :=
+  before.(TimerState).(timerInitPhase) = after.(TimerState).(timerInitPhase).
+
+Definition init_task_idle_continuation_create_program environment critical sg entry base task_return
+  lower old_frame upper call mask LitMap :=
+  task_create_ext_continuation_program environment critical sg (init_task_idle_stack_region base)
+    (init_task_idle_create_args entry base) task_return
+    (init_task_idle_after_lower entry base lower old_frame upper)
+    (init_task_idle_after_upper entry base lower old_frame upper) (LitMap "?") call mask.
+
+Definition init_task_idle_continuation_sequence environment critical sg entry base task_return
+  lower old_frame upper call mask LitMap : program UCOS2_Verify_State OsSchedCallContext :=
+  StateRelMonad.bind
+    (init_task_idle_continuation_create_program environment critical sg entry base task_return
+      lower old_frame upper call mask LitMap)
+    (fun created => StateRelMonad.bind
+      (task_name_set_continuation_call_program environment critical sg (fst created) mask 63 (LitMap "uC/OS-II Idle"))
+      (fun named => StateRelMonad.ret (fst named))).
+
+Definition init_task_idle_continuation_safe environment critical sg entry base task_return
+  lower old_frame upper call mask LitMap before (X : OsSchedCallContext -> UCOS2_Verify_State -> Prop) : Prop :=
+  safeExec (eq before)
+    (init_task_idle_continuation_sequence environment critical sg entry base task_return
+      lower old_frame upper call mask LitMap) X.
+
+Definition init_task_idle_continuation_name_postcondition
+  (X : OsSchedCallContext -> UCOS2_Verify_State -> Prop)
+  : OsSchedCallContext -> Z -> UCOS2_Verify_State -> Prop := fun returned _ current => X returned current.
+
+Definition init_task_idle_continuation_create_postcondition environment critical sg entry base task_return
+  lower old_frame upper call mask LitMap before (X : OsSchedCallContext -> UCOS2_Verify_State -> Prop)
+  : OsSchedCallContext -> Z -> UCOS2_Verify_State -> Prop := fun returned error current =>
+  init_task_idle_continuation_create_program environment critical sg entry base task_return
+    lower old_frame upper call mask LitMap before (returned, error) current /\
+  init_task_idle_boot_frame before current /\
+  readable_name current.(NameState) (LitMap "uC/OS-II Idle") init_task_idle_name_chars /\
+  task_create_stack_entry sg (init_task_idle_create_args entry base) (LitMap "?") returned current /\
+  task_name_set_continuation_call_safe environment critical sg returned mask 63 (LitMap "uC/OS-II Idle") current
+    (init_task_idle_continuation_name_postcondition X).
+
+Lemma init_task_idle_continuation_safe_create : forall environment critical sg entry base task_return
+  lower old_frame upper call mask LitMap before X,
+  before.(SchedState).(isRunning) = false ->
+  task_create_stack_entry sg (init_task_idle_create_args entry base) (LitMap "?") call before ->
+  readable_name before.(NameState) (LitMap "uC/OS-II Idle") init_task_idle_name_chars ->
+  init_task_idle_continuation_safe environment critical sg entry base task_return
+    lower old_frame upper call mask LitMap before X ->
+  task_create_ext_continuation_safe before
+    (init_task_idle_continuation_create_program environment critical sg entry base task_return
+      lower old_frame upper call mask LitMap)
+    (init_task_idle_continuation_create_postcondition environment critical sg entry base task_return
+      lower old_frame upper call mask LitMap before X).
+Proof.
+  intros environment critical sg entry base task_return lower old_frame upper call mask LitMap before X Hstop Hentry Hread Hsafe.
+  destruct Hsafe as [start [Hstart Hsafe]]; subst start.
+  exists before; split; [reflexivity|].
+  intros [returned error] current Hcreate; cbn.
+  assert (Herased : init_task_idle_create_program environment critical sg entry base task_return
+    lower old_frame upper call mask LitMap before error current).
+  { eapply (task_create_ext_continuation_program_error_projection environment critical sg
+      (init_task_idle_stack_region base) (init_task_idle_create_args entry base) task_return
+      (init_task_idle_after_lower entry base lower old_frame upper)
+      (init_task_idle_after_upper entry base lower old_frame upper) (LitMap "?") call mask
+      before returned error current); exact Hcreate. }
+  pose proof (init_task_idle_create_preserves_boot environment critical sg (init_task_idle_stack_region base)
+    (init_task_idle_create_args entry base) task_return
+    (init_task_idle_after_lower entry base lower old_frame upper)
+    (init_task_idle_after_upper entry base lower old_frame upper) (LitMap "?") call mask
+    before error current Hstop Herased) as Hframe.
+  split; [exact Hcreate|]. split; [exact Hframe|]. split.
+  - rewrite <- (proj2 Hframe); exact Hread.
+  - split.
+    + eapply init_task_continuation_program_preserves_entry; [exact Hstop|cbn; lia|exact Hentry|exact Hcreate].
+    + exists current; split; [reflexivity|]. intros [named name_error] final Hname; cbn.
+    apply (Hsafe named final).
+    exists (returned, error), current; split; [exact Hcreate|].
+    exists (named, name_error), final; split; [exact Hname|split; reflexivity].
+Qed.
+
+Definition init_task_idle_continuation_failure_buffer entry base task_return lower old_frame upper error : Assertion :=
+  if Z.eq_dec error 0 then emp else
+    task_stack_storage (init_task_idle_stack_region base)
+      (if Z.eq_dec error 66 then task_create_stack_image TaskStackNoVFP
+        (init_task_idle_create_args entry base) task_return
+        (init_task_idle_after_lower entry base lower old_frame upper)
+        (init_task_idle_after_upper entry base lower old_frame upper)
+       else lower ++ old_frame ++ upper).
+
+Definition init_task_idle_continuation_created environment critical sg entry base task_return lower old_frame upper
+  original mask LitMap initial X returned middle error : Prop :=
+  task_tcb_init_stack_same_call returned original /\ UCOS2_state_inv sg middle /\
+  (error = 0 \/ error = 40 \/ error = 60 \/ error = 66) /\
+  init_task_idle_continuation_create_postcondition environment critical sg entry base task_return lower old_frame upper
+    original mask LitMap initial X returned error middle.
+
+Lemma init_task_idle_continuation_create_post_open : forall environment critical saved_local sg entry base task_return
+  lower old_frame upper original mask LitMap literals initial X error,
+  initial.(SchedState).(isRunning) = false ->
+  task_create_ext_continuation_boot_phase_post environment critical saved_local sg (init_task_idle_stack_region base)
+    (init_task_idle_create_args entry base) task_return lower old_frame upper [] (lower ++ old_frame ++ upper) []
+    original mask initial error
+    (init_task_idle_continuation_create_postcondition environment critical sg entry base task_return lower old_frame upper
+      original mask LitMap initial X) ** GlobalStrings_missing LitMap literals |--
+  EX returned middle,
+    coq_prop (init_task_idle_continuation_created environment critical sg entry base task_return lower old_frame upper
+      original mask LitMap initial X returned middle error /\
+      initial.(TimerState).(timerInitPhase) = middle.(TimerState).(timerInitPhase) /\
+      task_name_set_continuation_admission sg returned 63 (LitMap "uC/OS-II Idle") middle /\
+      task_name_set_continuation_call_safe environment critical sg returned mask 63 (LitMap "uC/OS-II Idle") middle
+        (init_task_idle_continuation_name_postcondition X)) &&
+    (task_name_set_continuation_closed environment critical saved_local sg returned mask middle **
+     init_task_idle_continuation_failure_buffer entry base task_return lower old_frame upper error **
+     GlobalStrings_missing LitMap literals).
+Proof.
+  intros; unfold task_create_ext_continuation_boot_phase_post; Intros returned middle.
+  assert (Hsafe : task_create_ext_continuation_safe middle (StateRelMonad.ret (returned, error))
+    (init_task_idle_continuation_create_postcondition environment critical sg entry base task_return lower old_frame upper
+      original mask LitMap initial X)) by tauto.
+  destruct Hsafe as [start [Hstart Hsafe]]; subst start.
+  specialize (Hsafe (returned, error) middle (conj eq_refl eq_refl)).
+  change (init_task_idle_continuation_create_postcondition environment critical sg entry base task_return
+    lower old_frame upper original mask LitMap initial X returned error middle) in Hsafe.
+  assert (Hname : task_name_set_continuation_call_safe environment critical sg returned mask 63
+    (LitMap "uC/OS-II Idle") middle (init_task_idle_continuation_name_postcondition X)).
+  { exact (proj2 (proj2 (proj2 (proj2 Hsafe)))). }
+  assert (Hcodes : error = 0 \/ error = 40 \/ error = 60 \/ error = 66).
+  { assert (Hex : error = 42 -> 63 < (init_task_idle_create_args entry base).(createPriority)) by tauto.
+    cbn in Hex; tauto || lia. }
+  assert (Hadmit : task_name_set_continuation_admission sg returned 63 (LitMap "uC/OS-II Idle") middle).
+  { eapply task_name_set_continuation_admission_explicit; [lia|exact (proj1 (proj2 (proj2 Hsafe)))]. }
+  Exists returned middle; unfold init_task_idle_continuation_created, init_task_idle_continuation_failure_buffer,
+    task_name_set_continuation_closed, init_task_idle_after_lower, init_task_idle_after_upper; entailer!; tauto.
+Qed.
+
+Definition init_task_idle_continuation_literal_residual environment critical saved_local sg call mask state name : Assertion :=
+  coq_prop (UCOS2_state_inv sg state) &&
+  (init_task_idle_name_call_residual environment.(task_stack_call_platform) critical sg
+     call.(os_sched_call_invocation) call.(os_sched_call_origin) mask state name **
+   task_name_set_continuation_resources environment saved_local sg call state).
+
+Lemma init_task_idle_continuation_split_literal : forall environment critical saved_local sg call mask state name,
+  readable_name state.(NameState) name init_task_idle_name_chars ->
+  task_name_set_continuation_closed environment critical saved_local sg call mask state |--
+  store_stringLit name "uC/OS-II Idle" **
+  init_task_idle_continuation_literal_residual environment critical saved_local sg call mask state name.
+Proof.
+  intros * Hread; rewrite task_name_set_continuation_closed_split; Intros.
+  sep_apply_l_atomic (init_task_idle_name_call_split_literal environment.(task_stack_call_platform)
+    critical sg call.(os_sched_call_invocation) call.(os_sched_call_origin) mask state name Hread).
+  unfold init_task_idle_continuation_literal_residual; entailer!.
+Qed.
+
+Lemma init_task_idle_continuation_merge_literal : forall environment critical saved_local sg call mask state name,
+  store_stringLit name "uC/OS-II Idle" **
+  init_task_idle_continuation_literal_residual environment critical saved_local sg call mask state name |--
+  task_name_set_continuation_closed environment critical saved_local sg call mask state.
+Proof.
+  intros; unfold init_task_idle_continuation_literal_residual; Intros.
+  sep_apply_l_atomic (init_task_idle_name_call_merge_literal environment.(task_stack_call_platform)
+    critical sg call.(os_sched_call_invocation) call.(os_sched_call_origin) mask state name).
+  rewrite task_name_set_continuation_closed_split; entailer!.
+Qed.
+
+Lemma init_task_idle_continuation_source_names :
+  forall environment critical sg observer event_observer first before stopped last after,
+  kernel_resumption_task_source_trace environment.(task_stack_call_external) environment.(task_stack_call_port)
+    critical.(critical_region_clients) sg observer event_observer first before stopped last after ->
+  before.(NameState) = after.(NameState).
+Proof.
+  intros * Htrace.
+  destruct (kernel_resumption_task_source_trace_erases _ _ _ _ _ _ _ _ _ _ _ Htrace) as [Hresource _].
+  eapply kernel_client_resource_trace_preserves_name_state.
+  - intros; eapply critical_region_client_name_frame; eassumption.
+  - eapply kernel_resumption_resource_trace_erases; exact Hresource.
+Qed.
+
+Lemma init_task_idle_continuation_save_history_names :
+  forall environment critical sg original before returned acquired,
+  kernel_call_save_history environment critical sg original before returned acquired ->
+  before.(NameState) = acquired.(NameState).
+Proof.
+  intros * Hhistory; destruct Hhistory; try reflexivity;
+    match goal with
+    | Htrace : kernel_resumption_task_source_trace _ _ _ _ _ _ _ _ _ _ _ |- _ =>
+      pose proof (init_task_idle_continuation_source_names _ _ _ _ _ _ _ _ _ _ Htrace) as Hnames
+    end;
+    match type of Hnames with
+    | NameState (armv7a_irq_live_parked_state ?initial ?call ?sp ?fragments) = _ =>
+      assert (Hframe : NameState (armv7a_irq_live_parked_state initial call sp fragments) = NameState initial)
+        by (unfold armv7a_irq_live_parked_state, armv7a_irq_live_entry_state, os_sched_save_current_sp;
+            change (NameState (armv7a_irq_entry_counter_state initial) = NameState initial);
+            unfold armv7a_irq_entry_counter_state;
+            destruct (isRunning (SchedState initial)); reflexivity);
+      rewrite Hframe in Hnames; exact Hnames
+    end.
+Qed.
+
+Lemma init_task_idle_continuation_restore_history_names :
+  forall environment critical sg original before returned current,
+  kernel_call_restore_history environment critical sg original before returned current ->
+  before.(NameState) = current.(NameState).
+Proof.
+  intros * Hhistory; destruct Hhistory; try reflexivity;
+    match goal with
+    | Htrace : kernel_resumption_task_source_trace _ _ _ _ _ _ _ _ _ _ _ |- _ =>
+      pose proof (init_task_idle_continuation_source_names _ _ _ _ _ _ _ _ _ _ Htrace) as Hnames
+    end;
+    match type of Hnames with
+    | NameState (armv7a_irq_live_parked_state ?initial ?call ?sp ?fragments) = _ =>
+      assert (Hframe : NameState (armv7a_irq_live_parked_state initial call sp fragments) = NameState initial)
+        by (unfold armv7a_irq_live_parked_state, armv7a_irq_live_entry_state, os_sched_save_current_sp;
+            change (NameState (armv7a_irq_entry_counter_state initial) = NameState initial);
+            unfold armv7a_irq_entry_counter_state;
+            destruct (isRunning (SchedState initial)); reflexivity);
+      rewrite Hframe in Hnames; exact Hnames
+    end.
+Qed.
+
+Lemma init_task_idle_continuation_save_effect_names :
+  forall environment critical sg original mask saved before returned acquired,
+  os_sched_continuation_save_effect environment critical sg original mask saved before returned acquired ->
+  before.(NameState) = acquired.(NameState).
+Proof.
+  intros * [[Htrace _]|[Hhistory _]].
+  - eapply init_task_idle_continuation_source_names; exact Htrace.
+  - eapply init_task_idle_continuation_save_history_names; exact Hhistory.
+Qed.
+
+Lemma init_task_idle_continuation_restore_effect_names :
+  forall environment critical sg original released returned current,
+  os_sched_continuation_restore_effect environment critical sg original released returned current ->
+  released.(NameState) = current.(NameState).
+Proof.
+  intros * [[Htrace _]|Hhistory].
+  - eapply init_task_idle_continuation_source_names; exact Htrace.
+  - eapply init_task_idle_continuation_restore_history_names; exact Hhistory.
+Qed.
+
+Lemma init_task_idle_continuation_name_result_names :
+  forall environment critical sg original mask request name before returned error current,
+  task_name_set_continuation_result environment critical sg original mask request name before returned error current ->
+  before.(NameState) = current.(NameState).
+Proof.
+  intros * Hresult; unfold task_name_set_continuation_result in Hresult.
+  destruct Hresult as [Hbad|[Hnull|[Hisr|Hresult]]].
+  - destruct Hbad as (_ & _ & -> & _); reflexivity.
+  - destruct Hnull as (_ & _ & _ & -> & _); reflexivity.
+  - destruct Hisr as (_ & _ & _ & _ & -> & _); reflexivity.
+  - destruct Hresult as (_ & _ & _ & saved & active & acquired & priority & released & Hsave & _ & Hstep & Hrestore).
+    pose proof (init_task_idle_continuation_save_effect_names _ _ _ _ _ _ _ _ _ Hsave) as Hfirst.
+    pose proof (init_task_idle_continuation_restore_effect_names _ _ _ _ _ _ _ Hrestore) as Hlast.
+    inversion Hstep; subst;
+      unfold task_name_set_update in Hlast; cbn [NameState replace_TskS] in Hlast;
+      (etransitivity; [exact Hfirst|exact Hlast]).
+Qed.
+
+Lemma init_task_idle_continuation_name_post_safe_return :
+  forall environment critical sg original mask request name before named error current X,
+  task_name_set_continuation_call_post environment critical sg original mask request name before named error current
+    (init_task_idle_continuation_name_postcondition X) ->
+  safeExec (eq current) (StateRelMonad.ret named) X.
+Proof.
+  intros * [_ [_ [start [Hstart Hsafe]]]]; subst start.
+  exists current; split; [reflexivity|].
+  intros returned final [Hreturned Hfinal]; subst returned final.
+  exact (Hsafe (named, error) current (conj eq_refl eq_refl)).
+Qed.
+
+Lemma init_task_idle_continuation_uninitialized_stopped : forall sg state,
+  sg.(osKernelConfig).(cfgTimerEnabled) = true -> UCOS2_state_inv sg state ->
+  state.(TimerState).(timerInitPhase) = TimerUninitialized -> state.(SchedState).(isRunning) = false.
+Proof.
+  intros sg state Henabled Hvalid Hphase.
+  assert (Hcontrol : timer_running_initialization_consistency sg state)
+    by (unfold UCOS2_state_inv, UCOS2_state_inv_with_ready, cross_module_consistency in Hvalid; tauto).
+  unfold timer_running_initialization_consistency in Hcontrol.
+  destruct (state.(SchedState).(isRunning)) eqn:Hrunning; [|reflexivity].
+  specialize (Hcontrol Henabled eq_refl); congruence.
+Qed.
+
+Definition init_task_idle_continuation_post environment critical saved_local sg entry base task_return
+  lower old_frame upper original mask LitMap literals initial (X : OsSchedCallContext -> UCOS2_Verify_State -> Prop) : Assertion :=
+  EX returned middle create_error named current name_error,
+    coq_prop (safeExec (eq current) (StateRelMonad.ret named) X /\
+      task_create_stack_entry sg (init_task_idle_create_args entry base) (LitMap "?") named current /\
+      task_tcb_init_stack_same_call named original /\
+      initial.(TimerState).(timerInitPhase) = middle.(TimerState).(timerInitPhase) /\
+      middle.(TimerState).(timerInitPhase) = current.(TimerState).(timerInitPhase) /\
+      initial.(NameState) = current.(NameState) /\
+      (sg.(osKernelConfig).(cfgTimerEnabled) = true ->
+       initial.(TimerState).(timerInitPhase) = TimerUninitialized -> current.(SchedState).(isRunning) = false) /\
+      init_task_idle_continuation_created environment critical sg entry base task_return lower old_frame upper
+        original mask LitMap initial X returned middle create_error /\
+      task_name_set_continuation_call_post environment critical sg returned mask 63 (LitMap "uC/OS-II Idle")
+        middle named name_error current (init_task_idle_continuation_name_postcondition X)) &&
+    (coq_prop (init_task_idle_continuation_created environment critical sg entry base task_return lower old_frame upper
+    original mask LitMap initial X returned middle create_error) **
+  coq_prop (task_name_set_continuation_call_post environment critical sg returned mask 63 (LitMap "uC/OS-II Idle")
+    middle named name_error current (init_task_idle_continuation_name_postcondition X)) **
+  coq_prop (init_task_idle_continuation_phase_frame initial middle) **
+  task_name_set_continuation_closed environment critical saved_local sg named mask current **
+     init_task_idle_continuation_failure_buffer entry base task_return lower old_frame upper create_error **
+     GlobalStrings_missing LitMap literals).
+
+Lemma init_task_idle_continuation_post_close : forall environment critical saved_local sg entry base task_return
+  lower old_frame upper original mask LitMap literals initial X returned middle create_error named current name_error,
+  init_task_idle_continuation_created environment critical sg entry base task_return lower old_frame upper
+    original mask LitMap initial X returned middle create_error ->
+  initial.(TimerState).(timerInitPhase) = middle.(TimerState).(timerInitPhase) ->
+  task_name_set_continuation_call_post environment critical sg returned mask 63 (LitMap "uC/OS-II Idle")
+    middle named name_error current (init_task_idle_continuation_name_postcondition X) ->
+  coq_prop (init_task_idle_continuation_created environment critical sg entry base task_return lower old_frame upper
+    original mask LitMap initial X returned middle create_error) **
+  coq_prop (task_name_set_continuation_call_post environment critical sg returned mask 63 (LitMap "uC/OS-II Idle")
+    middle named name_error current (init_task_idle_continuation_name_postcondition X)) **
+  coq_prop (init_task_idle_continuation_phase_frame initial middle) **
+  task_name_set_continuation_closed environment critical saved_local sg named mask current **
+  init_task_idle_continuation_failure_buffer entry base task_return lower old_frame upper create_error **
+  GlobalStrings_missing LitMap literals |--
+  init_task_idle_continuation_post environment critical saved_local sg entry base task_return lower old_frame upper
+    original mask LitMap literals initial X.
+Proof.
+  intros * Hcreated Hphase Hname.
+  pose proof (task_name_set_continuation_call_result_phase _ _ _ _ _ _ _ _ _ _ _ (proj1 Hname)) as Hlast.
+  pose proof (init_task_idle_continuation_name_result_names _ _ _ _ _ _ _ _ _ _ _
+    (task_name_set_continuation_call_result_forget _ _ _ _ _ _ _ _ _ _ _ (proj1 Hname))) as Hnames.
+  pose proof (init_task_idle_continuation_name_post_safe_return environment critical sg returned mask 63
+    (LitMap "uC/OS-II Idle") middle named name_error current X Hname) as Hsafe.
+  assert (Hfirst_names : initial.(NameState) = middle.(NameState)).
+  { unfold init_task_idle_continuation_created, init_task_idle_continuation_create_postcondition,
+      init_task_idle_boot_frame in Hcreated; tauto. }
+  assert (Hmiddle_entry : task_create_stack_entry sg (init_task_idle_create_args entry base) (LitMap "?") returned middle).
+  { unfold init_task_idle_continuation_created, init_task_idle_continuation_create_postcondition in Hcreated; tauto. }
+  pose proof (init_task_continuation_name_post_preserves_entry environment critical sg
+    (init_task_idle_create_args entry base) (LitMap "?") returned mask 63
+    (LitMap "uC/OS-II Idle") middle named name_error current
+    (init_task_idle_continuation_name_postcondition X) Hmiddle_entry Hname) as Hcurrent_entry.
+  assert (Hsame : task_tcb_init_stack_same_call named original).
+  { pose proof (proj1 Hcreated) as Hfirst_same.
+    pose proof (task_name_set_continuation_call_result_same_call _ _ _ _ _ _ _ _ _ _ _ (proj1 Hname)) as Hlast_same.
+    unfold task_tcb_init_stack_same_call in *; intuition congruence. }
+  unfold task_name_set_continuation_closed, task_create_continuation_input; Intros.
+  assert (Hboot : sg.(osKernelConfig).(cfgTimerEnabled) = true ->
+    initial.(TimerState).(timerInitPhase) = TimerUninitialized -> current.(SchedState).(isRunning) = false).
+  { intros; eapply init_task_idle_continuation_uninitialized_stopped; [eassumption|tauto|congruence]. }
+  unfold init_task_idle_continuation_post; Exists returned middle create_error named current name_error.
+  unfold task_name_set_continuation_closed, task_create_continuation_input; entailer!; intuition congruence.
+Qed.

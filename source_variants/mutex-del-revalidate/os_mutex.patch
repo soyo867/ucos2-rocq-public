@@ -1,0 +1,16 @@
+--- a/Source/os_mutex.c
++++ b/Source/os_mutex.c
+@@ -349,6 +349,13 @@
+         return (pevent);
+     }
+     OS_ENTER_CRITICAL();
++    /* The earlier type observation may have expired before interrupts were masked. */
++    if (pevent->OSEventType != OS_EVENT_TYPE_MUTEX) {
++        OS_EXIT_CRITICAL();
++        *perr = OS_ERR_EVENT_TYPE;
++        OS_TRACE_MUTEX_DEL_EXIT(*perr);
++        return (pevent);
++    }
+     if (pevent->OSEventGrp != 0u) {                        /* See if any tasks waiting on mutex        */
+         tasks_waiting = OS_TRUE;                           /* Yes                                      */
+     } else {
